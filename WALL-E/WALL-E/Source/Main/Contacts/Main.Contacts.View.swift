@@ -114,13 +114,7 @@ private extension Main.Contacts.View {
             let view = UIImageView()
             view.contentMode = .scaleAspectFill
             let url = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1524402344412&di=4a23252a1384630713ed00984077d7aa&imgtype=0&src=http%3A%2F%2Fimg2.ph.126.net%2FiWniabDDa1xwCebyA6-75A%3D%3D%2F6597431505982826060.jpg"
-            view.kf.setImage(
-                with: URL(string: url),
-                options: [
-                    .transition(.fade(0.25)),
-                    .resizeAndCroppingProcessor(targetSize: ui.avatarSize, withCorner: 0.5 * ui.avatarSize.width)
-                ]
-            )
+            view.kf.setImage(with: URL(string: url), options: .normalAvatarOptions(sizeValue: ui.avatarSizeValue))
             return view
         }()
         
@@ -152,8 +146,8 @@ private extension Main.Contacts.View._Cell {
             _contentView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             
             _avatarView.topAnchor.constraint(equalTo: _contentView.topAnchor),
-            _avatarView.widthAnchor.constraint(equalToConstant: ui.avatarSize.width),
-            _avatarView.heightAnchor.constraint(equalToConstant: ui.avatarSize.height),
+            _avatarView.widthAnchor.constraint(equalToConstant: ui.avatarSizeValue),
+            _avatarView.heightAnchor.constraint(equalToConstant: ui.avatarSizeValue),
             _avatarView.centerXAnchor.constraint(equalTo: _contentView.centerXAnchor),
             _avatarView.bottomAnchor.constraint(equalTo: _titleLabel.topAnchor, constant: -4),
             
@@ -166,7 +160,7 @@ private extension Main.Contacts.View._Cell {
 
 extension UI where Base: Main.Contacts.View._Cell {
     var titleColor: UIColor { return UIColor(rgb: triple(123)) }
-    var avatarSize: CGSize { return .init(width: 68, height: 68) }
+    var avatarSizeValue: CGFloat { return 68 }
 }
 
 // MARK: - Header

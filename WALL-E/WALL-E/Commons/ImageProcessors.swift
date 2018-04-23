@@ -15,8 +15,20 @@ extension KingfisherOptionsInfoItem {
         let resizeSize = CGSize(width: scale * targetSize.width , height: scale * targetSize.height)
         var ret = ResizingImageProcessor(referenceSize: resizeSize, mode: .aspectFill) >> CroppingImageProcessor(size: resizeSize)
         if radius > 0 {
-            ret = ret >> RoundCornerImageProcessor(cornerRadius: radius * scale)
+            ret = ret >> RoundCornerImageProcessor(cornerRadius: radius * scale, backgroundColor: .clear)
         }
         return .processor(ret)
+    }
+    
+    static let pngCacheSerializer: KingfisherOptionsInfoItem = .cacheSerializer(FormatIndicatedCacheSerializer.png)
+}
+
+extension Array where Element == KingfisherOptionsInfoItem {
+    static func normalAvatarOptions(sizeValue: CGFloat) -> [KingfisherOptionsInfoItem] {
+        return [
+            .transition(.fade(0.25)),
+            .resizeAndCroppingProcessor(targetSize: .init(width: sizeValue, height: sizeValue), withCorner: 0.5 * sizeValue),
+            .pngCacheSerializer
+        ]
     }
 }

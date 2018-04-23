@@ -26,6 +26,16 @@ extension Main {
             layer.path = path.cgPath
             return layer
         }()
+        private lazy var _blurView: UIVisualEffectView = {
+            let effect = UIBlurEffect(style: .light)
+            let view = UIVisualEffectView(effect: effect)
+            view.clipsToBounds = true
+            view.layer.cornerRadius = 12
+            view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+            view.isHidden = true
+            view.alpha = 0
+            return view
+        }()
     }
 }
 
@@ -36,6 +46,22 @@ extension Main.View {
         view.layer.addSublayer(_backgroundLayer)
         _addSegmentControl()
         _setupViews()
+    }
+    
+    func blur(_ flag: Bool) {
+        guard (flag && _blurView.isHidden) || (!flag && !_blurView.isHidden) else { return }
+        if flag {
+            _blurView.isHidden = false
+            UIView.animate(withDuration: 0.25) {
+                self._blurView.alpha = 0.5
+            }
+        } else {
+            UIView.animate(withDuration: 0.25, animations: {
+                self._blurView.alpha = 0
+            }) { _ in
+                self._blurView.isHidden = true
+            }
+        }
     }
 }
 
@@ -80,6 +106,9 @@ private extension Main.View {
         addChildViewController(_conversationView)
         _conversationView.view.frame = _contentView.bounds
         _conversationView.didMove(toParentViewController: self)
+        
+        view.addSubview(_blurView)
+        _blurView.frame = view.bounds
     }
 
     var _contentViewFrame: CGRect {

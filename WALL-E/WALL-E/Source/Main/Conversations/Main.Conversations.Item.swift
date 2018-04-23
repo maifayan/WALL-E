@@ -32,11 +32,7 @@ private extension Main.Conversations.Item {
             viewReuseId: "AvatarLayout"
         ) { imageView in
             let url = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1524402344412&di=4a23252a1384630713ed00984077d7aa&imgtype=0&src=http%3A%2F%2Fimg2.ph.126.net%2FiWniabDDa1xwCebyA6-75A%3D%3D%2F6597431505982826060.jpg"
-            imageView.kf.setImage(
-                with: URL(string: url),
-                options: [.resizeAndCroppingProcessor(targetSize: .init(width: avatarSizeValue, height: avatarSizeValue),
-                                                       withCorner: 0.5 * avatarSizeValue)]
-            )
+            imageView.kf.setImage(with: URL(string: url), options: .normalAvatarOptions(sizeValue: avatarSizeValue))
             imageView.contentMode = .scaleAspectFill
         }
         

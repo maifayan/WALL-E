@@ -12,6 +12,8 @@
 		BA013C93208DC12F004689F0 /* ImageProcessors.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA013C92208DC12F004689F0 /* ImageProcessors.swift */; };
 		BA013C95208DD7B9004689F0 /* UITableView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA013C94208DD7B9004689F0 /* UITableView+Rx.swift */; };
 		BA013C97208DD8EC004689F0 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA013C96208DD8EC004689F0 /* Observable.swift */; };
+		BA013C9D208DE5EA004689F0 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA013C9C208DE5EA004689F0 /* Profile.swift */; };
+		BA013CA1208DE602004689F0 /* Profile.View.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA013CA0208DE602004689F0 /* Profile.View.swift */; };
 		BA1A99382085DE4500FAE3FA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1A99372085DE4500FAE3FA /* AppDelegate.swift */; };
 		BA1A993F2085DE4700FAE3FA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BA1A993E2085DE4700FAE3FA /* Assets.xcassets */; };
 		BA1A99422085DE4700FAE3FA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BA1A99402085DE4700FAE3FA /* LaunchScreen.storyboard */; };
@@ -33,6 +35,7 @@
 		BA3CCD9B208CD3F10000D639 /* UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3CCD9A208CD3F10000D639 /* UIButton.swift */; };
 		BA783F71208CE4A200771E86 /* MenuContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA783F70208CE4A200771E86 /* MenuContentView.xib */; };
 		BA783F73208CFAEA00771E86 /* ColorSelectView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA783F72208CFAEA00771E86 /* ColorSelectView.xib */; };
+		BAA2EC8D208DF07B00C6F577 /* ProfileHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BAA2EC8C208DF07B00C6F577 /* ProfileHeaderView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +55,8 @@
 		BA013C92208DC12F004689F0 /* ImageProcessors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageProcessors.swift; sourceTree = "<group>"; };
 		BA013C94208DD7B9004689F0 /* UITableView+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Rx.swift"; sourceTree = "<group>"; };
 		BA013C96208DD8EC004689F0 /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
+		BA013C9C208DE5EA004689F0 /* Profile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
+		BA013CA0208DE602004689F0 /* Profile.View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.View.swift; sourceTree = "<group>"; };
 		BA1A99342085DE4500FAE3FA /* WALL-E.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "WALL-E.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA1A99372085DE4500FAE3FA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BA1A993E2085DE4700FAE3FA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -77,6 +82,7 @@
 		BA3CCD9A208CD3F10000D639 /* UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButton.swift; sourceTree = "<group>"; };
 		BA783F70208CE4A200771E86 /* MenuContentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MenuContentView.xib; sourceTree = "<group>"; };
 		BA783F72208CFAEA00771E86 /* ColorSelectView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ColorSelectView.xib; sourceTree = "<group>"; };
+		BAA2EC8C208DF07B00C6F577 /* ProfileHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileHeaderView.xib; sourceTree = "<group>"; };
 		D6E5B6B7A8C93248B230FF43 /* Pods-WALL-E.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WALL-E.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WALL-E/Pods-WALL-E.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -122,6 +128,16 @@
 				BA013C90208DAFEA004689F0 /* Main.Conversations.Item.swift */,
 			);
 			path = Conversations;
+			sourceTree = "<group>";
+		};
+		BA013C9B208DE5EA004689F0 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				BA013C9C208DE5EA004689F0 /* Profile.swift */,
+				BA013CA0208DE602004689F0 /* Profile.View.swift */,
+				BAA2EC8C208DF07B00C6F577 /* ProfileHeaderView.xib */,
+			);
+			path = Profile;
 			sourceTree = "<group>";
 		};
 		BA1A992B2085DE4500FAE3FA = {
@@ -241,6 +257,7 @@
 		BA3CCD9C208CD4030000D639 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				BA013C9B208DE5EA004689F0 /* Profile */,
 				BA3CCD95208CCE6F0000D639 /* Menu */,
 				BA3CCD90208CA4EA0000D639 /* Root */,
 				BA3CCD7A208B99CA0000D639 /* Main */,
@@ -345,6 +362,7 @@
 				BA1A99422085DE4700FAE3FA /* LaunchScreen.storyboard in Resources */,
 				BA783F73208CFAEA00771E86 /* ColorSelectView.xib in Resources */,
 				BA1A993F2085DE4700FAE3FA /* Assets.xcassets in Resources */,
+				BAA2EC8D208DF07B00C6F577 /* ProfileHeaderView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -371,6 +389,7 @@
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Tactile/Tactile.framework",
+				"${BUILT_PRODUCTS_DIR}/WXWaveView/WXWaveView.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -380,6 +399,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Tactile.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WXWaveView.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -426,6 +446,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BA3CCD9B208CD3F10000D639 /* UIButton.swift in Sources */,
+				BA013CA1208DE602004689F0 /* Profile.View.swift in Sources */,
 				BA3CCD89208C82B90000D639 /* Main.Contacts.View.swift in Sources */,
 				BA3CCD79208B99820000D639 /* Main.View.swift in Sources */,
 				BA3CCD87208C76180000D639 /* Disposable.swift in Sources */,
@@ -435,6 +456,7 @@
 				BA3CCD8B208C83010000D639 /* Main.Conversations.View.swift in Sources */,
 				BA013C93208DC12F004689F0 /* ImageProcessors.swift in Sources */,
 				BA3CCD77208B99770000D639 /* Main.swift in Sources */,
+				BA013C9D208DE5EA004689F0 /* Profile.swift in Sources */,
 				BA3CCD94208CA5040000D639 /* Root.View.swift in Sources */,
 				BA3CCD99208CCE910000D639 /* Menu.View.swift in Sources */,
 				BA3CCD97208CCE7B0000D639 /* Menu.swift in Sources */,

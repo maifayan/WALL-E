@@ -16,7 +16,8 @@ extension Root {
         
         private lazy var _menuView = Menu.View { [weak self] action in
             switch action {
-            case .newRobot: ()
+            case .newRobot:
+                self?.present(Profile.View(contact: ""), animated: true, completion: nil)
             case .theme:
                 self?._switchTheme()
             case .settings: ()
@@ -117,6 +118,7 @@ private extension Root.View {
             self._mainView.view.transform = transformForMainViewAndMenuButton
             self._menuButton.transform = transformForMainViewAndMenuButton
         })
+        _mainView.blur(flag)
     }
     
     func _bindMenuDisplayControllers(_ controller: MenuButtonDisplayController) {

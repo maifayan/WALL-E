@@ -7,4 +7,5 @@ target 'WALL-E' do
   pod 'Tactile'
   pod 'Kingfisher'
   pod 'R.swift'
+  pod 'WXWaveView'
 end

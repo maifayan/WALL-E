@@ -72,12 +72,14 @@ struct R: Rswift.Validatable {
     fileprivate init() {}
   }
   
-  /// This `R.nib` struct is generated, and contains static references to 2 nibs.
+  /// This `R.nib` struct is generated, and contains static references to 3 nibs.
   struct nib {
     /// Nib `ColorSelectView`.
     static let colorSelectView = _R.nib._ColorSelectView()
     /// Nib `MenuContentView`.
     static let menuContentView = _R.nib._MenuContentView()
+    /// Nib `ProfileHeaderView`.
+    static let profileHeaderView = _R.nib._ProfileHeaderView()
     
     /// `UINib(name: "ColorSelectView", in: bundle)`
     static func colorSelectView(_: Void = ()) -> UIKit.UINib {
@@ -87,6 +89,11 @@ struct R: Rswift.Validatable {
     /// `UINib(name: "MenuContentView", in: bundle)`
     static func menuContentView(_: Void = ()) -> UIKit.UINib {
       return UIKit.UINib(resource: R.nib.menuContentView)
+    }
+    
+    /// `UINib(name: "ProfileHeaderView", in: bundle)`
+    static func profileHeaderView(_: Void = ()) -> UIKit.UINib {
+      return UIKit.UINib(resource: R.nib.profileHeaderView)
     }
     
     fileprivate init() {}
@@ -166,6 +173,17 @@ struct _R: Rswift.Validatable {
         if UIKit.UIImage(named: "menu_robot", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'menu_robot' is used in nib 'MenuContentView', but couldn't be loaded.") }
         if UIKit.UIImage(named: "menu_theme", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'menu_theme' is used in nib 'MenuContentView', but couldn't be loaded.") }
         if UIKit.UIImage(named: "menu_settings", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'menu_settings' is used in nib 'MenuContentView', but couldn't be loaded.") }
+      }
+      
+      fileprivate init() {}
+    }
+    
+    struct _ProfileHeaderView: Rswift.NibResourceType {
+      let bundle = R.hostingBundle
+      let name = "ProfileHeaderView"
+      
+      func firstView(owner ownerOrNil: AnyObject?, options optionsOrNil: [NSObject : AnyObject]? = nil) -> UIKit.UIView? {
+        return instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? UIKit.UIView
       }
       
       fileprivate init() {}
