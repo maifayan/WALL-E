@@ -1,0 +1,10 @@
+use_frameworks!
+
+target 'WALL-E' do
+  pod 'RxSwift'
+  pod 'RxCocoa'
+  pod 'LayoutKit'
+  pod 'Tactile'
+  pod 'Kingfisher'
+  pod 'R.swift'
+end

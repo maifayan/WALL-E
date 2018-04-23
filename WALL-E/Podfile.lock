@@ -1,0 +1,41 @@
+PODS:
+  - Kingfisher (4.7.0)
+  - LayoutKit (7.0.2)
+  - R.swift (4.0.0):
+    - R.swift.Library (~> 4.0.0)
+  - R.swift.Library (4.0.0)
+  - RxCocoa (4.1.2):
+    - RxSwift (~> 4.0)
+  - RxSwift (4.1.2)
+  - Tactile (2.0)
+
+DEPENDENCIES:
+  - Kingfisher
+  - LayoutKit
+  - R.swift
+  - RxCocoa
+  - RxSwift
+  - Tactile
+
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - Kingfisher
+    - LayoutKit
+    - R.swift
+    - R.swift.Library
+    - RxCocoa
+    - RxSwift
+    - Tactile
+
+SPEC CHECKSUMS:
+  Kingfisher: da6b005aa96d37698e3e4f1ccfe96a5b9bbf27d6
+  LayoutKit: 183c513f8322f4e22321499e54163864bcdf7d97
+  R.swift: d6a5ec2f55a8441dc0ed9f1f8b37d7d11ae85c66
+  R.swift.Library: c3af34921024333546e23b70e70d0b4e0cffca75
+  RxCocoa: d88ba0f1f6abf040011a9eb4b539324fc426843a
+  RxSwift: e49536837d9901277638493ea537394d4b55f570
+  Tactile: 22d5686693be17568351b95aa83ef37457cd40f4
+
+PODFILE CHECKSUM: 4190f7b27c36e65efe8cd31a63537c264d52d643
+
+COCOAPODS: 1.5.0
