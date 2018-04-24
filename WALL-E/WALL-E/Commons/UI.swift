@@ -138,6 +138,16 @@ extension UI where Base: AnyObject {
         refreshable.execute()
     }
     
+    // 此方法会报警告，但是为了适配KeyPath为`V!`，在这里做了妥协
+    // 关联使用例子： File: Profile.View.swift; Class: Profile.View._ContentView._FooterView -> _chatButton: UIButton
+    func adapt<V>(themeKeyPath: KeyPath<Theme, V>, for keyPath: ReferenceWritableKeyPath<Base, V!>) {
+        let refreshable = Theme.Refreshable(target: base, keyPath: keyPath) { [weak target = base] in
+            target?[keyPath: keyPath] = Theme.shared[keyPath: themeKeyPath]
+        }
+        Theme.shared.addRefreshable(refreshable, for: themeKeyPath)
+        refreshable.execute()
+    }
+
     func adapt<I, O>(themeKeyPath: KeyPath<Theme, I>, for keyPath: ReferenceWritableKeyPath<Base, O>, mapper: @escaping (I) -> O) {
         let refreshable = Theme.Refreshable(target: base, keyPath: keyPath) { [weak target = base] in
             target?[keyPath: keyPath] = mapper(Theme.shared[keyPath: themeKeyPath])

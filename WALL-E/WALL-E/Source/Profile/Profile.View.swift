@@ -29,6 +29,10 @@ extension Profile {
         
         private lazy var _contentView = _ContentView()
     }
+    
+    enum Event {
+        case chat
+    }
 }
 
 extension Profile.View {
@@ -101,7 +105,14 @@ private extension Profile.View {
         }
         
         private lazy var _headerView = _HeaderView()
-        private lazy var _footerView = _FooterView()
+        private lazy var _footerView = _FooterView { [weak self] in
+            switch $0 {
+            case .chat:
+                self?.dismiss(animated: true) { [weak viewController = self?.presentingViewController] in
+                    viewController?.present(Chat.View(), animated: true, completion: nil)
+                }
+            }
+        }
     }
 }
 
@@ -179,7 +190,7 @@ private extension Profile.View._ContentView {
         private lazy var _nickLabel: UILabel = {
             let label = UILabel()
             label.textColor = .white
-            label.font = .systemFont(ofSize: 22, weight: .bold)
+            label.font = .systemFont(ofSize: 28, weight: .bold)
             label.textAlignment = .center
             label.text = "Tangent"
             label.numberOfLines = 1
@@ -212,11 +223,11 @@ private extension Profile.View._ContentView {
                 
                 _nickLabel.leftAnchor.constraint(equalTo: leftAnchor),
                 _nickLabel.rightAnchor.constraint(equalTo: rightAnchor),
-                _nickLabel.topAnchor.constraint(equalTo: _avatarView.bottomAnchor, constant: 10),
+                _nickLabel.topAnchor.constraint(equalTo: _avatarView.bottomAnchor, constant: 8),
                 
                 _phoneLabel.leftAnchor.constraint(equalTo: leftAnchor),
                 _phoneLabel.rightAnchor.constraint(equalTo: rightAnchor),
-                _phoneLabel.topAnchor.constraint(equalTo: _nickLabel.bottomAnchor, constant: 10),
+                _phoneLabel.topAnchor.constraint(equalTo: _nickLabel.bottomAnchor, constant: 6),
                 
                 _wavesView.heightAnchor.constraint(equalToConstant: ui.wavesViewHeight),
                 _wavesView.bottomAnchor.constraint(equalTo: bottomAnchor),
@@ -268,14 +279,36 @@ private extension Profile.View._ContentView {
     }
     
     final class _FooterView: UIView {
-        override init(frame: CGRect) {
-            super.init(frame: frame)
+        init(eventsCallback: @escaping (Profile.Event) -> ()) {
+            super.init(frame: .zero)
             backgroundColor = .white
+            addSubview(_chatButton)
+            _chatButton.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                _chatButton.centerXAnchor.constraint(equalTo: centerXAnchor),
+                _chatButton.centerYAnchor.constraint(equalTo: centerYAnchor)
+            ])
+            
+            _chatButton.on(.touchUpInside, const(eventsCallback(.chat)))
         }
         
         required init?(coder aDecoder: NSCoder) {
             fatalError("init(coder:) has not been implemented")
         }
+        
+        override func layoutSubviews() {
+            super.layoutSubviews()
+            _chatButton.layout(with: .vImageLabel, space: 6)
+        }
+        
+        private lazy var _chatButton: UIButton = {
+            let button = UIButton(type: .system)
+            button.ui.adapt(themeKeyPath: \.mainColor, for: \.tintColor)
+            button.titleLabel?.font = .boldSystemFont(ofSize: 13)
+            button.setTitle("Chat", for: .normal)
+            button.setImage(R.image.chat()?.withRenderingMode(.alwaysTemplate), for: .normal)
+            return button
+        }()
     }
 }
 

@@ -12,4 +12,14 @@ extension ObservableType {
     func ignoreNil<T>() -> Observable<T> where E == T? {
         return filter { $0 != nil }.map { $0! }
     }
+    
+    func subscribeOnMain(_ on: @escaping (Event<E>) -> ()) -> Disposable {
+        return observeOn(MainScheduler.instance)
+            .subscribe(on)
+    }
+    
+    func subscribeOnMain(onNext: ((E) -> ())? = nil, onCompleted: (() -> ())? = nil, onError: ((Error) -> ())? = nil, onDisposed: (() -> ())? = nil) -> Disposable {
+        return observeOn(MainScheduler.instance)
+            .subscribe(onNext: onNext, onError: onError, onCompleted: onCompleted, onDisposed: onDisposed)
+    }
 }

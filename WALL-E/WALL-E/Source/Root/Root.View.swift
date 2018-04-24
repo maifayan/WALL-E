@@ -17,7 +17,7 @@ extension Root {
         private lazy var _menuView = Menu.View { [weak self] action in
             switch action {
             case .newRobot:
-                self?.present(Profile.View(contact: ""), animated: true, completion: nil)
+                self?.present(Chat.View(), animated: true, completion: nil)
             case .theme:
                 self?._switchTheme()
             case .settings: ()
@@ -55,6 +55,8 @@ extension Root {
 extension Root.View {
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.clipsToBounds = true
+        view.layer.cornerRadius = 16
         ui.adapt(themeKeyPath: \.mainColor, for: \.view.backgroundColor)
         addChildViewController(_menuView)
         view.addSubview(_menuView.view)

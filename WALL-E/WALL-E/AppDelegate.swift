@@ -15,7 +15,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        UIViewController.adaptStatusBarStyle()
         let window = UIWindow(frame: UIScreen.main.bounds)
+        window.ui.adapt(themeKeyPath: \.mainColor, for: \.backgroundColor)
         window.rootViewController = Root.View()
         window.makeKeyAndVisible()
         self.window = window

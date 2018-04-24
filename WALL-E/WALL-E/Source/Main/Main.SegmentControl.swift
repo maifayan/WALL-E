@@ -21,7 +21,7 @@ extension Main {
             case right
         }
         
-        private(set) var selectedSide: SelectedSide = .right {
+        var selectedSide: SelectedSide = .right {
             didSet {
                 guard selectedSide != oldValue else { return }
                 let isLeft = selectedSide == .left

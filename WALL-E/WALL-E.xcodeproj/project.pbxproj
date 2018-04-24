@@ -36,6 +36,13 @@
 		BA783F71208CE4A200771E86 /* MenuContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA783F70208CE4A200771E86 /* MenuContentView.xib */; };
 		BA783F73208CFAEA00771E86 /* ColorSelectView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA783F72208CFAEA00771E86 /* ColorSelectView.xib */; };
 		BAA2EC8D208DF07B00C6F577 /* ProfileHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BAA2EC8C208DF07B00C6F577 /* ProfileHeaderView.xib */; };
+		BAA2EC8F208F030C00C6F577 /* curry.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA2EC8E208F030C00C6F577 /* curry.swift */; };
+		BAA2EC94208F172800C6F577 /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA2EC93208F172800C6F577 /* Chat.swift */; };
+		BAA2EC96208F173600C6F577 /* Chat.View.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA2EC95208F173500C6F577 /* Chat.View.swift */; };
+		BAA2EC9E208F1F9800C6F577 /* Chat.Transition.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA2EC9D208F1F9800C6F577 /* Chat.Transition.swift */; };
+		BAA2ECA0208F34DD00C6F577 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA2EC9F208F34DD00C6F577 /* UIViewController.swift */; };
+		BAA2ECA2208F3AB300C6F577 /* WeakArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA2ECA1208F3AB300C6F577 /* WeakArray.swift */; };
+		BAA2ECA4208F5A2000C6F577 /* Chat.HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA2ECA3208F5A2000C6F577 /* Chat.HeaderView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +90,13 @@
 		BA783F70208CE4A200771E86 /* MenuContentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MenuContentView.xib; sourceTree = "<group>"; };
 		BA783F72208CFAEA00771E86 /* ColorSelectView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ColorSelectView.xib; sourceTree = "<group>"; };
 		BAA2EC8C208DF07B00C6F577 /* ProfileHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileHeaderView.xib; sourceTree = "<group>"; };
+		BAA2EC8E208F030C00C6F577 /* curry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = curry.swift; sourceTree = "<group>"; };
+		BAA2EC93208F172800C6F577 /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
+		BAA2EC95208F173500C6F577 /* Chat.View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.View.swift; sourceTree = "<group>"; };
+		BAA2EC9D208F1F9800C6F577 /* Chat.Transition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.Transition.swift; sourceTree = "<group>"; };
+		BAA2EC9F208F34DD00C6F577 /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
+		BAA2ECA1208F3AB300C6F577 /* WeakArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeakArray.swift; sourceTree = "<group>"; };
+		BAA2ECA3208F5A2000C6F577 /* Chat.HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.HeaderView.swift; sourceTree = "<group>"; };
 		D6E5B6B7A8C93248B230FF43 /* Pods-WALL-E.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WALL-E.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WALL-E/Pods-WALL-E.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -201,6 +215,7 @@
 				BA3CCD85208C76090000D639 /* Extensions */,
 				BA3CCD7E208B9A500000D639 /* UI.swift */,
 				BA013C92208DC12F004689F0 /* ImageProcessors.swift */,
+				BAA2ECA1208F3AB300C6F577 /* WeakArray.swift */,
 			);
 			path = Commons;
 			sourceTree = "<group>";
@@ -210,6 +225,7 @@
 			children = (
 				BA3CCD81208BB0940000D639 /* Simple.swift */,
 				BA3CCD83208BB4C80000D639 /* Operators.swift */,
+				BAA2EC8E208F030C00C6F577 /* curry.swift */,
 			);
 			path = FP;
 			sourceTree = "<group>";
@@ -221,6 +237,7 @@
 				BA3CCD9A208CD3F10000D639 /* UIButton.swift */,
 				BA013C94208DD7B9004689F0 /* UITableView+Rx.swift */,
 				BA013C96208DD8EC004689F0 /* Observable.swift */,
+				BAA2EC9F208F34DD00C6F577 /* UIViewController.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -257,12 +274,24 @@
 		BA3CCD9C208CD4030000D639 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				BAA2EC90208F16C100C6F577 /* Chat */,
 				BA013C9B208DE5EA004689F0 /* Profile */,
 				BA3CCD95208CCE6F0000D639 /* Menu */,
 				BA3CCD90208CA4EA0000D639 /* Root */,
 				BA3CCD7A208B99CA0000D639 /* Main */,
 			);
 			path = Source;
+			sourceTree = "<group>";
+		};
+		BAA2EC90208F16C100C6F577 /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				BAA2EC93208F172800C6F577 /* Chat.swift */,
+				BAA2EC95208F173500C6F577 /* Chat.View.swift */,
+				BAA2EC9D208F1F9800C6F577 /* Chat.Transition.swift */,
+				BAA2ECA3208F5A2000C6F577 /* Chat.HeaderView.swift */,
+			);
+			path = Chat;
 			sourceTree = "<group>";
 		};
 		D40534D51AB1F005E30D710C /* Pods */ = {
@@ -447,16 +476,23 @@
 			files = (
 				BA3CCD9B208CD3F10000D639 /* UIButton.swift in Sources */,
 				BA013CA1208DE602004689F0 /* Profile.View.swift in Sources */,
+				BAA2ECA0208F34DD00C6F577 /* UIViewController.swift in Sources */,
+				BAA2ECA4208F5A2000C6F577 /* Chat.HeaderView.swift in Sources */,
 				BA3CCD89208C82B90000D639 /* Main.Contacts.View.swift in Sources */,
 				BA3CCD79208B99820000D639 /* Main.View.swift in Sources */,
+				BAA2EC9E208F1F9800C6F577 /* Chat.Transition.swift in Sources */,
 				BA3CCD87208C76180000D639 /* Disposable.swift in Sources */,
 				BA3CCD84208BB4C80000D639 /* Operators.swift in Sources */,
 				BA3CCD7C208B99EA0000D639 /* Main.SegmentControl.swift in Sources */,
+				BAA2ECA2208F3AB300C6F577 /* WeakArray.swift in Sources */,
 				BA013C91208DAFEA004689F0 /* Main.Conversations.Item.swift in Sources */,
 				BA3CCD8B208C83010000D639 /* Main.Conversations.View.swift in Sources */,
+				BAA2EC8F208F030C00C6F577 /* curry.swift in Sources */,
 				BA013C93208DC12F004689F0 /* ImageProcessors.swift in Sources */,
 				BA3CCD77208B99770000D639 /* Main.swift in Sources */,
 				BA013C9D208DE5EA004689F0 /* Profile.swift in Sources */,
+				BAA2EC94208F172800C6F577 /* Chat.swift in Sources */,
+				BAA2EC96208F173600C6F577 /* Chat.View.swift in Sources */,
 				BA3CCD94208CA5040000D639 /* Root.View.swift in Sources */,
 				BA3CCD99208CCE910000D639 /* Menu.View.swift in Sources */,
 				BA3CCD97208CCE7B0000D639 /* Menu.swift in Sources */,

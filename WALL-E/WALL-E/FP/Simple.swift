@@ -20,8 +20,8 @@ func flip<A, B>(_ f: @escaping () -> (A) -> B) -> (A) -> () -> B {
     return { a in { f()(a) }}
 }
 
-func const<A, B>(_ v: B) -> (A) -> B {
-    return { _ in v }
+func const<A, B>(_ v: @autoclosure @escaping () -> B) -> (A) -> B {
+    return { _ in v() }
 }
 
 func const<A, B>(_ v: @escaping () -> B) -> (A) -> B {
@@ -31,8 +31,30 @@ func const<A, B>(_ v: @escaping () -> B) -> (A) -> B {
 // Tuple
 func first<A, B>(_ tuple: (A, B)) -> A { return tuple.0 }
 func second<A, B>(_ tuple: (A, B)) -> B { return tuple.1 }
+
+func first<A, B, C>(_ tuple: (A, B, C)) -> A { return tuple.0 }
+func second<A, B, C>(_ tuple: (A, B, C)) -> B { return tuple.1 }
+func third<A, B, C>(_ tuple: (A, B, C)) -> C { return tuple.2 }
+
 func double<T>(_ value: T) -> (T, T) { return (value, value) }
 func triple<T>(_ value: T) -> (T, T, T) { return (value, value, value) }
+
+func double<T>(_ f: () -> T) -> (T, T) { return (f(), f()) }
+func triple<T>(_ f: () -> T) -> (T, T, T) { return (f(), f(), f()) }
+
+@discardableResult
+func forEach<T, O>(_ tuple: (T, T), mapper: @escaping (T) -> O) -> (O, O) {
+    return (tuple |> first >>> mapper, tuple |> second >>> mapper)
+}
+
+@discardableResult
+func forEach<T, O>(_ tuple: (T, T, T), mapper: @escaping (T) -> O) -> (O, O, O) {
+    return (
+        tuple |> first >>> mapper,
+        tuple |> second >>> mapper,
+        tuple |> third >>> mapper
+    )
+}
 
 // Composition & Applicative
 func <<< <A, B, C>(lhs: @escaping (B) -> C, rhs: @escaping (A) -> B) -> (A) -> C {
@@ -41,4 +63,8 @@ func <<< <A, B, C>(lhs: @escaping (B) -> C, rhs: @escaping (A) -> B) -> (A) -> C
 
 func >>> <A, B, C>(lhs: @escaping (A) -> B, rhs: @escaping (B) -> C) -> (A) -> C {
     return { rhs(lhs($0)) }
+}
+
+func |> <A, B>(lhs: A, rhs: (A) -> B) -> B {
+    return rhs(lhs)
 }

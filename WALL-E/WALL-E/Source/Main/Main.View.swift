@@ -20,7 +20,7 @@ extension Main {
         }()
         private lazy var _segmentControl = SegmentControl(titles: ("CONVERSATIONS", "CONTACTS"), callback: _switchContentView)
         private lazy var _backgroundLayer: CALayer = {
-            let path = UIBezierPath(roundedRect: view.bounds, byRoundingCorners: [.bottomLeft, .bottomRight], cornerRadii: .init(width: 12, height: 12))
+            let path = UIBezierPath(roundedRect: view.bounds, byRoundingCorners: .allCorners, cornerRadii: .init(width: 16, height: 16))
             let layer = CAShapeLayer()
             layer.fillColor = UIColor.white.cgColor
             layer.path = path.cgPath
@@ -30,7 +30,7 @@ extension Main {
             let effect = UIBlurEffect(style: .light)
             let view = UIVisualEffectView(effect: effect)
             view.clipsToBounds = true
-            view.layer.cornerRadius = 12
+            view.layer.cornerRadius = 16
             view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
             view.isHidden = true
             view.alpha = 0
@@ -46,8 +46,9 @@ extension Main.View {
         view.layer.addSublayer(_backgroundLayer)
         _addSegmentControl()
         _setupViews()
+        _setupGestureRecognizer()
     }
-    
+
     func blur(_ flag: Bool) {
         guard (flag && _blurView.isHidden) || (!flag && !_blurView.isHidden) else { return }
         if flag {
@@ -109,6 +110,17 @@ private extension Main.View {
         
         view.addSubview(_blurView)
         _blurView.frame = view.bounds
+    }
+    
+    func _setupGestureRecognizer() {
+        let handler: (Main.SegmentControl.SelectedSide) -> () -> () = { [weak self] side in { self?._segmentControl.selectedSide = side } }
+        let create: (UISwipeGestureRecognizerDirection) -> UISwipeGestureRecognizer = {
+            let ret = UISwipeGestureRecognizer()
+            ret.direction = $0
+            return ret
+        }
+        view.on(create(.left), const(handler(.right)))
+        view.on(create(.right), const(handler(.left)))
     }
 
     var _contentViewFrame: CGRect {

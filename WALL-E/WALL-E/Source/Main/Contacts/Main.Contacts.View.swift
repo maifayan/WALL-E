@@ -79,6 +79,10 @@ extension Main.Contacts.View: UICollectionViewDelegate, UICollectionViewDataSour
         }
         return header
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        present(Profile.View(contact: ""), animated: true, completion: nil)
+    }
 }
 
 extension UI where Base: Main.Contacts.View {

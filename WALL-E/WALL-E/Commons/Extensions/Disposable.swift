@@ -12,23 +12,21 @@ import RxSwift
 private struct _DisposeBagAssociatedHelper {
     static var key = "disposeBag"
     
-    static func lock(for obj: NSObject, todo: () -> ()) {
+    static func lock<T>(in obj: AnyObject, todo: () -> T) -> T{
         objc_sync_enter(obj); defer { objc_sync_exit(obj) }
-        todo()
+        return todo()
     }
 }
 
 extension Reactive where Base: NSObject {
     var disposeBag: DisposeBag {
-        var ret: DisposeBag!
-        _DisposeBagAssociatedHelper.lock(for: base) {
+        return _DisposeBagAssociatedHelper.lock(in: base) {
             let create: () -> DisposeBag = {
                 let bag = DisposeBag()
                 objc_setAssociatedObject(self.base, &_DisposeBagAssociatedHelper.key, bag, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
                 return bag
             }
-            ret = objc_getAssociatedObject(self.base, &_DisposeBagAssociatedHelper.key) as? DisposeBag ?? create()
+            return objc_getAssociatedObject(self.base, &_DisposeBagAssociatedHelper.key) as? DisposeBag ?? create()
         }
-        return ret
     }
 }
