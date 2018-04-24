@@ -8,4 +8,5 @@ target 'WALL-E' do
   pod 'Kingfisher'
   pod 'R.swift'
   pod 'WXWaveView'
+  pod 'YYText'
 end

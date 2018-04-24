@@ -9,6 +9,7 @@ PODS:
   - RxSwift (4.1.2)
   - Tactile (2.0)
   - WXWaveView (1.0.1)
+  - YYText (1.0.7)
 
 DEPENDENCIES:
   - Kingfisher
@@ -18,6 +19,7 @@ DEPENDENCIES:
   - RxSwift
   - Tactile
   - WXWaveView
+  - YYText
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
@@ -29,6 +31,7 @@ SPEC REPOS:
     - RxSwift
     - Tactile
     - WXWaveView
+    - YYText
 
 SPEC CHECKSUMS:
   Kingfisher: da6b005aa96d37698e3e4f1ccfe96a5b9bbf27d6
@@ -39,7 +42,8 @@ SPEC CHECKSUMS:
   RxSwift: e49536837d9901277638493ea537394d4b55f570
   Tactile: 22d5686693be17568351b95aa83ef37457cd40f4
   WXWaveView: f8424284812536a3842bc5dd9afb943e53e911a8
+  YYText: 5c461d709e24d55a182d1441c41dc639a18a4849
 
-PODFILE CHECKSUM: fe6d9f870dc5964109f299b9abb8517d4279ff6b
+PODFILE CHECKSUM: 99a957981d7668c5e382faf8e3a467b7a2f92047
 
 COCOAPODS: 1.5.0
