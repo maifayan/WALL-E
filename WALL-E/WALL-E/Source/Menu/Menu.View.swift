@@ -81,7 +81,7 @@ class _MenuContentView: UIView {
     }
 }
 
-class _ColorSelectView: UIViewController {
+class _ThemePickerView: UIViewController {
     override func awakeFromNib() {
         super.awakeFromNib()
         modalTransitionStyle = .crossDissolve
@@ -92,8 +92,13 @@ class _ColorSelectView: UIViewController {
         }
     }
     
+    @IBAction func switchSupportNewLine(_ sender: UISwitch) {
+        UserPreferenceConfig.supportNewLine = sender.isOn
+    }
+    
     @IBAction func on(_ sender: UIButton) {
-        Theme.shared.refresh(keyPath: \.mainColor, to: sender.backgroundColor ?? .white)
+        let tagIndex = sender.tag - 1
+        Theme.shared.setMainColor(index: tagIndex)
         dismiss(animated: true, completion: nil)
     }
 }

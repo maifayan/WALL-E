@@ -116,19 +116,14 @@ struct R: Rswift.Validatable {
   
   /// This `R.nib` struct is generated, and contains static references to 4 nibs.
   struct nib {
-    /// Nib `ColorSelectView`.
-    static let colorSelectView = _R.nib._ColorSelectView()
     /// Nib `LaunchViewController`.
     static let launchViewController = _R.nib._LaunchViewController()
     /// Nib `MenuContentView`.
     static let menuContentView = _R.nib._MenuContentView()
     /// Nib `ProfileHeaderView`.
     static let profileHeaderView = _R.nib._ProfileHeaderView()
-    
-    /// `UINib(name: "ColorSelectView", in: bundle)`
-    static func colorSelectView(_: Void = ()) -> UIKit.UINib {
-      return UIKit.UINib(resource: R.nib.colorSelectView)
-    }
+    /// Nib `ThemePickerView`.
+    static let themePickerView = _R.nib._ThemePickerView()
     
     /// `UINib(name: "LaunchViewController", in: bundle)`
     static func launchViewController(_: Void = ()) -> UIKit.UINib {
@@ -143,6 +138,11 @@ struct R: Rswift.Validatable {
     /// `UINib(name: "ProfileHeaderView", in: bundle)`
     static func profileHeaderView(_: Void = ()) -> UIKit.UINib {
       return UIKit.UINib(resource: R.nib.profileHeaderView)
+    }
+    
+    /// `UINib(name: "ThemePickerView", in: bundle)`
+    static func themePickerView(_: Void = ()) -> UIKit.UINib {
+      return UIKit.UINib(resource: R.nib.themePickerView)
     }
     
     fileprivate init() {}
@@ -196,19 +196,8 @@ struct _R: Rswift.Validatable {
   
   struct nib: Rswift.Validatable {
     static func validate() throws {
-      try _LaunchViewController.validate()
       try _MenuContentView.validate()
-    }
-    
-    struct _ColorSelectView: Rswift.NibResourceType {
-      let bundle = R.hostingBundle
-      let name = "ColorSelectView"
-      
-      func firstView(owner ownerOrNil: AnyObject?, options optionsOrNil: [NSObject : AnyObject]? = nil) -> _ColorSelectView? {
-        return instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? _ColorSelectView
-      }
-      
-      fileprivate init() {}
+      try _LaunchViewController.validate()
     }
     
     struct _LaunchViewController: Rswift.NibResourceType, Rswift.Validatable {
@@ -249,6 +238,17 @@ struct _R: Rswift.Validatable {
       
       func firstView(owner ownerOrNil: AnyObject?, options optionsOrNil: [NSObject : AnyObject]? = nil) -> UIKit.UIView? {
         return instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? UIKit.UIView
+      }
+      
+      fileprivate init() {}
+    }
+    
+    struct _ThemePickerView: Rswift.NibResourceType {
+      let bundle = R.hostingBundle
+      let name = "ThemePickerView"
+      
+      func firstView(owner ownerOrNil: AnyObject?, options optionsOrNil: [NSObject : AnyObject]? = nil) -> _ThemePickerView? {
+        return instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? _ThemePickerView
       }
       
       fileprivate init() {}

@@ -128,7 +128,7 @@ private extension Root.View {
 // MARK: - Events
 private extension Root.View {
     func _switchTheme() {
-        let vc = R.nib.colorSelectView().instantiate(withOwner: nil, options: nil).first as! UIViewController
+        let vc = R.nib.themePickerView().instantiate(withOwner: nil, options: nil).first as! UIViewController
         present(vc, animated: true, completion: nil)
     }
 }

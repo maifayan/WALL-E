@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 struct UI<Base> {
     let base: Base
     
@@ -111,14 +110,26 @@ final class Theme {
         _refreshables[themeKeyPath] = _refreshables[themeKeyPath]?.filter { !$0.isFor(keyPath: keyPath, target: target) }
     }
     
-    var mainColor: UIColor = UIColor(rgb: Theme.colors[0])
-
+    var mainColor: UIColor = {
+        let defaultIndex = PreferenceStore.default[PreferenceStore.themeMainColorIndexKey] ?? 0
+        return UIColor(rgb: Theme.colors[defaultIndex])
+    }()
+    
+    func setMainColor(index: Int) {
+        refresh(keyPath: \.mainColor, to: UIColor(rgb: Theme.colors[index]))
+        PreferenceStore.default[PreferenceStore.themeMainColorIndexKey] = index
+    }
+    
     func refresh<V>(keyPath: ReferenceWritableKeyPath<Theme, V>, to value: V) {
         _lock.lock(); defer { _lock.unlock() }
         self[keyPath: keyPath] = value
         _refreshables[keyPath] = _refreshables[keyPath]?.filter(flip(Refreshable.isAvailable)())
         _refreshables[keyPath]?.forEach(flip(Refreshable.execute)())
     }
+}
+
+fileprivate extension PreferenceStore {
+    static let themeMainColorIndexKey = "Theme.mainColor"
 }
 
 extension UI where Base: AnyObject {
@@ -174,7 +185,7 @@ extension UIColor {
 }
 
 extension Theme {
-    static let colors: [RGB] = [(240, 147, 144)]
+    static let colors: [RGB] = [(240, 147, 144), (85, 95, 160), (166, 194, 192)]
 }
 
 // Corner

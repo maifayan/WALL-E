@@ -34,7 +34,7 @@
 		BA3CCD99208CCE910000D639 /* Menu.View.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3CCD98208CCE910000D639 /* Menu.View.swift */; };
 		BA3CCD9B208CD3F10000D639 /* UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3CCD9A208CD3F10000D639 /* UIButton.swift */; };
 		BA783F71208CE4A200771E86 /* MenuContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA783F70208CE4A200771E86 /* MenuContentView.xib */; };
-		BA783F73208CFAEA00771E86 /* ColorSelectView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA783F72208CFAEA00771E86 /* ColorSelectView.xib */; };
+		BA783F73208CFAEA00771E86 /* ThemePickerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA783F72208CFAEA00771E86 /* ThemePickerView.xib */; };
 		BAA2EC8D208DF07B00C6F577 /* ProfileHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BAA2EC8C208DF07B00C6F577 /* ProfileHeaderView.xib */; };
 		BAA2EC8F208F030C00C6F577 /* curry.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA2EC8E208F030C00C6F577 /* curry.swift */; };
 		BAA2EC94208F172800C6F577 /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA2EC93208F172800C6F577 /* Chat.swift */; };
@@ -50,6 +50,8 @@
 		BAA2ECB02090A0A000C6F577 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA2ECAF2090A0A000C6F577 /* UIView.swift */; };
 		BAA2ECB52090A90000C6F577 /* LaunchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA2ECB42090A90000C6F577 /* LaunchViewController.swift */; };
 		BAA2ECB72090AA4700C6F577 /* LaunchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BAA2ECB62090AA4700C6F577 /* LaunchViewController.xib */; };
+		BAA2ECB92090CEA100C6F577 /* PreferenceStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA2ECB82090CEA000C6F577 /* PreferenceStore.swift */; };
+		BAA2ECBC2090DCEC00C6F577 /* UserPreferenceConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA2ECBB2090DCEC00C6F577 /* UserPreferenceConfig.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,7 +97,7 @@
 		BA3CCD98208CCE910000D639 /* Menu.View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Menu.View.swift; sourceTree = "<group>"; };
 		BA3CCD9A208CD3F10000D639 /* UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButton.swift; sourceTree = "<group>"; };
 		BA783F70208CE4A200771E86 /* MenuContentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MenuContentView.xib; sourceTree = "<group>"; };
-		BA783F72208CFAEA00771E86 /* ColorSelectView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ColorSelectView.xib; sourceTree = "<group>"; };
+		BA783F72208CFAEA00771E86 /* ThemePickerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThemePickerView.xib; sourceTree = "<group>"; };
 		BAA2EC8C208DF07B00C6F577 /* ProfileHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileHeaderView.xib; sourceTree = "<group>"; };
 		BAA2EC8E208F030C00C6F577 /* curry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = curry.swift; sourceTree = "<group>"; };
 		BAA2EC93208F172800C6F577 /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
@@ -111,6 +113,8 @@
 		BAA2ECAF2090A0A000C6F577 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		BAA2ECB42090A90000C6F577 /* LaunchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchViewController.swift; sourceTree = "<group>"; };
 		BAA2ECB62090AA4700C6F577 /* LaunchViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LaunchViewController.xib; sourceTree = "<group>"; };
+		BAA2ECB82090CEA000C6F577 /* PreferenceStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferenceStore.swift; sourceTree = "<group>"; };
+		BAA2ECBB2090DCEC00C6F577 /* UserPreferenceConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPreferenceConfig.swift; sourceTree = "<group>"; };
 		D6E5B6B7A8C93248B230FF43 /* Pods-WALL-E.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WALL-E.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WALL-E/Pods-WALL-E.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -231,6 +235,7 @@
 				BA013C92208DC12F004689F0 /* ImageProcessors.swift */,
 				BAA2ECA1208F3AB300C6F577 /* WeakArray.swift */,
 				BAA2ECAD20906ABF00C6F577 /* CrossSizeHittableView.swift */,
+				BAA2ECB82090CEA000C6F577 /* PreferenceStore.swift */,
 			);
 			path = Commons;
 			sourceTree = "<group>";
@@ -282,7 +287,7 @@
 				BA3CCD96208CCE7B0000D639 /* Menu.swift */,
 				BA3CCD98208CCE910000D639 /* Menu.View.swift */,
 				BA783F70208CE4A200771E86 /* MenuContentView.xib */,
-				BA783F72208CFAEA00771E86 /* ColorSelectView.xib */,
+				BA783F72208CFAEA00771E86 /* ThemePickerView.xib */,
 			);
 			path = Menu;
 			sourceTree = "<group>";
@@ -290,6 +295,7 @@
 		BA3CCD9C208CD4030000D639 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				BAA2ECBA2090DCD900C6F577 /* Config */,
 				BAA2EC90208F16C100C6F577 /* Chat */,
 				BA013C9B208DE5EA004689F0 /* Profile */,
 				BA3CCD95208CCE6F0000D639 /* Menu */,
@@ -321,6 +327,14 @@
 				BAA2ECB62090AA4700C6F577 /* LaunchViewController.xib */,
 			);
 			path = Launch;
+			sourceTree = "<group>";
+		};
+		BAA2ECBA2090DCD900C6F577 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				BAA2ECBB2090DCEC00C6F577 /* UserPreferenceConfig.swift */,
+			);
+			path = Config;
 			sourceTree = "<group>";
 		};
 		D40534D51AB1F005E30D710C /* Pods */ = {
@@ -418,7 +432,7 @@
 			files = (
 				BA783F71208CE4A200771E86 /* MenuContentView.xib in Resources */,
 				BA1A99422085DE4700FAE3FA /* LaunchScreen.storyboard in Resources */,
-				BA783F73208CFAEA00771E86 /* ColorSelectView.xib in Resources */,
+				BA783F73208CFAEA00771E86 /* ThemePickerView.xib in Resources */,
 				BAA2ECB72090AA4700C6F577 /* LaunchViewController.xib in Resources */,
 				BA1A993F2085DE4700FAE3FA /* Assets.xcassets in Resources */,
 				BAA2EC8D208DF07B00C6F577 /* ProfileHeaderView.xib in Resources */,
@@ -512,12 +526,14 @@
 			files = (
 				BA3CCD9B208CD3F10000D639 /* UIButton.swift in Sources */,
 				BA013CA1208DE602004689F0 /* Profile.View.swift in Sources */,
+				BAA2ECBC2090DCEC00C6F577 /* UserPreferenceConfig.swift in Sources */,
 				BAA2ECA0208F34DD00C6F577 /* UIViewController.swift in Sources */,
 				BAA2ECA4208F5A2000C6F577 /* Chat.HeaderView.swift in Sources */,
 				BA3CCD89208C82B90000D639 /* Main.Contacts.View.swift in Sources */,
 				BA3CCD79208B99820000D639 /* Main.View.swift in Sources */,
 				BAA2ECAE20906ABF00C6F577 /* CrossSizeHittableView.swift in Sources */,
 				BAA2EC9E208F1F9800C6F577 /* Chat.Transition.swift in Sources */,
+				BAA2ECB92090CEA100C6F577 /* PreferenceStore.swift in Sources */,
 				BA3CCD87208C76180000D639 /* Disposable.swift in Sources */,
 				BA3CCD84208BB4C80000D639 /* Operators.swift in Sources */,
 				BA3CCD7C208B99EA0000D639 /* Main.SegmentControl.swift in Sources */,

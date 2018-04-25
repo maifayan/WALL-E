@@ -311,7 +311,7 @@ extension UI where Base: Chat.InputView {
     var imagesPickerIndicationViewHeight: CGFloat { return 60 }
     var maxHeightForContentView: CGFloat { return 0.3 * UIScreen.main.bounds.height}
     // Support keyboard new line
-    var _supportNewLine: Bool { return true }
+    var _supportNewLine: Bool { return UserPreferenceConfig.supportNewLine }
 }
 
 fileprivate extension String {
