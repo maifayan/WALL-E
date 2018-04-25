@@ -12,13 +12,16 @@ extension Chat {
     final class Transition: NSObject {
         private var _isShowing = false
         
-        private lazy var _maskView: UIView = {
-            let view = UIView()
+        private lazy var _maskView: UIButton = {
+            let view = UIButton()
             view.autoresizingMask = [.flexibleHeight, .flexibleWidth]
             view.backgroundColor = .gray
             view.alpha = 0
+            view.on(.touchUpInside) { [weak self] _ in self?._maskViewAction?() }
             return view
         }()
+        
+        private var _maskViewAction: (() -> ())?
     }
 }
 
@@ -44,7 +47,8 @@ extension Chat.Transition: UIViewControllerAnimatedTransitioning {
     
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         let fromView = transitionContext.viewController(forKey: .from)!.view!
-        let toView = transitionContext.viewController(forKey: .to)!.view!
+        let toViewController = transitionContext.viewController(forKey: .to)!
+        let toView = toViewController.view!
         let containerView = transitionContext.containerView
         
         func animate(_ animations: @escaping () -> (), completion: @escaping () -> ()) {
@@ -67,6 +71,7 @@ extension Chat.Transition: UIViewControllerAnimatedTransitioning {
             }) {
                 transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
             }
+            _maskViewAction = { [weak vc = toViewController] in vc?.dismiss(animated: true, completion: nil) }
         }
         
         func dismiss() {
@@ -79,6 +84,7 @@ extension Chat.Transition: UIViewControllerAnimatedTransitioning {
                 transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
                 fromView.transform = .identity
             }
+            _maskViewAction = nil
         }
         
         if _isShowing { show() }

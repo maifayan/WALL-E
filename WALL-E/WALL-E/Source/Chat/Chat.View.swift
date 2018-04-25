@@ -25,7 +25,15 @@ extension Chat {
         }
         
         private lazy var _headerView = HeaderView()
-        private lazy var _inputView = InputView()
+        
+        private lazy var _inputView = InputView { content in
+            switch content {
+            case let .text(text):
+                print("Send \(text)")
+            case let .assets(assets):
+                print("Send assets, count: \(assets.count)")
+            }
+        }
     }
 }
 

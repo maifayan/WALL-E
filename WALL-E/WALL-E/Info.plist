@@ -39,5 +39,9 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Tap &quot;OK&quot; to send photos.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Tap &quot;OK&quot; to send photos.</string>
 </dict>
 </plist>

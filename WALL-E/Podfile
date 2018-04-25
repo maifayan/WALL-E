@@ -9,4 +9,6 @@ target 'WALL-E' do
   pod 'R.swift'
   pod 'WXWaveView'
   pod 'YYText'
+  pod 'TanImagePicker'
+  pod 'JGProgressHUD'
 end

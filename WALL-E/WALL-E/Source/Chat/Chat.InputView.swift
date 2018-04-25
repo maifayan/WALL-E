@@ -7,9 +7,22 @@
 //
 
 import UIKit
+import Photos
+import TanImagePicker
 
 extension Chat {
     final class InputView: UIViewController {
+        private let _send: (Content) -> ()
+        
+        init(send: @escaping (Content) -> ()) {
+            _send = send
+            super.init(nibName: nil, bundle: nil)
+        }
+        
+        required init?(coder aDecoder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+        }
+        
         private lazy var _contentView: UITextView = {
             let tv = UITextView()
             tv.font = ui.font
@@ -33,62 +46,153 @@ extension Chat {
             return label
         }()
         
-        private lazy var _pickImagesButton: UIButton = {
+        private lazy var _extraButton: UIButton = { (callback: @escaping () -> ()) in
             let button = UIButton(type: .system)
             button.tintColor = .gray
             button.setImage(R.image.chat_images(), for: .normal)
-            button.on(.touchUpInside) { _ in print("Pick images") }
+            button.on(.touchUpInside) { _ in callback() }
             return button
-        }()
+        }(_switchInputType)
         
+        private lazy var _sendButton: UIButton = { (callback: @escaping () -> ()) in
+            let button = UIButton(type: .system)
+            button.tintColor = .gray
+            button.setImage(R.image.chat_send(), for: .normal)
+            button.on(.touchUpInside) { _ in callback() }
+            return button
+        }(_imagesPickerHelper.prepareSend)
+        
+        private lazy var _imagesPickerHelper = ImagesPickerAdapter(self, sendAssets: _sendAssets)
+
         private var _contentViewHeightConstraint: NSLayoutConstraint?
+        private var _sendButtonWidthAndRightConstraint: (width: NSLayoutConstraint, right: NSLayoutConstraint)?
+        
+        private var _inputType: InputType = .keyboard {
+            didSet {
+                guard _inputType != oldValue else { return }
+                _switchInputViewIfNeeds()
+            }
+        }
+    }
+}
+
+extension Chat {
+    enum InputType {
+        case keyboard
+        case imagesPicker
+        
+        var extraButtonImage: UIImage? {
+            switch self {
+            case .keyboard:
+                return R.image.chat_images()
+            case .imagesPicker:
+                return R.image.chat_keyboard()
+            }
+        }
+    }
+    
+    enum Content {
+        case text(String)
+        case assets([PHAsset])
     }
 }
 
 extension Chat.InputView {
+    override func loadView() {
+        view = CrossSizeHittableView()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .clear
         view.addSubview(_placeholderLabel)
         view.addSubview(_contentView)
-        view.addSubview(_pickImagesButton)
+        view.addSubview(_extraButton)
+        view.addSubview(_sendButton)
         _layoutViews()
+        
+        view.addSubview(_imagesPickerHelper.indicationView)
+        _setupPicker()
     }
     
     private func _layoutViews() {
         _contentView.translatesAutoresizingMaskIntoConstraints = false
         _placeholderLabel.translatesAutoresizingMaskIntoConstraints = false
-        _pickImagesButton.translatesAutoresizingMaskIntoConstraints = false
+        _extraButton.translatesAutoresizingMaskIntoConstraints = false
+        _sendButton.translatesAutoresizingMaskIntoConstraints = false
+        _imagesPickerHelper.indicationView.translatesAutoresizingMaskIntoConstraints = false
         
+        // ContentView & PlaceholderView
         _contentView.sizeToFit()
         let initialContentViewHeight = _contentView.height
         
         func fillConstraints(_ aView: UIView) -> [NSLayoutConstraint] {
             let isPlaceholder = aView === _placeholderLabel
-            return [
-                aView.topAnchor.constraint(greaterThanOrEqualTo: view.topAnchor, constant: ui.topSpacing),
+            var ret = [
                 aView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -ui.bottomSpacing),
                 aView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: ui.horizontalSpacing - (isPlaceholder ? -2 : 5)),
-                aView.rightAnchor.constraint(equalTo: _pickImagesButton.leftAnchor, constant: -ui.horizontalSpacing + (isPlaceholder ? -2 : 5)),
+                aView.rightAnchor.constraint(equalTo: _extraButton.leftAnchor, constant: -ui.horizontalSpacing + (isPlaceholder ? 2 : 9)),
             ]
+            
+            if isPlaceholder {
+                ret += [aView.heightAnchor.constraint(equalToConstant: initialContentViewHeight)]
+            } else {
+                ret += [aView.topAnchor.constraint(greaterThanOrEqualTo: view.topAnchor, constant: ui.topSpacing)]
+            }
+            
+            return ret
         }
         
         let contentViewHeightConstraint = _contentView.heightAnchor.constraint(equalToConstant: initialContentViewHeight)
         _contentViewHeightConstraint = contentViewHeightConstraint
         
-        _pickImagesButton.sizeToFit()
-        let pickImageButtonBottomSpacing = 0.5 * (initialContentViewHeight + ui.topSpacing + ui.bottomSpacing - _pickImagesButton.height)
-        let pickImagesButtonConstraints: [NSLayoutConstraint] = [
-            _pickImagesButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -ui.horizontalSpacing),
-            _pickImagesButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -pickImageButtonBottomSpacing),
-            _pickImagesButton.widthAnchor.constraint(equalToConstant: _pickImagesButton.width)
-        ]
+        // Buttons
+        func layoutButton(_ btn: UIButton) -> [NSLayoutConstraint] {
+            btn.sizeToFit()
+            let isSendBtn = btn === _sendButton
+            let widthConstraint = btn.widthAnchor.constraint(equalToConstant: isSendBtn ? 0 : btn.width)
+            let rightConstraint = btn.rightAnchor.constraint(equalTo: isSendBtn ? view.rightAnchor : _sendButton.leftAnchor,
+                                                             constant: isSendBtn ? 0 : -ui.horizontalSpacing)
+            
+            if isSendBtn { _sendButtonWidthAndRightConstraint = (widthConstraint, rightConstraint) }
+            
+            return [
+                btn.centerYAnchor.constraint(equalTo: _placeholderLabel.centerYAnchor),
+                rightConstraint,
+                widthConstraint
+            ]
+        }
 
         NSLayoutConstraint.activate(
             fillConstraints(_contentView) + fillConstraints(_placeholderLabel)
             + [contentViewHeightConstraint]
-            + pickImagesButtonConstraints
+            + layoutButton(_extraButton) + layoutButton(_sendButton)
         )
+    }
+    
+    private func _setupPicker() {
+        let indicationView = _imagesPickerHelper.indicationView
+        indicationView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            indicationView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            indicationView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            indicationView.heightAnchor.constraint(equalToConstant: ui.imagesPickerIndicationViewHeight),
+            indicationView.bottomAnchor.constraint(equalTo: view.topAnchor)
+        ])
+
+        _imagesPickerHelper.shouldShowSendButton = { [weak self] shouldShow in
+            guard let `self` = self, let constraints = self._sendButtonWidthAndRightConstraint else { return }
+            if shouldShow {
+                self._sendButton.sizeToFit()
+                constraints.width.constant = self._sendButton.width
+                constraints.right.constant = -self.ui.horizontalSpacing
+            } else {
+                forEach(constraints) { $0.constant = 0 }
+            }
+            UIView.animate(withDuration: 0.25) {
+                self.view.superview?.layoutIfNeeded()
+            }
+        }
     }
 }
 
@@ -98,15 +202,47 @@ extension Chat.InputView: UITextViewDelegate {
     }
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        guard !text._shouldSend else { _finishInputAndClearText(); return false }
+        guard !text._shouldSend else { _prepareSend(); return false }
         return true
+    }
+    
+    var _text: String {
+        return _contentView.text.trimmingCharacters(in: .whitespacesAndNewlines)
     }
 }
 
 private extension Chat.InputView {
+    // For InputView
+    var _switchInputType: () -> () {
+        return { [weak self] in
+            if self?._inputType == .keyboard {
+                self?._inputType = .imagesPicker
+            } else {
+                self?._inputType = .keyboard
+            }
+        }
+    }
+    
+    func _switchInputViewIfNeeds() {
+        _extraButton.setImage(_inputType.extraButtonImage, for: .normal)
+        switch _inputType {
+        case .keyboard:
+            _contentView.inputView = nil
+        case .imagesPicker:
+            _contentView.inputView = _imagesPickerHelper.contentView
+            _imagesPickerHelper.requestPHAuthIfNeeds()
+        }
+        
+        if _contentView.isFirstResponder {
+            _contentView.reloadInputViews()
+        } else {
+            _contentView.becomeFirstResponder()
+        }
+    }
+    
+    // For TextView
     func _contentChanged() {
-        let text = _contentView.text.trimmingCharacters(in: .whitespacesAndNewlines)
-        _placeholderLabel.isHidden = !text.isEmpty
+        _placeholderLabel.isHidden = !_text.isEmpty
         
         // Check: Should re-layout height
         let expectedContentViewHeight = _contentView.sizeThatFits(.init(width: _contentView.width, height: .infinity)).height
@@ -120,9 +256,28 @@ private extension Chat.InputView {
         }
     }
     
-    func _finishInputAndClearText() {
+    // For sending
+    func _prepareSend() {
+        if _imagesPickerHelper.hasSelectedAssets {
+            _imagesPickerHelper.prepareSend()
+        } else {
+            _sendText()
+        }
+    }
+    
+    func _sendText() {
+        guard !_text.isEmpty else { return }
+        _send(.text(_text))
         _contentView.text = ""
         _contentChanged()
+    }
+    
+    var _sendAssets: ([PHAsset]) -> () {
+        return { [weak self] in
+            self?._send(.assets($0))
+            self?._sendText()
+            self?._inputType = .keyboard
+        }
     }
 }
 
@@ -133,6 +288,7 @@ extension UI where Base: Chat.InputView {
     var horizontalSpacing: CGFloat { return 20 }
     var topSpacing: CGFloat { return 16 }
     var bottomSpacing: CGFloat { return 20 }
+    var imagesPickerIndicationViewHeight: CGFloat { return 60 }
 }
 
 fileprivate extension String {

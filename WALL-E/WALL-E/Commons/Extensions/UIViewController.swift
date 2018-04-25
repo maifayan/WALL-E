@@ -9,6 +9,7 @@
 import UIKit
 import RxSwift
 
+// MARK: - StatusBarDelegate
 private struct _AssociatedHelper {
     static var _statusBarStyleKey: UInt8 = 32
     static var _preStatusBarStyleKey: UInt8 = 34
@@ -69,5 +70,42 @@ extension UIViewController {
         if let preStyle = _preStatusBarStyle, statusBarStyle != preStyle {
             UIApplication.shared.statusBarStyle = preStyle
         }
+    }
+}
+
+// MARK: - Show Alert
+extension UIViewController {
+    @discardableResult
+    func showAlert(title: String? = nil, message: String? = nil, okAction: (() -> ())? = nil, completion: (() -> ())? = nil ) -> UIAlertController {
+        let ac = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .default) { _ in okAction?() }
+        ac.addAction(action)
+        present(ac, animated: true, completion: completion)
+        return ac
+    }
+}
+
+// MARK: - Topmost
+extension UIViewController {
+    static var topMost: UIViewController? {
+        guard let window = UIApplication.shared.delegate?.window, let rootVC = window?.rootViewController else {
+            return nil
+        }
+        return rootVC.topMost
+    }
+    
+    var topMost: UIViewController? {
+        if let presentedVC = presentedViewController {
+            return presentedVC.topMost
+        }
+        if let tabBarC = self as? UITabBarController,
+            let selectedVC = tabBarC.selectedViewController {
+            return selectedVC.topMost
+        }
+        if let navC = self as? UINavigationController,
+            let visibleVC = navC.visibleViewController {
+            return visibleVC.topMost
+        }
+        return self
     }
 }

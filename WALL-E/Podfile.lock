@@ -1,4 +1,5 @@
 PODS:
+  - JGProgressHUD (2.0.2)
   - Kingfisher (4.7.0)
   - LayoutKit (7.0.2)
   - R.swift (4.0.0):
@@ -8,21 +9,25 @@ PODS:
     - RxSwift (~> 4.0)
   - RxSwift (4.1.2)
   - Tactile (2.0)
+  - TanImagePicker (0.2.4)
   - WXWaveView (1.0.1)
   - YYText (1.0.7)
 
 DEPENDENCIES:
+  - JGProgressHUD
   - Kingfisher
   - LayoutKit
   - R.swift
   - RxCocoa
   - RxSwift
   - Tactile
+  - TanImagePicker
   - WXWaveView
   - YYText
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
+    - JGProgressHUD
     - Kingfisher
     - LayoutKit
     - R.swift
@@ -30,10 +35,12 @@ SPEC REPOS:
     - RxCocoa
     - RxSwift
     - Tactile
+    - TanImagePicker
     - WXWaveView
     - YYText
 
 SPEC CHECKSUMS:
+  JGProgressHUD: bf75da151936cfd3c9b674afb17e8a5df2e14a7d
   Kingfisher: da6b005aa96d37698e3e4f1ccfe96a5b9bbf27d6
   LayoutKit: 183c513f8322f4e22321499e54163864bcdf7d97
   R.swift: d6a5ec2f55a8441dc0ed9f1f8b37d7d11ae85c66
@@ -41,9 +48,10 @@ SPEC CHECKSUMS:
   RxCocoa: d88ba0f1f6abf040011a9eb4b539324fc426843a
   RxSwift: e49536837d9901277638493ea537394d4b55f570
   Tactile: 22d5686693be17568351b95aa83ef37457cd40f4
+  TanImagePicker: 88ce20ed587e7b0ec05b71f1afaf0edb76bf5a1b
   WXWaveView: f8424284812536a3842bc5dd9afb943e53e911a8
   YYText: 5c461d709e24d55a182d1441c41dc639a18a4849
 
-PODFILE CHECKSUM: 99a957981d7668c5e382faf8e3a467b7a2f92047
+PODFILE CHECKSUM: 97f92464f3574b1b026828632d349ddcd780dfa9
 
 COCOAPODS: 1.5.0
