@@ -102,11 +102,8 @@ private extension Main.SegmentControl {
             ret.layer.cornerRadius = 3
             ret.autoresizingMask = style == .left ? .flexibleLeftMargin : .flexibleRightMargin
             
-            ret.layer.shadowColor = UIColor.gray.cgColor
-            ret.layer.shadowOffset = CGSize(width: 0, height: 4)
-            ret.layer.shadowRadius = 5
-            ret.layer.shadowOpacity = 0
-            
+            ret.setShadow(color: .gray, offSet: CGSize(width: 0, height: 4), radius: 5, opacity: 0)
+
             ret.setTitleColor(.white, for: .selected)
             ret.setTitleColor(UIColor(rgb: triple(146)), for: .normal)
             ret.titleLabel?.font = .systemFont(ofSize: 12, weight: .bold)

@@ -23,10 +23,7 @@ extension Chat {
             viewController.addChildViewController(_imagePicker.indicationView)
             _imagePicker.indicationView.didMove(toParentViewController: viewController)
             _imagePicker.indicationView.view.isHidden = true
-            _imagePicker.indicationView.view.layer.shadowRadius = 12
-            _imagePicker.indicationView.view.layer.shadowColor = UIColor(white: 0, alpha: 0.2).cgColor
-            _imagePicker.indicationView.view.layer.shadowOpacity = 0.4
-            _imagePicker.indicationView.view.layer.shadowOffset = CGSize(width: 0, height: -20)
+            _imagePicker.indicationView.view.setShadow(color: UIColor(white: 0, alpha: 0.2), offSet: CGSize(width: 0, height: -20), radius: 12, opacity: 0.4)
         }
         
         private lazy var _imagePicker: TanImagePicker = { (callback: @escaping ([PHAsset]) -> ()) in

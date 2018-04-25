@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <viewController id="QxW-ep-kx6" customClass="LaunchViewController" customModule="WALL_E" customModuleProvider="target">
+            <view key="view" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="AV8-dg-n1O">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="W A L L - E" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="duP-0d-RwE">
+                        <rect key="frame" x="39.5" y="417" width="296" height="73"/>
+                        <fontDescription key="fontDescription" name="OriyaSangamMN-Bold" family="Oriya Sangam MN" pointSize="52"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="robot" translatesAutoresizingMaskIntoConstraints="NO" id="wWJ-iV-Gfw">
+                        <rect key="frame" x="87.5" y="173.5" width="200" height="200"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="200" id="LCD-Qe-H0g"/>
+                            <constraint firstAttribute="width" constant="200" id="UuO-wb-6yy"/>
+                        </constraints>
+                    </imageView>
+                </subviews>
+                <color key="backgroundColor" red="0.93725490199999995" green="0.57647058819999997" blue="0.56862745100000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                <constraints>
+                    <constraint firstItem="duP-0d-RwE" firstAttribute="centerX" secondItem="AV8-dg-n1O" secondAttribute="centerX" id="KHl-rk-d78"/>
+                    <constraint firstItem="wWJ-iV-Gfw" firstAttribute="centerY" secondItem="AV8-dg-n1O" secondAttribute="centerY" constant="-60" id="lCD-Il-18L"/>
+                    <constraint firstItem="wWJ-iV-Gfw" firstAttribute="centerX" secondItem="AV8-dg-n1O" secondAttribute="centerX" id="qI9-Y6-zLh"/>
+                    <constraint firstItem="duP-0d-RwE" firstAttribute="centerY" secondItem="AV8-dg-n1O" secondAttribute="centerY" constant="120" id="qmd-L9-yJ0"/>
+                </constraints>
+            </view>
+            <connections>
+                <outlet property="imageView" destination="wWJ-iV-Gfw" id="TIx-s4-QCr"/>
+            </connections>
+            <point key="canvasLocation" x="-431" y="-563"/>
+        </viewController>
+    </objects>
+    <resources>
+        <image name="robot" width="290" height="304"/>
+    </resources>
+</document>

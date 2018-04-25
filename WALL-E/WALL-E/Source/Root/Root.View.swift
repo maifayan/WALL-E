@@ -32,12 +32,8 @@ extension Root {
             backgroundLayer.ui.adapt(themeKeyPath: \.mainColor, for: \.fillColor) { $0.cgColor }
             backgroundLayer.path = path.cgPath
             button.layer.insertSublayer(backgroundLayer, below: button.imageView?.layer)
+            button.setShadow(color: .gray, offSet: CGSize(width: 5, height: 5), radius: 6, opacity: 0.6)
 
-            button.layer.shadowColor = UIColor.gray.cgColor
-            button.layer.shadowOffset = CGSize(width: 5, height: 5)
-            button.layer.shadowRadius = 6
-            button.layer.shadowOpacity = 0.6
-            
             button.setImage(R.image.menu()?.withRenderingMode(.alwaysOriginal), for: .normal)
             button.imageEdgeInsets = UIEdgeInsets(top: 3, left: 0, bottom: -3, right: 0)
             return button
@@ -65,10 +61,7 @@ extension Root.View {
         addChildViewController(_mainView)
         view.addSubview(_mainView.view)
         _mainView.view.frame = view.bounds
-        _mainView.view.layer.shadowColor = UIColor.gray.cgColor
-        _mainView.view.layer.shadowOffset = CGSize(width: 0, height: 1)
-        _mainView.view.layer.shadowRadius = 8
-        _mainView.view.layer.shadowOpacity = 0.5
+        _mainView.view.setShadow(color: .gray, offSet: CGSize(width: 0, height: 1), radius: 8, opacity: 0.5)
         _mainView.didMove(toParentViewController: self)
         _setupMenuButton()
     }

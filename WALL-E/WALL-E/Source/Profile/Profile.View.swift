@@ -120,11 +120,8 @@ extension Profile.View._ContentView {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .clear
-        view.layer.shadowColor = UIColor.gray.cgColor
-        view.layer.shadowOffset = CGSize(width: 3.5, height: 3.5)
-        view.layer.shadowRadius = 6
-        view.layer.shadowOpacity = 0.45
-        
+        view.setShadow(color: .gray, offSet: CGSize(width: 3.5, height: 3.5), radius: 6, opacity: 0.45)
+
         view.addSubview(_headerView)
         view.addSubview(_footerView)
         _layoutViews()
@@ -180,10 +177,7 @@ private extension Profile.View._ContentView {
             let url = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1524402344412&di=4a23252a1384630713ed00984077d7aa&imgtype=0&src=http%3A%2F%2Fimg2.ph.126.net%2FiWniabDDa1xwCebyA6-75A%3D%3D%2F6597431505982826060.jpg"
             imageView.kf.setImage(with: URL(string: url), options: .normalAvatarOptions(sizeValue: ui.avatarSizeValue))
             imageView.contentMode = .scaleAspectFill
-            imageView.layer.shadowColor = UIColor.gray.cgColor
-            imageView.layer.shadowOffset = CGSize(width: 3.5, height: 3.5)
-            imageView.layer.shadowRadius = 6
-            imageView.layer.shadowOpacity = 0.45
+            imageView.setShadow(color: .gray, offSet: CGSize(width: 3.5, height: 3.5), radius: 6, opacity: 0.45)
             return imageView
         }()
         
@@ -269,10 +263,7 @@ private extension Profile.View._ContentView {
                     view.bottomAnchor.constraint(equalTo: bottomAnchor),
                     view.heightAnchor.constraint(equalToConstant: item.height)
                 ])
-                view.layer.shadowColor = UIColor.gray.cgColor
-                view.layer.shadowOffset = CGSize(width: 2, height: 2)
-                view.layer.shadowRadius = 3
-                view.layer.shadowOpacity = 0.2
+                view.setShadow(color: .gray, offSet: CGSize(width: 2, height: 2), radius: 3, opacity: 0.2)
                 return view
             }
         }
