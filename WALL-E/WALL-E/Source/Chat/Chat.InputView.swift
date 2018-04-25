@@ -30,10 +30,15 @@ extension Chat {
             tv.delegate = self
             tv.backgroundColor = .clear
             tv.textContainerInset = .zero
-            tv.returnKeyType = .send
-            tv.enablesReturnKeyAutomatically = true
             tv.isScrollEnabled = false
             tv.showsVerticalScrollIndicator = false
+            if ui._supportNewLine {
+                tv.returnKeyType = .default
+                tv.enablesReturnKeyAutomatically = false
+            } else {
+                tv.returnKeyType = .send
+                tv.enablesReturnKeyAutomatically = true
+            }
             return tv
         }()
         
@@ -66,6 +71,7 @@ extension Chat {
 
         private var _contentViewHeightConstraint: NSLayoutConstraint?
         private var _sendButtonWidthAndRightConstraint: (width: NSLayoutConstraint, right: NSLayoutConstraint)?
+        private var _isSendButtonShowed = false
         
         private var _inputType: InputType = .keyboard {
             didSet {
@@ -180,19 +186,29 @@ extension Chat.InputView {
             indicationView.bottomAnchor.constraint(equalTo: view.topAnchor)
         ])
 
-        _imagesPickerHelper.shouldShowSendButton = { [weak self] shouldShow in
-            guard let `self` = self, let constraints = self._sendButtonWidthAndRightConstraint else { return }
-            if shouldShow {
-                self._sendButton.sizeToFit()
-                constraints.width.constant = self._sendButton.width
-                constraints.right.constant = -self.ui.horizontalSpacing
-            } else {
-                forEach(constraints) { $0.constant = 0 }
+        _imagesPickerHelper.shouldShowSendButton = { [weak self] in
+            guard let `self` = self else { return }
+            var shouldShow = $0
+            if self.ui._supportNewLine {
+                shouldShow = shouldShow || !self._text.isEmpty
             }
-            UIView.animate(withDuration: 0.25) {
-                self.view.superview?.layoutIfNeeded()
-            }
+            self._switchSendButtonDisplayIfNeeds(shouldShow)
         }
+    }
+    
+    private func _switchSendButtonDisplayIfNeeds(_ shouldShow: Bool) {
+        guard _isSendButtonShowed != shouldShow, let constraints = _sendButtonWidthAndRightConstraint else { return }
+        if shouldShow {
+            self._sendButton.sizeToFit()
+            constraints.width.constant = _sendButton.width
+            constraints.right.constant = -ui.horizontalSpacing
+        } else {
+            forEach(constraints) { $0.constant = 0 }
+        }
+        UIView.animate(withDuration: 0.25) {
+            self.view.superview?.layoutIfNeeded()
+        }
+        _isSendButtonShowed = shouldShow
     }
 }
 
@@ -202,7 +218,7 @@ extension Chat.InputView: UITextViewDelegate {
     }
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        guard !text._shouldSend else { _prepareSend(); return false }
+        guard !text._shouldSend || ui._supportNewLine else { _prepareSend(); return false }
         return true
     }
     
@@ -243,13 +259,17 @@ private extension Chat.InputView {
     // For TextView
     func _contentChanged() {
         _placeholderLabel.isHidden = !_text.isEmpty
-        
+        if ui._supportNewLine {
+            _switchSendButtonDisplayIfNeeds(!_text.isEmpty || _imagesPickerHelper.hasSelectedAssets)
+        }
+
         // Check: Should re-layout height
-        let expectedContentViewHeight = _contentView.sizeThatFits(.init(width: _contentView.width, height: .infinity)).height
+        let expectedContentViewHeight = min(_contentView.sizeThatFits(.init(width: _contentView.width, height: .infinity)).height, ui.maxHeightForContentView)
         guard
             let contentViewHeightConstraint = _contentViewHeightConstraint,
             contentViewHeightConstraint.constant != expectedContentViewHeight
         else { return }
+        _contentView.isScrollEnabled = expectedContentViewHeight == ui.maxHeightForContentView
         contentViewHeightConstraint.constant = expectedContentViewHeight
         UIView.animate(withDuration: 0.25) {
             self.view.superview?.layoutIfNeeded()
@@ -289,6 +309,9 @@ extension UI where Base: Chat.InputView {
     var topSpacing: CGFloat { return 16 }
     var bottomSpacing: CGFloat { return 20 }
     var imagesPickerIndicationViewHeight: CGFloat { return 60 }
+    var maxHeightForContentView: CGFloat { return 0.3 * UIScreen.main.bounds.height}
+    // Support keyboard new line
+    var _supportNewLine: Bool { return true }
 }
 
 fileprivate extension String {
