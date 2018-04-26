@@ -18,10 +18,8 @@ extension Chat {
         init(_ viewController: UIViewController, sendAssets: @escaping ([PHAsset]) -> ()) {
             _sendAssets = sendAssets
             
-            viewController.addChildViewController(_imagePicker.contentView)
-            _imagePicker.contentView.didMove(toParentViewController: viewController)
-            viewController.addChildViewController(_imagePicker.indicationView)
-            _imagePicker.indicationView.didMove(toParentViewController: viewController)
+            viewController.add(_imagePicker.contentView, shouldAddView: false)
+            viewController.add(_imagePicker.indicationView, shouldAddView: false)
             _imagePicker.indicationView.view.isHidden = true
             _imagePicker.indicationView.view.setShadow(color: UIColor(white: 0, alpha: 0.2), offSet: CGSize(width: 0, height: -20), radius: 12, opacity: 0.4)
         }

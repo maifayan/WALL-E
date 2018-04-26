@@ -19,8 +19,10 @@ extension Root {
             case .newRobot:
                 self?.present(Chat.View(), animated: true, completion: nil)
             case .theme:
-                self?._switchTheme()
-            case .settings: ()
+                let vc = R.nib.themePickerView().instantiate(withOwner: nil, options: nil).first as! UIViewController
+                self?.present(vc, animated: true, completion: nil)
+            case .settings:
+                self?.present(Settings.View(), animated: true, completion: nil)
             }
         }
         
@@ -54,15 +56,10 @@ extension Root.View {
         view.clipsToBounds = true
         view.layer.cornerRadius = 16
         ui.adapt(themeKeyPath: \.mainColor, for: \.view.backgroundColor)
-        addChildViewController(_menuView)
-        view.addSubview(_menuView.view)
-        _menuView.didMove(toParentViewController: self)
-        
-        addChildViewController(_mainView)
-        view.addSubview(_mainView.view)
-        _mainView.view.frame = view.bounds
+        add(_menuView)
+
+        add(_mainView, viewFrame: view.bounds)
         _mainView.view.setShadow(color: .gray, offSet: CGSize(width: 0, height: 1), radius: 8, opacity: 0.5)
-        _mainView.didMove(toParentViewController: self)
         _setupMenuButton()
     }
     
@@ -122,14 +119,6 @@ private extension Root.View {
                 self?._menuButton.alpha = show ? 1 : 0.4
             }
         }).disposed(by: rx.disposeBag)
-    }
-}
-
-// MARK: - Events
-private extension Root.View {
-    func _switchTheme() {
-        let vc = R.nib.themePickerView().instantiate(withOwner: nil, options: nil).first as! UIViewController
-        present(vc, animated: true, completion: nil)
     }
 }
 

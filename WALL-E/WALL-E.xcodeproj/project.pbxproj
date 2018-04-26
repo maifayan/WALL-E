@@ -52,6 +52,10 @@
 		BAA2ECB72090AA4700C6F577 /* LaunchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BAA2ECB62090AA4700C6F577 /* LaunchViewController.xib */; };
 		BAA2ECB92090CEA100C6F577 /* PreferenceStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA2ECB82090CEA000C6F577 /* PreferenceStore.swift */; };
 		BAA2ECBC2090DCEC00C6F577 /* UserPreferenceConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA2ECBB2090DCEC00C6F577 /* UserPreferenceConfig.swift */; };
+		BAA2ECBF2090E12E00C6F577 /* Chat.Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA2ECBE2090E12E00C6F577 /* Chat.Node.swift */; };
+		BAA2ECC52091916E00C6F577 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA2ECC42091916E00C6F577 /* Settings.swift */; };
+		BAA2ECC72091918100C6F577 /* Settings.View.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA2ECC62091918000C6F577 /* Settings.View.swift */; };
+		BAA2ECC9209191AD00C6F577 /* Settings.ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA2ECC8209191AD00C6F577 /* Settings.ContentView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -115,6 +119,10 @@
 		BAA2ECB62090AA4700C6F577 /* LaunchViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LaunchViewController.xib; sourceTree = "<group>"; };
 		BAA2ECB82090CEA000C6F577 /* PreferenceStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferenceStore.swift; sourceTree = "<group>"; };
 		BAA2ECBB2090DCEC00C6F577 /* UserPreferenceConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPreferenceConfig.swift; sourceTree = "<group>"; };
+		BAA2ECBE2090E12E00C6F577 /* Chat.Node.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.Node.swift; sourceTree = "<group>"; };
+		BAA2ECC42091916E00C6F577 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		BAA2ECC62091918000C6F577 /* Settings.View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.View.swift; sourceTree = "<group>"; };
+		BAA2ECC8209191AD00C6F577 /* Settings.ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.ContentView.swift; sourceTree = "<group>"; };
 		D6E5B6B7A8C93248B230FF43 /* Pods-WALL-E.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WALL-E.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WALL-E/Pods-WALL-E.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -295,6 +303,7 @@
 		BA3CCD9C208CD4030000D639 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				BAA2ECC32091915000C6F577 /* Settings */,
 				BAA2ECBA2090DCD900C6F577 /* Config */,
 				BAA2EC90208F16C100C6F577 /* Chat */,
 				BA013C9B208DE5EA004689F0 /* Profile */,
@@ -308,6 +317,7 @@
 		BAA2EC90208F16C100C6F577 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
+				BAA2ECBD2090E11C00C6F577 /* Node */,
 				BAA2EC93208F172800C6F577 /* Chat.swift */,
 				BAA2EC95208F173500C6F577 /* Chat.View.swift */,
 				BAA2ECA7208F821A00C6F577 /* Chat.Presenter.swift */,
@@ -335,6 +345,24 @@
 				BAA2ECBB2090DCEC00C6F577 /* UserPreferenceConfig.swift */,
 			);
 			path = Config;
+			sourceTree = "<group>";
+		};
+		BAA2ECBD2090E11C00C6F577 /* Node */ = {
+			isa = PBXGroup;
+			children = (
+				BAA2ECBE2090E12E00C6F577 /* Chat.Node.swift */,
+			);
+			path = Node;
+			sourceTree = "<group>";
+		};
+		BAA2ECC32091915000C6F577 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				BAA2ECC42091916E00C6F577 /* Settings.swift */,
+				BAA2ECC62091918000C6F577 /* Settings.View.swift */,
+				BAA2ECC8209191AD00C6F577 /* Settings.ContentView.swift */,
+			);
+			path = Settings;
 			sourceTree = "<group>";
 		};
 		D40534D51AB1F005E30D710C /* Pods */ = {
@@ -456,6 +484,7 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-WALL-E/Pods-WALL-E-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Eureka/Eureka.framework",
 				"${BUILT_PRODUCTS_DIR}/JGProgressHUD/JGProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/LayoutKit/LayoutKit.framework",
@@ -469,6 +498,7 @@
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Eureka.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JGProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/LayoutKit.framework",
@@ -538,7 +568,9 @@
 				BA3CCD84208BB4C80000D639 /* Operators.swift in Sources */,
 				BA3CCD7C208B99EA0000D639 /* Main.SegmentControl.swift in Sources */,
 				BAA2ECA2208F3AB300C6F577 /* WeakArray.swift in Sources */,
+				BAA2ECC9209191AD00C6F577 /* Settings.ContentView.swift in Sources */,
 				BA013C91208DAFEA004689F0 /* Main.Conversations.Item.swift in Sources */,
+				BAA2ECC52091916E00C6F577 /* Settings.swift in Sources */,
 				BAA2ECA8208F821A00C6F577 /* Chat.Presenter.swift in Sources */,
 				BA3CCD8B208C83010000D639 /* Main.Conversations.View.swift in Sources */,
 				BAA2EC8F208F030C00C6F577 /* curry.swift in Sources */,
@@ -547,11 +579,13 @@
 				BA013C9D208DE5EA004689F0 /* Profile.swift in Sources */,
 				BAA2EC94208F172800C6F577 /* Chat.swift in Sources */,
 				BAA2EC96208F173600C6F577 /* Chat.View.swift in Sources */,
+				BAA2ECC72091918100C6F577 /* Settings.View.swift in Sources */,
 				BA3CCD94208CA5040000D639 /* Root.View.swift in Sources */,
 				BA3CCD99208CCE910000D639 /* Menu.View.swift in Sources */,
 				BA3CCD97208CCE7B0000D639 /* Menu.swift in Sources */,
 				BAA2ECA6208F7A8E00C6F577 /* Chat.InputView.swift in Sources */,
 				BA3CCD92208CA4F90000D639 /* Root.swift in Sources */,
+				BAA2ECBF2090E12E00C6F577 /* Chat.Node.swift in Sources */,
 				BAA2ECB52090A90000C6F577 /* LaunchViewController.swift in Sources */,
 				BA1A99382085DE4500FAE3FA /* AppDelegate.swift in Sources */,
 				BA3CCD7F208B9A500000D639 /* UI.swift in Sources */,
@@ -717,10 +751,7 @@
 				DEVELOPMENT_TEAM = 9PA6Z533LV;
 				INFOPLIST_FILE = "WALL-E/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "personal.tangent.WALL-E";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -737,10 +768,7 @@
 				DEVELOPMENT_TEAM = 9PA6Z533LV;
 				INFOPLIST_FILE = "WALL-E/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "personal.tangent.WALL-E";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -756,11 +784,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9PA6Z533LV;
 				INFOPLIST_FILE = "WALL-ETests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "personal.tangent.WALL-ETests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -777,11 +801,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9PA6Z533LV;
 				INFOPLIST_FILE = "WALL-ETests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "personal.tangent.WALL-ETests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;

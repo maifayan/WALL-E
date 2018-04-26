@@ -56,13 +56,8 @@ extension Chat.View {
 
 private extension Chat.View {
     func _setupViews() {
-        addChildViewController(_headerView)
-        view.addSubview(_headerView.view)
-        _headerView.didMove(toParentViewController: self)
-        
-        addChildViewController(_inputView)
-        view.addSubview(_inputView.view)
-        _inputView.didMove(toParentViewController: self)
+        add(_headerView)
+        add(_inputView)
     }
     
     func _layoutViews() {

@@ -85,6 +85,16 @@ extension UIViewController {
     }
 }
 
+// MARK: - Add
+extension UIViewController {
+    func add(_ child: UIViewController, shouldAddView: Bool = true, viewFrame: CGRect = .zero) {
+        addChildViewController(child)
+        if shouldAddView { view.addSubview(child.view) }
+        if viewFrame != .zero { child.view.frame = viewFrame }
+        child.didMove(toParentViewController: self)
+    }
+}
+
 // MARK: - Topmost
 extension UIViewController {
     static var topMost: UIViewController? {

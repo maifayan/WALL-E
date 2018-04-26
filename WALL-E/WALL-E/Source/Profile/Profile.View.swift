@@ -40,10 +40,9 @@ extension Profile.View {
         super.viewDidLoad()
         view.backgroundColor = .clear
         view.addSubview(_blurView)
-        addChildViewController(_contentView)
-        view.addSubview(_contentView.view)
+        add(_contentView)
+        _contentView.view.alpha = 0
         _contentView.view.transform = CGAffineTransform(translationX: 0, y: -60)
-        _contentView.didMove(toParentViewController: self)
         _layoutViews()
         
         _blurView.on(UITapGestureRecognizer()) { [weak self] _ in
@@ -68,14 +67,15 @@ extension Profile.View {
         ])
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         switchTo(show: true)
     }
-
+    
     func switchTo(show flag: Bool) {
         if flag && _contentView.view.transform != .identity {
             UIView.animate(withDuration: 0.35) {
+                self._contentView.view.alpha = 1
                 self._contentView.view.transform = .identity
             }
         } else if !flag {

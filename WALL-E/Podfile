@@ -11,4 +11,5 @@ target 'WALL-E' do
   pod 'YYText'
   pod 'TanImagePicker'
   pod 'JGProgressHUD'
+  pod 'Eureka'
 end

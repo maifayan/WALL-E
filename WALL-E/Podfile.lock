@@ -1,4 +1,5 @@
 PODS:
+  - Eureka (4.1.1)
   - JGProgressHUD (2.0.2)
   - Kingfisher (4.7.0)
   - LayoutKit (7.0.2)
@@ -14,6 +15,7 @@ PODS:
   - YYText (1.0.7)
 
 DEPENDENCIES:
+  - Eureka
   - JGProgressHUD
   - Kingfisher
   - LayoutKit
@@ -27,6 +29,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
+    - Eureka
     - JGProgressHUD
     - Kingfisher
     - LayoutKit
@@ -40,6 +43,7 @@ SPEC REPOS:
     - YYText
 
 SPEC CHECKSUMS:
+  Eureka: b88fb930e42c79f8c03c373d0fcdc28c1d6c50ed
   JGProgressHUD: bf75da151936cfd3c9b674afb17e8a5df2e14a7d
   Kingfisher: da6b005aa96d37698e3e4f1ccfe96a5b9bbf27d6
   LayoutKit: 183c513f8322f4e22321499e54163864bcdf7d97
@@ -52,6 +56,6 @@ SPEC CHECKSUMS:
   WXWaveView: f8424284812536a3842bc5dd9afb943e53e911a8
   YYText: 5c461d709e24d55a182d1441c41dc639a18a4849
 
-PODFILE CHECKSUM: 97f92464f3574b1b026828632d349ddcd780dfa9
+PODFILE CHECKSUM: e15013dab88d6416a6b960d54d5b4128ace43be8
 
 COCOAPODS: 1.5.0

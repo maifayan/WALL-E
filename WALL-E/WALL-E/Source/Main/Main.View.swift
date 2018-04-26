@@ -91,23 +91,16 @@ private extension Main.View {
 
 private extension Main.View {
     func _addSegmentControl() {
-        addChildViewController(_segmentControl)
-        view.addSubview(_segmentControl.view)
-        _segmentControl.view.frame = CGRect(x: 0, y: UIApplication.shared.statusBarFrame.height, width: view.width, height: _segmentControl.ui.height)
-        _segmentControl.didMove(toParentViewController: self)
+        add(_segmentControl, viewFrame: CGRect(x: 0, y: UIApplication.shared.statusBarFrame.height, width: view.width, height: _segmentControl.ui.height))
     }
     
     func _setupViews() {
         view.addSubview(_contentView)
         _contentView.frame = _contentViewFrame
         
-        addChildViewController(_contactsView)
-        _contactsView.view.frame = _contentView.bounds
-        _contactsView.didMove(toParentViewController: self)
-        addChildViewController(_conversationView)
-        _conversationView.view.frame = _contentView.bounds
-        _conversationView.didMove(toParentViewController: self)
-        
+        add(_contactsView, shouldAddView: false, viewFrame: _contentView.bounds)
+        add(_conversationView, shouldAddView: false, viewFrame: _contentView.bounds)
+
         view.addSubview(_blurView)
         _blurView.frame = view.bounds
     }
