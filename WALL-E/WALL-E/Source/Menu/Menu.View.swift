@@ -91,11 +91,7 @@ class _ThemePickerView: UIViewController {
             self?.dismiss(animated: true, completion: nil)
         }
     }
-    
-    @IBAction func switchSupportNewLine(_ sender: UISwitch) {
-        UserPreferenceConfig.supportNewLine = sender.isOn
-    }
-    
+
     @IBAction func on(_ sender: UIButton) {
         let tagIndex = sender.tag - 1
         Theme.shared.setMainColor(index: tagIndex)

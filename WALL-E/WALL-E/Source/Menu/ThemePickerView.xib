@@ -25,7 +25,7 @@
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AGg-bj-vJK">
-                                    <rect key="frame" x="69.5" y="116" width="235" height="235"/>
+                                    <rect key="frame" x="69.5" y="196" width="235" height="235"/>
                                     <subviews>
                                         <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f8V-ux-xeT">
                                             <rect key="frame" x="0.0" y="145" width="90" height="90"/>
@@ -99,38 +99,10 @@
                                         <constraint firstItem="Dz9-2w-03M" firstAttribute="firstBaseline" secondItem="f8V-ux-xeT" secondAttribute="firstBaseline" id="tOl-ZI-cxZ"/>
                                     </constraints>
                                 </view>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VyW-Hr-iMU">
-                                    <rect key="frame" x="118.5" y="391" width="137" height="66"/>
-                                    <subviews>
-                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="kAw-d3-p35">
-                                            <rect key="frame" x="44" y="35" width="51" height="31"/>
-                                            <connections>
-                                                <action selector="switchSupportNewLine:" destination="A3l-NF-gQT" eventType="valueChanged" id="XgN-ME-Ect"/>
-                                            </connections>
-                                        </switch>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Support New Line" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qq7-r6-zj2">
-                                            <rect key="frame" x="0.0" y="0.0" width="137" height="21"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <constraints>
-                                        <constraint firstAttribute="trailing" secondItem="Qq7-r6-zj2" secondAttribute="trailing" id="BBx-Jl-DhZ"/>
-                                        <constraint firstItem="kAw-d3-p35" firstAttribute="centerX" secondItem="VyW-Hr-iMU" secondAttribute="centerX" id="NIE-h0-rzc"/>
-                                        <constraint firstItem="Qq7-r6-zj2" firstAttribute="leading" secondItem="VyW-Hr-iMU" secondAttribute="leading" id="bGp-O9-g5X"/>
-                                        <constraint firstAttribute="bottom" secondItem="kAw-d3-p35" secondAttribute="bottom" id="cQY-xd-7jQ"/>
-                                        <constraint firstItem="kAw-d3-p35" firstAttribute="top" secondItem="Qq7-r6-zj2" secondAttribute="bottom" constant="14" id="jos-z6-trZ"/>
-                                        <constraint firstItem="Qq7-r6-zj2" firstAttribute="top" secondItem="VyW-Hr-iMU" secondAttribute="top" id="p0L-RN-tzC"/>
-                                    </constraints>
-                                </view>
                             </subviews>
                             <constraints>
-                                <constraint firstItem="VyW-Hr-iMU" firstAttribute="top" secondItem="AGg-bj-vJK" secondAttribute="bottom" constant="40" id="QZe-jC-6nH"/>
                                 <constraint firstItem="AGg-bj-vJK" firstAttribute="centerX" secondItem="Vqo-80-mGS" secondAttribute="centerX" id="UZl-e8-krc"/>
-                                <constraint firstItem="VyW-Hr-iMU" firstAttribute="centerX" secondItem="Vqo-80-mGS" secondAttribute="centerX" id="WtA-yV-ib8"/>
-                                <constraint firstItem="AGg-bj-vJK" firstAttribute="centerY" secondItem="Vqo-80-mGS" secondAttribute="centerY" constant="-100" id="toH-hU-5xt"/>
+                                <constraint firstItem="AGg-bj-vJK" firstAttribute="centerY" secondItem="Vqo-80-mGS" secondAttribute="centerY" constant="-20" id="toH-hU-5xt"/>
                             </constraints>
                         </view>
                         <blurEffect style="light"/>

@@ -13,7 +13,7 @@ import RxCocoa
 
 extension Settings {
     final class ContentView: UIViewController {
-        private lazy var _formView = _FormView(style: .grouped)
+        private lazy var _formView = _FormView(model: _model)
         private lazy var _avatarView: UIImageView = {
             let imageView = UIImageView()
             let url = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1524402344412&di=4a23252a1384630713ed00984077d7aa&imgtype=0&src=http%3A%2F%2Fimg2.ph.126.net%2FiWniabDDa1xwCebyA6-75A%3D%3D%2F6597431505982826060.jpg"
@@ -22,6 +22,8 @@ extension Settings {
             imageView.setShadow(color: .gray, offSet: CGSize(width: 3.5, height: 3.5), radius: 6, opacity: 0.45)
             return imageView
         }()
+        
+        private let _model = Model()
     }
 }
 
@@ -59,10 +61,26 @@ extension Settings.ContentView {
             _avatarView.topAnchor.constraint(equalTo: view.topAnchor, constant: -40)
         ])
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        _model.loadSettings()
+    }
 }
 
 private extension Settings.ContentView {
     final class _FormView: FormViewController {
+        private let _model: Settings.Model
+        
+        init(model: Settings.Model) {
+            _model = model
+            super.init(style: .grouped)
+        }
+        
+        required init?(coder aDecoder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+        }
+        
         override func viewDidLoad() {
             super.viewDidLoad()
             view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -100,10 +118,15 @@ private extension Settings.ContentView._FormView {
         LabelRow.defaultCellUpdate = { cell, _ in
             cell.textLabel?.ui.adapt(themeKeyPath: \.mainColor, for: \.textColor) { dark($0) }
         }
+        SwitchRow.defaultCellUpdate = { cell, _ in
+            cell.textLabel?.ui.adapt(themeKeyPath: \.mainColor, for: \.textColor) { dark($0) }
+        }
         CheckRow.defaultCellUpdate = { cell, _ in
             cell.textLabel?.ui.adapt(themeKeyPath: \.mainColor, for: \.textColor) { dark($0) }
             cell.tintColor = .gray
         }
+        
+        let model = _model
 
         form +++ Section("Profile")
             <<< NameRow() { row in
@@ -120,10 +143,36 @@ private extension Settings.ContentView._FormView {
         +++ Section("Enter key options")
             <<< CheckRow() { row in
                 row.title = "Send"
+                row.onChange { row in
+                    guard let value = row.value else { return }
+                    model.enterKeyOption.left(value ? .send : .newline)
+                }
+                model.enterKeyOption.right = { [weak row] in
+                    let value = $0 == .send
+                    if row?.value != value { row?.value = value }
+                }
             }
             <<< CheckRow() { row in
                 row.title = "Newline"
-                row.value = true
+                row.onChange { row in
+                    guard let value = row.value else { return }
+                    model.enterKeyOption.left(value ? .newline : .send)
+                }
+                model.enterKeyOption.right = { [weak row, weak model] in
+                    let value = $0 == .newline
+                    if row?.value != value { row?.value = value }
+                }
+            }
+        +++ Section()
+            <<< SwitchRow() { row in
+                row.title = "Show message date"
+                row.onChange { row in
+                    guard let value = row.value else { return }
+                    model.showMessageDate.left(value)
+                }
+                model.showMessageDate.right = { [weak row] in
+                    row?.value = $0
+                }
             }
         +++ Section()
             <<< LabelRow() { row in

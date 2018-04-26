@@ -39,22 +39,20 @@ final class TextLayoutProvider: ChatNodeLayoutProvider {
             string: _text,
             attributes: [
                 .paragraphStyle: paragraph,
-                ]
+            ]
         )
         
-        return StackLayout(
-            axis: .vertical,
-            spacing: 8,
-            viewReuseId: "TextContentLayout",
-            sublayouts: [
-                LabelLayout(
-                    text: .attributed(attributedString),
-                    font: .boldSystemFont(ofSize: 16),
-                    viewReuseId: "LabelLayout"
-                ) {
-                    $0.textColor = isMyOwn ? .gray : .white
-                },
-                
+        var sublayouts: [Layout] = [
+            LabelLayout(
+                text: .attributed(attributedString),
+                font: .boldSystemFont(ofSize: 16),
+                viewReuseId: "LabelLayout"
+            ) {
+                $0.textColor = isMyOwn ? .gray : .white
+            },
+        ]
+        if Settings.showMessageDate {
+            sublayouts.append(
                 LabelLayout(
                     text: "19:32",
                     font: .boldSystemFont(ofSize: 14),
@@ -63,7 +61,14 @@ final class TextLayoutProvider: ChatNodeLayoutProvider {
                 ) {
                     $0.textColor = isMyOwn ? .lightGray : UIColor(rgb: triple(235))
                 }
-            ]
+            )
+        }
+        
+        return StackLayout(
+            axis: .vertical,
+            spacing: 8,
+            viewReuseId: "TextContentLayout",
+            sublayouts: sublayouts
         )
     }
 }
