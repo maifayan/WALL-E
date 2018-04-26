@@ -45,7 +45,7 @@ extension Profile.View {
         _contentView.view.transform = CGAffineTransform(translationX: 0, y: -60)
         _layoutViews()
         
-        _blurView.on(UITapGestureRecognizer()) { [weak self] _ in
+        _blurView.tap { [weak self] _ in
             self?.switchTo(show: false)
         }
     }

@@ -39,7 +39,7 @@ extension Settings.View {
         add(_contentView)
         _layoutViews()
 
-        _backgroundView.on(UITapGestureRecognizer()) { [weak self] _ in
+        _backgroundView.tap { [weak self] _ in
             self?._saveAndDismiss()
         }
         

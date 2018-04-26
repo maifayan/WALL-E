@@ -3,6 +3,7 @@ PODS:
   - JGProgressHUD (2.0.2)
   - Kingfisher (4.7.0)
   - LayoutKit (7.0.2)
+  - MessageListener (1.0.0)
   - R.swift (4.0.0):
     - R.swift.Library (~> 4.0.0)
   - R.swift.Library (4.0.0)
@@ -19,6 +20,7 @@ DEPENDENCIES:
   - JGProgressHUD
   - Kingfisher
   - LayoutKit
+  - MessageListener
   - R.swift
   - RxCocoa
   - RxSwift
@@ -33,6 +35,7 @@ SPEC REPOS:
     - JGProgressHUD
     - Kingfisher
     - LayoutKit
+    - MessageListener
     - R.swift
     - R.swift.Library
     - RxCocoa
@@ -47,6 +50,7 @@ SPEC CHECKSUMS:
   JGProgressHUD: bf75da151936cfd3c9b674afb17e8a5df2e14a7d
   Kingfisher: da6b005aa96d37698e3e4f1ccfe96a5b9bbf27d6
   LayoutKit: 183c513f8322f4e22321499e54163864bcdf7d97
+  MessageListener: 03a08e08927aaa5f4191fbb53e8624fd95c31285
   R.swift: d6a5ec2f55a8441dc0ed9f1f8b37d7d11ae85c66
   R.swift.Library: c3af34921024333546e23b70e70d0b4e0cffca75
   RxCocoa: d88ba0f1f6abf040011a9eb4b539324fc426843a
@@ -56,6 +60,6 @@ SPEC CHECKSUMS:
   WXWaveView: f8424284812536a3842bc5dd9afb943e53e911a8
   YYText: 5c461d709e24d55a182d1441c41dc639a18a4849
 
-PODFILE CHECKSUM: e15013dab88d6416a6b960d54d5b4128ace43be8
+PODFILE CHECKSUM: 8a59522c5a49bab8147f74a11a5bd50b66881436
 
 COCOAPODS: 1.5.0

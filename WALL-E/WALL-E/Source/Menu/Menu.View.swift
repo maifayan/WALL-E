@@ -87,7 +87,7 @@ class _ThemePickerView: UIViewController {
         modalTransitionStyle = .crossDissolve
         modalPresentationStyle = .overCurrentContext
         
-        view.on(UITapGestureRecognizer()) { [weak self] _ in
+        view.tap { [weak self] _ in
             self?.dismiss(animated: true, completion: nil)
         }
     }

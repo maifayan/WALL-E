@@ -143,7 +143,7 @@ extension Chat.InputView {
             if isPlaceholder {
                 ret += [aView.heightAnchor.constraint(equalToConstant: initialContentViewHeight)]
             } else {
-                ret += [aView.topAnchor.constraint(greaterThanOrEqualTo: view.topAnchor, constant: ui.topSpacing)]
+                ret += [aView.topAnchor.constraint(equalTo: view.topAnchor, constant: ui.topSpacing)]
             }
             
             return ret

@@ -81,10 +81,12 @@ private extension Settings.ContentView {
 private extension Settings.ContentView._FormView {
     func _setupForm() {
         let dark: (UIColor) -> UIColor = { color in
-            var (r, g, b, a): (CGFloat, CGFloat, CGFloat, CGFloat) = (0, 0, 0, 0)
-            color.getRed(&r, green: &g, blue: &b, alpha: &a)
             let magicNum: CGFloat = 20 / 255
-            return UIColor(red: r - magicNum, green: g - magicNum, blue: b - magicNum, alpha: a)
+            return color.trim {
+                $0.red -= magicNum
+                $0.green -= magicNum
+                $0.blue -= magicNum
+            }
         }
         
         NameRow.defaultCellUpdate = { cell, _ in

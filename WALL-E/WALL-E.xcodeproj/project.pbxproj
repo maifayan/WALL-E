@@ -56,6 +56,9 @@
 		BAA2ECC52091916E00C6F577 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA2ECC42091916E00C6F577 /* Settings.swift */; };
 		BAA2ECC72091918100C6F577 /* Settings.View.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA2ECC62091918000C6F577 /* Settings.View.swift */; };
 		BAA2ECC9209191AD00C6F577 /* Settings.ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA2ECC8209191AD00C6F577 /* Settings.ContentView.swift */; };
+		BAFD041A2091C995009D132A /* Chat.NodeLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFD04192091C995009D132A /* Chat.NodeLayout.swift */; };
+		BAFD041C2091D62A009D132A /* Chat.ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFD041B2091D62A009D132A /* Chat.ContentView.swift */; };
+		BAFD041E2091ED5C009D132A /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFD041D2091ED5C009D132A /* UIColor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -123,6 +126,9 @@
 		BAA2ECC42091916E00C6F577 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		BAA2ECC62091918000C6F577 /* Settings.View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.View.swift; sourceTree = "<group>"; };
 		BAA2ECC8209191AD00C6F577 /* Settings.ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.ContentView.swift; sourceTree = "<group>"; };
+		BAFD04192091C995009D132A /* Chat.NodeLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.NodeLayout.swift; sourceTree = "<group>"; };
+		BAFD041B2091D62A009D132A /* Chat.ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.ContentView.swift; sourceTree = "<group>"; };
+		BAFD041D2091ED5C009D132A /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		D6E5B6B7A8C93248B230FF43 /* Pods-WALL-E.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WALL-E.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WALL-E/Pods-WALL-E.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -267,6 +273,7 @@
 				BA013C96208DD8EC004689F0 /* Observable.swift */,
 				BAA2EC9F208F34DD00C6F577 /* UIViewController.swift */,
 				BAA2ECAF2090A0A000C6F577 /* UIView.swift */,
+				BAFD041D2091ED5C009D132A /* UIColor.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -320,6 +327,7 @@
 				BAA2ECBD2090E11C00C6F577 /* Node */,
 				BAA2EC93208F172800C6F577 /* Chat.swift */,
 				BAA2EC95208F173500C6F577 /* Chat.View.swift */,
+				BAFD041B2091D62A009D132A /* Chat.ContentView.swift */,
 				BAA2ECA7208F821A00C6F577 /* Chat.Presenter.swift */,
 				BAA2EC9D208F1F9800C6F577 /* Chat.Transition.swift */,
 				BAA2ECA3208F5A2000C6F577 /* Chat.HeaderView.swift */,
@@ -351,6 +359,7 @@
 			isa = PBXGroup;
 			children = (
 				BAA2ECBE2090E12E00C6F577 /* Chat.Node.swift */,
+				BAFD04192091C995009D132A /* Chat.NodeLayout.swift */,
 			);
 			path = Node;
 			sourceTree = "<group>";
@@ -488,6 +497,7 @@
 				"${BUILT_PRODUCTS_DIR}/JGProgressHUD/JGProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/LayoutKit/LayoutKit.framework",
+				"${BUILT_PRODUCTS_DIR}/MessageListener/MessageListener.framework",
 				"${BUILT_PRODUCTS_DIR}/R.swift.Library/Rswift.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
@@ -502,6 +512,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JGProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/LayoutKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MessageListener.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Rswift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
@@ -562,12 +573,14 @@
 				BA3CCD89208C82B90000D639 /* Main.Contacts.View.swift in Sources */,
 				BA3CCD79208B99820000D639 /* Main.View.swift in Sources */,
 				BAA2ECAE20906ABF00C6F577 /* CrossSizeHittableView.swift in Sources */,
+				BAFD041A2091C995009D132A /* Chat.NodeLayout.swift in Sources */,
 				BAA2EC9E208F1F9800C6F577 /* Chat.Transition.swift in Sources */,
 				BAA2ECB92090CEA100C6F577 /* PreferenceStore.swift in Sources */,
 				BA3CCD87208C76180000D639 /* Disposable.swift in Sources */,
 				BA3CCD84208BB4C80000D639 /* Operators.swift in Sources */,
 				BA3CCD7C208B99EA0000D639 /* Main.SegmentControl.swift in Sources */,
 				BAA2ECA2208F3AB300C6F577 /* WeakArray.swift in Sources */,
+				BAFD041C2091D62A009D132A /* Chat.ContentView.swift in Sources */,
 				BAA2ECC9209191AD00C6F577 /* Settings.ContentView.swift in Sources */,
 				BA013C91208DAFEA004689F0 /* Main.Conversations.Item.swift in Sources */,
 				BAA2ECC52091916E00C6F577 /* Settings.swift in Sources */,
@@ -581,6 +594,7 @@
 				BAA2EC96208F173600C6F577 /* Chat.View.swift in Sources */,
 				BAA2ECC72091918100C6F577 /* Settings.View.swift in Sources */,
 				BA3CCD94208CA5040000D639 /* Root.View.swift in Sources */,
+				BAFD041E2091ED5C009D132A /* UIColor.swift in Sources */,
 				BA3CCD99208CCE910000D639 /* Menu.View.swift in Sources */,
 				BA3CCD97208CCE7B0000D639 /* Menu.swift in Sources */,
 				BAA2ECA6208F7A8E00C6F577 /* Chat.InputView.swift in Sources */,
