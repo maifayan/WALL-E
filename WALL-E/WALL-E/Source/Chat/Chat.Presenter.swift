@@ -23,18 +23,33 @@ extension Chat {
         }
         
         deinit {
+            log()
             YYTextKeyboardManager.default()?.remove(self)
         }
         
         // Keyboard
         typealias KeyboardChangedInfo = (constant: CGFloat, duration: TimeInterval, animationOptions: UIViewAnimationOptions)
-
-        // ContentView Refresh
         private let _keyboardChangedSubject = PublishSubject<KeyboardChangedInfo>()
-        private(set) lazy var refreshContentView: Observable<ContentViewRefreshing> = _makeRefresh()
-        
+
         // Node Event
         private let _nodeEventSubject = PublishSubject<NodeEvent>()
+        
+        // ContentView Refresh
+        
+        // ContentView Refresh
+        private(set) lazy var refreshContentView: Observable<ContentViewRefreshing> = _makeRefresh()
+        private let _scrollToBottomSubject = PublishSubject<()>()
+    }
+}
+
+// MARK: - Open Methods
+extension Chat.Presenter {
+    func dismissKeyboard() {
+        _chatView?.view.endEditing(true)
+    }
+    
+    func scrollToBottom() {
+        _scrollToBottomSubject.onNext(())
     }
 }
 
@@ -48,8 +63,9 @@ private extension Chat.Presenter {
             }
             return Disposables.create()
         }
-        let scroll: Observable<ContentViewRefreshing> = _keyboardChangedSubject.asObserver().map { .scroll($0) }
-        return Observable.merge(nodes, scroll)
+        let scroll: Observable<ContentViewRefreshing> = _keyboardChangedSubject.asObserver().map { .scrollWithKeyboard($0) }
+        let scrollToBottom: Observable<ContentViewRefreshing> = _scrollToBottomSubject.map { .scrollToBottom }
+        return Observable.merge(nodes, scroll, scrollToBottom)
     }
 }
 
@@ -88,17 +104,14 @@ extension Chat.Presenter: YYTextKeyboardObserver {
             })
         }).disposed(by: rx.disposeBag)
     }
-    
-    func dismissKeyboard() {
-        _chatView?.view.endEditing(true)
-    }
 }
 
 // MARK: - Events
 extension Chat.Presenter {
     enum ContentViewRefreshing {
         case nodes(layouts: [Layout], batchUpdates: BatchUpdates?)
-        case scroll(KeyboardChangedInfo)
+        case scrollWithKeyboard(KeyboardChangedInfo)
+        case scrollToBottom
     }
     
     enum NodeEvent {
@@ -109,6 +122,22 @@ extension Chat.Presenter {
 extension Chat.Presenter {
     func makeTestNode() -> [Layout] {
         let texts = [
+            "今天天气不错哦",
+            "今天天气不错哦",
+            "今天天气不错哦",
+            "今天我寒夜里看雪飘过怀着冷却了的心窝票远方，风雨里追赶夜里分不清影踪天空海阔你与我可会边谁没在变",
+            "原谅我这一生不羁放纵爱自由",
+            "也会怕有一天会跌倒",
+            "背弃了理想谁人都可以",
+            "也会怕有一天只你共我",
+            "今天天气不错哦",
+            "今天我寒夜里看雪飘过怀着冷却了的心窝票远方，风雨里追赶夜里分不清影踪天空海阔你与我可会边谁没在变",
+            "原谅我这一生不羁放纵爱自由",
+            "也会怕有一天会跌倒",
+            "背弃了理想谁人都可以",
+            "也会怕有一天只你共我",
+            "背弃了理想谁人都可以",
+            "也会怕有一天只你共我",
             "今天天气不错哦",
             "今天我寒夜里看雪飘过怀着冷却了的心窝票远方，风雨里追赶夜里分不清影踪天空海阔你与我可会边谁没在变",
             "原谅我这一生不羁放纵爱自由",

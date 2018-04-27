@@ -19,6 +19,10 @@ extension Chat {
             transitioningDelegate = _transition
         }
         
+        deinit {
+            log()
+        }
+        
         required init?(coder aDecoder: NSCoder) {
             fatalError("init(coder:) has not been implemented")
         }
@@ -31,9 +35,23 @@ extension Chat {
             switch event {
             case .tap:
                 self?._presenter.dismissKeyboard()
+            case .scrollTooFar(let flag):
+                self?._scrollBottomButton.isHidden = !flag
             }
         }
         
+        private lazy var _scrollBottomButton: UIButton = { (callback: @escaping () -> ()) in
+            let button = UIButton(type: .system)
+            button.isHidden = true
+            button.ui.adapt(themeKeyPath: \.mainColor, for: \.tintColor)
+            button.setImage(R.image.scroll_bottom()?.withRenderingMode(.alwaysTemplate), for: .normal)
+            button.setShadow(color: .gray, offSet: .init(width: 1, height: 1), radius: 2, opacity: 0.6)
+            button.on(.touchUpInside) { _ in callback() }
+            return button
+        } { [weak self] in
+            self?._presenter.scrollToBottom()
+        }
+
         private lazy var _inputView = InputView { content in
             switch content {
             case let .text(text):
@@ -67,12 +85,14 @@ private extension Chat.View {
         add(_headerView)
         add(_contentView)
         add(_inputView)
+        view.addSubview(_scrollBottomButton)
     }
     
     func _layoutViews() {
         _headerView.view.translatesAutoresizingMaskIntoConstraints = false
         _inputView.view.translatesAutoresizingMaskIntoConstraints = false
         _contentView.view.translatesAutoresizingMaskIntoConstraints = false
+        _scrollBottomButton.translatesAutoresizingMaskIntoConstraints = false
 
         let inputViewBottomAnchor: NSLayoutYAxisAnchor = {
             if #available(iOS 11, *) {
@@ -98,8 +118,10 @@ private extension Chat.View {
             
             _inputView.view.leftAnchor.constraint(equalTo: view.leftAnchor),
             _inputView.view.rightAnchor.constraint(equalTo: view.rightAnchor),
-
-            inputViewBottomConstraint
+            inputViewBottomConstraint,
+            
+            _scrollBottomButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -28),
+            _scrollBottomButton.bottomAnchor.constraint(equalTo: _inputView.view.topAnchor, constant: -20)
         ])
     }
 }

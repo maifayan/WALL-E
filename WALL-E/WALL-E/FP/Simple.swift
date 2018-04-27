@@ -28,6 +28,12 @@ func const<A, B>(_ v: @escaping () -> B) -> (A) -> B {
     return { _ in v() }
 }
 
+func id<T>(_ v: T) -> T { return v }
+
+func merge<T>(_ l: @escaping (T) -> (), _ r: @escaping (T) -> ()) -> (T) -> () {
+    return { l($0); r($0) }
+}
+
 // Tuple
 func first<A, B>(_ tuple: (A, B)) -> A { return tuple.0 }
 func second<A, B>(_ tuple: (A, B)) -> B { return tuple.1 }

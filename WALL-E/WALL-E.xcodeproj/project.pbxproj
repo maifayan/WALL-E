@@ -61,6 +61,7 @@
 		BAFD041A2091C995009D132A /* Chat.NodeLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFD04192091C995009D132A /* Chat.NodeLayout.swift */; };
 		BAFD041C2091D62A009D132A /* Chat.ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFD041B2091D62A009D132A /* Chat.ContentView.swift */; };
 		BAFD041E2091ED5C009D132A /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFD041D2091ED5C009D132A /* UIColor.swift */; };
+		BAFF8DEC2093238500BFB1BF /* log.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFF8DEB2093238500BFB1BF /* log.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -133,6 +134,7 @@
 		BAFD04192091C995009D132A /* Chat.NodeLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.NodeLayout.swift; sourceTree = "<group>"; };
 		BAFD041B2091D62A009D132A /* Chat.ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.ContentView.swift; sourceTree = "<group>"; };
 		BAFD041D2091ED5C009D132A /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
+		BAFF8DEB2093238500BFB1BF /* log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = log.swift; sourceTree = "<group>"; };
 		D6E5B6B7A8C93248B230FF43 /* Pods-WALL-E.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WALL-E.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WALL-E/Pods-WALL-E.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -315,7 +317,7 @@
 			isa = PBXGroup;
 			children = (
 				BAA2ECC32091915000C6F577 /* Settings */,
-				BAA2ECBA2090DCD900C6F577 /* Config */,
+				BAA2ECBA2090DCD900C6F577 /* Global */,
 				BAA2EC90208F16C100C6F577 /* Chat */,
 				BA013C9B208DE5EA004689F0 /* Profile */,
 				BA3CCD95208CCE6F0000D639 /* Menu */,
@@ -360,11 +362,12 @@
 			path = Launch;
 			sourceTree = "<group>";
 		};
-		BAA2ECBA2090DCD900C6F577 /* Config */ = {
+		BAA2ECBA2090DCD900C6F577 /* Global */ = {
 			isa = PBXGroup;
 			children = (
+				BAFF8DEB2093238500BFB1BF /* log.swift */,
 			);
-			path = Config;
+			path = Global;
 			sourceTree = "<group>";
 		};
 		BAA2ECBD2090E11C00C6F577 /* Node */ = {
@@ -598,6 +601,7 @@
 				BAA2ECA2208F3AB300C6F577 /* WeakArray.swift in Sources */,
 				BAFD041C2091D62A009D132A /* Chat.ContentView.swift in Sources */,
 				BAA2ECC9209191AD00C6F577 /* Settings.ContentView.swift in Sources */,
+				BAFF8DEC2093238500BFB1BF /* log.swift in Sources */,
 				BA013C91208DAFEA004689F0 /* Main.Conversations.Item.swift in Sources */,
 				BAA2ECC52091916E00C6F577 /* Settings.swift in Sources */,
 				BAA2ECA8208F821A00C6F577 /* Chat.Presenter.swift in Sources */,

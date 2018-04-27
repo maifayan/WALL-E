@@ -16,6 +16,10 @@ extension Settings {
             modalTransitionStyle = .crossDissolve
         }
         
+        deinit {
+            log()
+        }
+        
         required init?(coder aDecoder: NSCoder) {
             fatalError("init(coder:) has not been implemented")
         }

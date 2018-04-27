@@ -24,6 +24,10 @@ extension Settings {
         }()
         
         private let _model = Model()
+        
+        deinit {
+            log()
+        }
     }
 }
 
@@ -77,6 +81,10 @@ private extension Settings.ContentView {
             super.init(style: .grouped)
         }
         
+        deinit {
+            log()
+        }
+
         required init?(coder aDecoder: NSCoder) {
             fatalError("init(coder:) has not been implemented")
         }
@@ -91,13 +99,15 @@ private extension Settings.ContentView {
             tableView.separatorStyle = .none
             tableView.tableHeaderView = UIView()
             tableView.showsVerticalScrollIndicator = false
+            
+            _setupTheme()
             _setupForm()
         }
     }
 }
 
 private extension Settings.ContentView._FormView {
-    func _setupForm() {
+    func _setupTheme() {
         let dark: (UIColor) -> UIColor = { color in
             let magicNum: CGFloat = 20 / 255
             return color.trim {
@@ -107,26 +117,49 @@ private extension Settings.ContentView._FormView {
             }
         }
         
+        func adaptThemeMainColor(_ label: UILabel?) {
+            label?.ui.adapt(themeKeyPath: \.mainColor, for: \.textColor) { dark($0) }
+        }
+        
         NameRow.defaultCellUpdate = { cell, _ in
-            cell.titleLabel?.ui.adapt(themeKeyPath: \.mainColor, for: \.textColor) { dark($0) }
+            adaptThemeMainColor(cell.titleLabel)
             cell.textField.textColor = .gray
         }
         PhoneRow.defaultCellUpdate = { cell, _ in
-            cell.titleLabel?.ui.adapt(themeKeyPath: \.mainColor, for: \.textColor) { dark($0) }
+            adaptThemeMainColor(cell.titleLabel)
             cell.textField.textColor = .gray
         }
         LabelRow.defaultCellUpdate = { cell, _ in
-            cell.textLabel?.ui.adapt(themeKeyPath: \.mainColor, for: \.textColor) { dark($0) }
+            adaptThemeMainColor(cell.textLabel)
         }
         SwitchRow.defaultCellUpdate = { cell, _ in
-            cell.textLabel?.ui.adapt(themeKeyPath: \.mainColor, for: \.textColor) { dark($0) }
+            adaptThemeMainColor(cell.textLabel)
         }
         CheckRow.defaultCellUpdate = { cell, _ in
-            cell.textLabel?.ui.adapt(themeKeyPath: \.mainColor, for: \.textColor) { dark($0) }
+            adaptThemeMainColor(cell.textLabel)
             cell.tintColor = .gray
         }
-        
+    }
+    
+    func _setupForm() {
         let model = _model
+        func onChange<T, C: Cell<T>, R: Row<C>, O>(val: BehaviorRelay<O>, filter: ((T) -> Bool)? = nil, mapper: @escaping (T) -> O) -> (R) -> () {
+            return { row in
+                guard let value = row.value else { return }
+                if let filter = filter, !filter(value) { return }
+                value |> mapper >>> val.accept
+            }
+        }
+
+        func subscribe<T, C: Cell<O>, R: Row<C>, O>(row: R, val: BehaviorRelay<T>, mapper: @escaping (T) -> O) {
+            let refresh: (T) -> () = { [weak row] in
+                let newValue = mapper($0)
+                guard row?.value != newValue else { return }
+                row?.value = newValue
+                row?.updateCell()
+            }
+            val.subscribeOnMain(onNext: refresh).disposed(by: row.cell.rx.disposeBag)
+        }
 
         form +++ Section("Profile")
             <<< NameRow() { row in
@@ -143,36 +176,29 @@ private extension Settings.ContentView._FormView {
         +++ Section("Enter key options")
             <<< CheckRow() { row in
                 row.title = "Send"
-                row.onChange { row in
-                    guard let value = row.value else { return }
-                    model.enterKeyOption.left(value ? .send : .newline)
-                }
-                model.enterKeyOption.right = { [weak row] in
-                    let value = $0 == .send
-                    if row?.value != value { row?.value = value }
-                }
+                row.onChange(
+                    merge(
+                        onChange(val: model.enterKeyOptionsVal, filter: { $0 == true }, mapper: const(.send)),
+                        { $0.cell.isUserInteractionEnabled = $0.value == false }
+                    )
+                )
+                row.cellSetup { subscribe(row: $1, val: model.enterKeyOptionsVal) { $0 == .send } }
             }
             <<< CheckRow() { row in
                 row.title = "Newline"
-                row.onChange { row in
-                    guard let value = row.value else { return }
-                    model.enterKeyOption.left(value ? .newline : .send)
-                }
-                model.enterKeyOption.right = { [weak row, weak model] in
-                    let value = $0 == .newline
-                    if row?.value != value { row?.value = value }
-                }
+                row.onChange(
+                    merge(
+                        onChange(val: model.enterKeyOptionsVal, filter: { $0 == true }, mapper: const(.newline)),
+                        { $0.cell.isUserInteractionEnabled = $0.value == false }
+                    )
+                )
+                row.cellSetup { subscribe(row: $1, val: model.enterKeyOptionsVal) { $0 == .newline } }
             }
         +++ Section()
             <<< SwitchRow() { row in
                 row.title = "Show message date"
-                row.onChange { row in
-                    guard let value = row.value else { return }
-                    model.showMessageDate.left(value)
-                }
-                model.showMessageDate.right = { [weak row] in
-                    row?.value = $0
-                }
+                row.onChange(onChange(val: model.showDateVal, mapper: id))
+                row.cellSetup { subscribe(row: $1, val: model.showDateVal, mapper: id) }
             }
         +++ Section()
             <<< LabelRow() { row in

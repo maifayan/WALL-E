@@ -31,7 +31,7 @@ struct R: Rswift.Validatable {
     fileprivate init() {}
   }
   
-  /// This `R.image` struct is generated, and contains static references to 11 images.
+  /// This `R.image` struct is generated, and contains static references to 12 images.
   struct image {
     /// Image `chat_back`.
     static let chat_back = Rswift.ImageResource(bundle: R.hostingBundle, name: "chat_back")
@@ -55,6 +55,8 @@ struct R: Rswift.Validatable {
     static let menu = Rswift.ImageResource(bundle: R.hostingBundle, name: "menu")
     /// Image `robot`.
     static let robot = Rswift.ImageResource(bundle: R.hostingBundle, name: "robot")
+    /// Image `scroll_bottom`.
+    static let scroll_bottom = Rswift.ImageResource(bundle: R.hostingBundle, name: "scroll_bottom")
     
     /// `UIImage(named: "chat", bundle: ..., traitCollection: ...)`
     static func chat(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
@@ -109,6 +111,11 @@ struct R: Rswift.Validatable {
     /// `UIImage(named: "robot", bundle: ..., traitCollection: ...)`
     static func robot(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
       return UIKit.UIImage(resource: R.image.robot, compatibleWith: traitCollection)
+    }
+    
+    /// `UIImage(named: "scroll_bottom", bundle: ..., traitCollection: ...)`
+    static func scroll_bottom(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
+      return UIKit.UIImage(resource: R.image.scroll_bottom, compatibleWith: traitCollection)
     }
     
     fileprivate init() {}

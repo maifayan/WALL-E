@@ -7,31 +7,28 @@
 //
 
 import Foundation
+import RxSwift
+import RxCocoa
 
 extension Settings {
     final class Model {
-        let showMessageDate: Pipe<Bool> = Pipe { Settings.showMessageDate = $0 }
-        private(set) lazy var enterKeyOption: Pipe<EnterKeyOptions> = Pipe { [weak self] in Settings.enterKeyOptions = $0; self?.enterKeyOption.right?($0) }
+        typealias Val<T> = BehaviorRelay<T>
         
-        init() { }
+        let enterKeyOptionsVal = BehaviorRelay<EnterKeyOptions>(value: .send)
+        let showDateVal = BehaviorRelay(value: false)
         
         func loadSettings() {
-            enterKeyOption.right?(Settings.enterKeyOptions)
-            showMessageDate.right?(Settings.showMessageDate)
+            enterKeyOptionsVal.accept(Settings.enterKeyOptions)
+            showDateVal.accept(Settings.showMessageDate)
+            
+            enterKeyOptionsVal.subscribe(onNext: { Settings.enterKeyOptions = $0 }).disposed(by: _bag)
+            showDateVal.subscribe(onNext: { Settings.showMessageDate = $0 }).disposed(by: _bag)
         }
-    }
-}
-
-private extension Settings.Model {
-}
-
-extension Settings.Model {
-    final class Pipe<T> {
-        let left: (T) -> ()
-        var right: ((T) -> ())?
         
-        init(left: @escaping (T) -> ()) {
-            self.left = left
+        deinit {
+            log()
         }
+        
+        private let _bag = DisposeBag()
     }
 }

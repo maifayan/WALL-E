@@ -23,6 +23,7 @@ private extension AppDelegate {
     func _setupWindow() {
         let window = UIWindow(frame: UIScreen.main.bounds)
         window.ui.adapt(themeKeyPath: \.mainColor, for: \.backgroundColor)
+        _setupRootViewController()
         window.rootViewController = LaunchViewController.obtainInstance { [weak self] in
             self?._setupRootViewController()
         }
