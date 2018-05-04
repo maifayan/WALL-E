@@ -1,6 +1,9 @@
 use_frameworks!
 
 target 'WALL-E' do
+  # gRPC
+  pod 'EVE', :path => '.'
+
   pod 'RxSwift'
   pod 'RxCocoa'
   pod 'LayoutKit'

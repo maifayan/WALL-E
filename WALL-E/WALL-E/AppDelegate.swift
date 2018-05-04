@@ -12,9 +12,17 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
+    // Just for test
+    private var _connecter: EVE.Connecter!
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         _setupGlobalConfig()
         _setupWindow()
+        
+        
+        // Just for test
+        _connecter = EVE.Connecter()
+        _connecter.connect()
         return true
     }
 }

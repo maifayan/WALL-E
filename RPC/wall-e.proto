@@ -1,0 +1,119 @@
+
+syntax = "proto3";
+import public "google/protobuf/timestamp.proto";
+
+package rpc;
+
+option objc_class_prefix = "EVE";
+
+message Unit {
+}
+
+// Connecter
+service Connecter {
+  rpc Connect (stream BabyMessage) returns (stream Event) {}
+}
+
+message Event {
+  oneof content {
+    Message message = 1;
+    ContactUpdate contactUpdate = 2;
+  }
+}
+
+message BabyMessage {
+  string receiver = 2;
+  string content = 3;
+}
+
+message Message {
+  string id = 1;
+  string sender = 2;
+  string receiver = 3;
+  string content = 4;
+  google.protobuf.Timestamp createdAt = 5;
+  google.protobuf.Timestamp updatedAt = 6;
+}
+
+message ContactUpdate {
+  Contact contact = 1;
+}
+
+// Account(login/register)
+service AccountService {
+  rpc Register (UserRegisterInfo) returns (Unit) {}
+  rpc Create (RobotCreateInfo) returns (Contact) {}
+  rpc Login (LoginInfo) returns (LoginResult) {}
+}
+
+message LoginInfo {
+  string nameOrPhone = 1;
+  string password = 2;
+}
+
+message LoginResult {
+  string token = 1;
+  Contact contact = 2;
+}
+
+message UserRegisterInfo {
+  string phone = 1;
+  string name = 2;
+  string iconURL = 3;
+  string password = 4;
+}
+
+message RobotCreateInfo {
+  string name = 1;
+  string iconURL = 2;
+}
+
+// Sync
+service Sync {
+  rpc SyncContacts (google.protobuf.Timestamp) returns (ContactsSyncResp) {}
+  rpc SyncMessages (google.protobuf.Timestamp) returns (MessagesSyncResp) {}
+}
+
+message MessagesSyncResp {
+  repeated Message messages = 1;
+}
+
+message ContactsSyncResp {
+  repeated Contact contacts = 1;
+}
+
+// Update
+service Update {
+  rpc UpdateMember (MemberUpdateInfo) returns (Unit) {}
+  rpc UpdateRobot (RobotUpdateInfo) returns (Unit) {}
+}
+
+message MemberUpdateInfo {
+  string name = 1;
+  string iconURL = 2;
+  string phone = 3;
+}
+
+message RobotUpdateInfo {
+  string id = 1;
+  string name = 2;
+  string iconURL = 3;
+}
+
+// Contact
+message Contact {
+  enum Type {
+    ROBOT = 0;
+    MEMBER = 1;
+  }
+
+  string id = 1;
+  Type type = 2;
+  string name = 3;
+  string iconURL = 4;
+  string phone = 5;
+  bool isOnline = 6;
+  string token = 7;
+  google.protobuf.Timestamp createdAt = 8;
+  google.protobuf.Timestamp updatedAt = 9;
+}
