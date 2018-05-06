@@ -4,6 +4,7 @@ target 'WALL-E' do
   # gRPC
   pod 'EVE', :path => '.'
 
+  pod 'RealmSwift'
   pod 'RxSwift'
   pod 'RxCocoa'
   pod 'LayoutKit'

@@ -54,6 +54,11 @@ PODS:
   - R.swift (4.0.0):
     - R.swift.Library (~> 4.0.0)
   - R.swift.Library (4.0.0)
+  - Realm (3.3.2):
+    - Realm/Headers (= 3.3.2)
+  - Realm/Headers (3.3.2)
+  - RealmSwift (3.3.2):
+    - Realm (= 3.3.2)
   - RxCocoa (4.1.2):
     - RxSwift (~> 4.0)
   - RxSwift (4.1.2)
@@ -70,6 +75,7 @@ DEPENDENCIES:
   - LayoutKit
   - MessageListener
   - R.swift
+  - RealmSwift
   - RxCocoa
   - RxSwift
   - Tactile
@@ -95,6 +101,8 @@ SPEC REPOS:
     - Protobuf
     - R.swift
     - R.swift.Library
+    - Realm
+    - RealmSwift
     - RxCocoa
     - RxSwift
     - Tactile
@@ -124,6 +132,8 @@ SPEC CHECKSUMS:
   Protobuf: 8a9838fba8dae3389230e1b7f8c104aa32389c03
   R.swift: d6a5ec2f55a8441dc0ed9f1f8b37d7d11ae85c66
   R.swift.Library: c3af34921024333546e23b70e70d0b4e0cffca75
+  Realm: d927fbf66df5532cfafc08afb5f7e53ded37b894
+  RealmSwift: 4e903a494e05d866581d69ad6f7e7b879d446baf
   RxCocoa: d88ba0f1f6abf040011a9eb4b539324fc426843a
   RxSwift: e49536837d9901277638493ea537394d4b55f570
   Tactile: 22d5686693be17568351b95aa83ef37457cd40f4
@@ -131,6 +141,6 @@ SPEC CHECKSUMS:
   WXWaveView: f8424284812536a3842bc5dd9afb943e53e911a8
   YYText: 5c461d709e24d55a182d1441c41dc639a18a4849
 
-PODFILE CHECKSUM: bfa67ba814e60b1b6be9138a38001dba1589067f
+PODFILE CHECKSUM: 8e54c4947dfd532c0a935888fa2aa3b25696cd3a
 
 COCOAPODS: 1.5.0

@@ -20,9 +20,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _setupWindow()
         
         
-        // Just for test
-        _connecter = EVE.Connecter()
-        _connecter.connect()
+//        // Just for test
+//        _connecter = EVE.Connecter()
+//        _connecter.connect()
+//        let context = Context(token: "", uid: "")
+//        do {
+//            let auto = try Auto(context)
+//            print(auto)
+//            print("ok")
+//        } catch {
+//            print(error)
+//        }
         return true
     }
 }
@@ -32,9 +40,10 @@ private extension AppDelegate {
         let window = UIWindow(frame: UIScreen.main.bounds)
         window.ui.adapt(themeKeyPath: \.mainColor, for: \.backgroundColor)
         _setupRootViewController()
-        window.rootViewController = LaunchViewController.obtainInstance { [weak self] in
-            self?._setupRootViewController()
-        }
+//        window.rootViewController = LaunchViewController.obtainInstance { [weak self] in
+//            self?._setupRootViewController()
+//        }
+        window.rootViewController = Login.View()
         window.makeKeyAndVisible()
         self.window = window
     }

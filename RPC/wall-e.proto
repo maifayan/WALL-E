@@ -11,21 +11,36 @@ message Unit {
 
 // Connecter
 service Connecter {
-  rpc Connect (stream BabyMessage) returns (stream Event) {}
+  rpc Connect (stream ClientEvent) returns (stream ServiceEvent) {}
 }
 
-message Event {
+message ClientEvent {
   oneof content {
-    Message message = 1;
-    ContactUpdate contactUpdate = 2;
+    BabyMessage message = 1;
+    string typingTo = 2;
   }
 }
 
-message BabyMessage {
-  string receiver = 2;
-  string content = 3;
+message ServiceEvent {
+  oneof content {
+    Message message = 1;
+    ContactUpdate contactUpdate = 2;
+    Typing typing = 3;
+  }
 }
 
+// Sent by client
+message BabyMessage {
+  string receiver = 1;
+  string content = 2;
+}
+
+message Typing {
+  string sender = 1;
+  string receiver = 2;
+}
+
+// Sent by service
 message Message {
   string id = 1;
   string sender = 2;
@@ -42,7 +57,6 @@ message ContactUpdate {
 // Account(login/register)
 service AccountService {
   rpc Register (UserRegisterInfo) returns (Unit) {}
-  rpc Create (RobotCreateInfo) returns (Contact) {}
   rpc Login (LoginInfo) returns (LoginResult) {}
 }
 
@@ -86,6 +100,7 @@ message ContactsSyncResp {
 service Update {
   rpc UpdateMember (MemberUpdateInfo) returns (Unit) {}
   rpc UpdateRobot (RobotUpdateInfo) returns (Unit) {}
+  rpc Create (RobotCreateInfo) returns (Contact) {}
 }
 
 message MemberUpdateInfo {
@@ -117,3 +132,4 @@ message Contact {
   google.protobuf.Timestamp createdAt = 8;
   google.protobuf.Timestamp updatedAt = 9;
 }
+

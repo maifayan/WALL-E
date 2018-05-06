@@ -15,7 +15,7 @@ extension EVE {
     final class Connecter {
         private let _service: EVEConnecter
         
-        init() {
+        init(_ context: Context) {
             GRPCCall.useInsecureConnections(forHost: EVE.Config.address)
             _service = EVEConnecter(host: EVE.Config.address)
         }
@@ -36,6 +36,7 @@ extension EVE.Connecter {
             guard let event = event else { return }
             print(event)
         }
+        call.timeout = EVE.Config.timeout
         call.requestHeaders["authorization"] = token
         call.start()
     }

@@ -31,8 +31,10 @@ struct R: Rswift.Validatable {
     fileprivate init() {}
   }
   
-  /// This `R.image` struct is generated, and contains static references to 12 images.
+  /// This `R.image` struct is generated, and contains static references to 13 images.
   struct image {
+    /// Image `account_ok`.
+    static let account_ok = Rswift.ImageResource(bundle: R.hostingBundle, name: "account_ok")
     /// Image `chat_back`.
     static let chat_back = Rswift.ImageResource(bundle: R.hostingBundle, name: "chat_back")
     /// Image `chat_images`.
@@ -57,6 +59,11 @@ struct R: Rswift.Validatable {
     static let robot = Rswift.ImageResource(bundle: R.hostingBundle, name: "robot")
     /// Image `scroll_bottom`.
     static let scroll_bottom = Rswift.ImageResource(bundle: R.hostingBundle, name: "scroll_bottom")
+    
+    /// `UIImage(named: "account_ok", bundle: ..., traitCollection: ...)`
+    static func account_ok(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
+      return UIKit.UIImage(resource: R.image.account_ok, compatibleWith: traitCollection)
+    }
     
     /// `UIImage(named: "chat", bundle: ..., traitCollection: ...)`
     static func chat(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
@@ -121,10 +128,12 @@ struct R: Rswift.Validatable {
     fileprivate init() {}
   }
   
-  /// This `R.nib` struct is generated, and contains static references to 4 nibs.
+  /// This `R.nib` struct is generated, and contains static references to 5 nibs.
   struct nib {
     /// Nib `LaunchViewController`.
     static let launchViewController = _R.nib._LaunchViewController()
+    /// Nib `LoginView`.
+    static let loginView = _R.nib._LoginView()
     /// Nib `MenuContentView`.
     static let menuContentView = _R.nib._MenuContentView()
     /// Nib `ProfileHeaderView`.
@@ -135,6 +144,11 @@ struct R: Rswift.Validatable {
     /// `UINib(name: "LaunchViewController", in: bundle)`
     static func launchViewController(_: Void = ()) -> UIKit.UINib {
       return UIKit.UINib(resource: R.nib.launchViewController)
+    }
+    
+    /// `UINib(name: "LoginView", in: bundle)`
+    static func loginView(_: Void = ()) -> UIKit.UINib {
+      return UIKit.UINib(resource: R.nib.loginView)
     }
     
     /// `UINib(name: "MenuContentView", in: bundle)`
@@ -205,6 +219,7 @@ struct _R: Rswift.Validatable {
     static func validate() throws {
       try _MenuContentView.validate()
       try _LaunchViewController.validate()
+      try _LoginView.validate()
     }
     
     struct _LaunchViewController: Rswift.NibResourceType, Rswift.Validatable {
@@ -217,6 +232,25 @@ struct _R: Rswift.Validatable {
       
       static func validate() throws {
         if UIKit.UIImage(named: "robot", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'robot' is used in nib 'LaunchViewController', but couldn't be loaded.") }
+      }
+      
+      fileprivate init() {}
+    }
+    
+    struct _LoginView: Rswift.NibResourceType, Rswift.Validatable {
+      let bundle = R.hostingBundle
+      let name = "LoginView"
+      
+      func firstView(owner ownerOrNil: AnyObject?, options optionsOrNil: [NSObject : AnyObject]? = nil) -> LoginView? {
+        return instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? LoginView
+      }
+      
+      func secondView(owner ownerOrNil: AnyObject?, options optionsOrNil: [NSObject : AnyObject]? = nil) -> UIKit.UIView? {
+        return instantiate(withOwner: ownerOrNil, options: optionsOrNil)[1] as? UIKit.UIView
+      }
+      
+      static func validate() throws {
+        if UIKit.UIImage(named: "robot", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'robot' is used in nib 'LoginView', but couldn't be loaded.") }
       }
       
       fileprivate init() {}
