@@ -18,4 +18,5 @@ target 'WALL-E' do
   pod 'Eureka'
   pod 'MessageListener'
   pod 'KYCircularProgress'
+  pod 'Qiniu'
 end

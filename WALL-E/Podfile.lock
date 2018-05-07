@@ -41,6 +41,7 @@ PODS:
   - gRPC/Main (1.10.0):
     - gRPC-Core (= 1.10.0)
     - gRPC-RxLibrary (= 1.10.0)
+  - HappyDNS (0.3.14)
   - JGProgressHUD (2.0.2)
   - Kingfisher (4.7.0)
   - KYCircularProgress (1.1.0)
@@ -52,6 +53,8 @@ PODS:
   - nanopb/decode (0.3.8)
   - nanopb/encode (0.3.8)
   - Protobuf (3.5.0)
+  - Qiniu (7.2.3):
+    - HappyDNS (~> 0.3)
   - R.swift (4.0.0):
     - R.swift.Library (~> 4.0.0)
   - R.swift.Library (4.0.0)
@@ -76,6 +79,7 @@ DEPENDENCIES:
   - KYCircularProgress
   - LayoutKit
   - MessageListener
+  - Qiniu
   - R.swift
   - RealmSwift
   - RxCocoa
@@ -95,6 +99,7 @@ SPEC REPOS:
     - gRPC-Core
     - gRPC-ProtoRPC
     - gRPC-RxLibrary
+    - HappyDNS
     - JGProgressHUD
     - Kingfisher
     - KYCircularProgress
@@ -102,6 +107,7 @@ SPEC REPOS:
     - MessageListener
     - nanopb
     - Protobuf
+    - Qiniu
     - R.swift
     - R.swift.Library
     - Realm
@@ -127,6 +133,7 @@ SPEC CHECKSUMS:
   gRPC-Core: a030b1678ded49c88ec5ba7c90ee8ee5f47ec6e1
   gRPC-ProtoRPC: 22712b23eb1bda656a59715fa5c1da0ea1493ea4
   gRPC-RxLibrary: a41a4652d220f230ba1c0491a94ce2ee04c6180a
+  HappyDNS: dc6a164ee81979093123c241c6353bcf0218add6
   JGProgressHUD: bf75da151936cfd3c9b674afb17e8a5df2e14a7d
   Kingfisher: da6b005aa96d37698e3e4f1ccfe96a5b9bbf27d6
   KYCircularProgress: fc2aae269abf361da970605a7fc904837788e94d
@@ -134,6 +141,7 @@ SPEC CHECKSUMS:
   MessageListener: 03a08e08927aaa5f4191fbb53e8624fd95c31285
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   Protobuf: 8a9838fba8dae3389230e1b7f8c104aa32389c03
+  Qiniu: ae0fea1cc379fae1560d8748ac537e0fbeb8626e
   R.swift: d6a5ec2f55a8441dc0ed9f1f8b37d7d11ae85c66
   R.swift.Library: c3af34921024333546e23b70e70d0b4e0cffca75
   Realm: d927fbf66df5532cfafc08afb5f7e53ded37b894
@@ -145,6 +153,6 @@ SPEC CHECKSUMS:
   WXWaveView: f8424284812536a3842bc5dd9afb943e53e911a8
   YYText: 5c461d709e24d55a182d1441c41dc639a18a4849
 
-PODFILE CHECKSUM: aca3915e139d5bbadd82c3b52b5caad604a14dbb
+PODFILE CHECKSUM: 08e07853f855e90c48af46161de36cfdb25aba23
 
 COCOAPODS: 1.5.0
