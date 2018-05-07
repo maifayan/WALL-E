@@ -17,4 +17,5 @@ target 'WALL-E' do
   pod 'JGProgressHUD'
   pod 'Eureka'
   pod 'MessageListener'
+  pod 'KYCircularProgress'
 end

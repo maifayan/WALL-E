@@ -43,7 +43,7 @@ private extension AppDelegate {
 //        window.rootViewController = LaunchViewController.obtainInstance { [weak self] in
 //            self?._setupRootViewController()
 //        }
-        window.rootViewController = Login.View()
+        window.rootViewController = Account.View()
         window.makeKeyAndVisible()
         self.window = window
     }

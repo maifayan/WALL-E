@@ -43,6 +43,7 @@ PODS:
     - gRPC-RxLibrary (= 1.10.0)
   - JGProgressHUD (2.0.2)
   - Kingfisher (4.7.0)
+  - KYCircularProgress (1.1.0)
   - LayoutKit (7.0.2)
   - MessageListener (1.0.0)
   - nanopb (0.3.8):
@@ -72,6 +73,7 @@ DEPENDENCIES:
   - EVE (from `.`)
   - JGProgressHUD
   - Kingfisher
+  - KYCircularProgress
   - LayoutKit
   - MessageListener
   - R.swift
@@ -95,6 +97,7 @@ SPEC REPOS:
     - gRPC-RxLibrary
     - JGProgressHUD
     - Kingfisher
+    - KYCircularProgress
     - LayoutKit
     - MessageListener
     - nanopb
@@ -126,6 +129,7 @@ SPEC CHECKSUMS:
   gRPC-RxLibrary: a41a4652d220f230ba1c0491a94ce2ee04c6180a
   JGProgressHUD: bf75da151936cfd3c9b674afb17e8a5df2e14a7d
   Kingfisher: da6b005aa96d37698e3e4f1ccfe96a5b9bbf27d6
+  KYCircularProgress: fc2aae269abf361da970605a7fc904837788e94d
   LayoutKit: 183c513f8322f4e22321499e54163864bcdf7d97
   MessageListener: 03a08e08927aaa5f4191fbb53e8624fd95c31285
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
@@ -141,6 +145,6 @@ SPEC CHECKSUMS:
   WXWaveView: f8424284812536a3842bc5dd9afb943e53e911a8
   YYText: 5c461d709e24d55a182d1441c41dc639a18a4849
 
-PODFILE CHECKSUM: 8e54c4947dfd532c0a935888fa2aa3b25696cd3a
+PODFILE CHECKSUM: aca3915e139d5bbadd82c3b52b5caad604a14dbb
 
 COCOAPODS: 1.5.0

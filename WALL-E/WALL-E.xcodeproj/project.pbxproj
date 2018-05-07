@@ -68,8 +68,16 @@
 		BAAFF4DB209D84BD0010CB4C /* Auto.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAAFF4DA209D84BD0010CB4C /* Auto.swift */; };
 		BAE8DF0A209E0D9D0021246E /* EVE.Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE8DF09209E0D9D0021246E /* EVE.Request.swift */; };
 		BAE8DF0C209E0F7F0021246E /* EVE.Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE8DF0B209E0F7F0021246E /* EVE.Account.swift */; };
-		BAE8DF0F209F1B6B0021246E /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE8DF0E209F1B6B0021246E /* Login.swift */; };
+		BAE8DF0F209F1B6B0021246E /* Account.Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE8DF0E209F1B6B0021246E /* Account.Login.swift */; };
 		BAE8DF13209F1E3B0021246E /* LoginView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BAE8DF12209F1E3B0021246E /* LoginView.xib */; };
+		BAE8DF15209F2E810021246E /* RegisterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BAE8DF14209F2E810021246E /* RegisterView.xib */; };
+		BAE8DF17209F2E900021246E /* Account.Register.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE8DF16209F2E900021246E /* Account.Register.swift */; };
+		BAE8DF19209F328B0021246E /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE8DF18209F328B0021246E /* Account.swift */; };
+		BAE8DF1C209FEEF20021246E /* AvatarUploadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE8DF1B209FEEF20021246E /* AvatarUploadView.swift */; };
+		BAE8DF20209FFB610021246E /* ImagePicker+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE8DF1F209FFB610021246E /* ImagePicker+Rx.swift */; };
+		BAE8DF22209FFD950021246E /* MessageListener+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE8DF21209FFD950021246E /* MessageListener+Rx.swift */; };
+		BAE8DF24209FFEB10021246E /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE8DF23209FFEB10021246E /* Error.swift */; };
+		BAE8DF2620A00BB30021246E /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE8DF2520A00BB30021246E /* UIImage.swift */; };
 		BAFD041A2091C995009D132A /* Chat.NodeLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFD04192091C995009D132A /* Chat.NodeLayout.swift */; };
 		BAFD041C2091D62A009D132A /* Chat.ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFD041B2091D62A009D132A /* Chat.ContentView.swift */; };
 		BAFD041E2091ED5C009D132A /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFD041D2091ED5C009D132A /* UIColor.swift */; };
@@ -153,8 +161,16 @@
 		BAAFF4DA209D84BD0010CB4C /* Auto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Auto.swift; sourceTree = "<group>"; };
 		BAE8DF09209E0D9D0021246E /* EVE.Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EVE.Request.swift; sourceTree = "<group>"; };
 		BAE8DF0B209E0F7F0021246E /* EVE.Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EVE.Account.swift; sourceTree = "<group>"; };
-		BAE8DF0E209F1B6B0021246E /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
+		BAE8DF0E209F1B6B0021246E /* Account.Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.Login.swift; sourceTree = "<group>"; };
 		BAE8DF12209F1E3B0021246E /* LoginView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoginView.xib; sourceTree = "<group>"; };
+		BAE8DF14209F2E810021246E /* RegisterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RegisterView.xib; sourceTree = "<group>"; };
+		BAE8DF16209F2E900021246E /* Account.Register.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.Register.swift; sourceTree = "<group>"; };
+		BAE8DF18209F328B0021246E /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
+		BAE8DF1B209FEEF20021246E /* AvatarUploadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarUploadView.swift; sourceTree = "<group>"; };
+		BAE8DF1F209FFB610021246E /* ImagePicker+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImagePicker+Rx.swift"; sourceTree = "<group>"; };
+		BAE8DF21209FFD950021246E /* MessageListener+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageListener+Rx.swift"; sourceTree = "<group>"; };
+		BAE8DF23209FFEB10021246E /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
+		BAE8DF2520A00BB30021246E /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
 		BAFD04192091C995009D132A /* Chat.NodeLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.NodeLayout.swift; sourceTree = "<group>"; };
 		BAFD041B2091D62A009D132A /* Chat.ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.ContentView.swift; sourceTree = "<group>"; };
 		BAFD041D2091ED5C009D132A /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
@@ -274,6 +290,7 @@
 		BA3CCD7D208B9A220000D639 /* Commons */ = {
 			isa = PBXGroup;
 			children = (
+				BAE8DF1A209FEED30021246E /* Controls */,
 				BA3CCD85208C76090000D639 /* Extensions */,
 				BA3CCD7E208B9A500000D639 /* UI.swift */,
 				BA013C92208DC12F004689F0 /* ImageProcessors.swift */,
@@ -281,6 +298,7 @@
 				BAA2ECAD20906ABF00C6F577 /* CrossSizeHittableView.swift */,
 				BAA2ECB82090CEA000C6F577 /* PreferenceStore.swift */,
 				BA8B312B209D93CD007C34CD /* Threads.swift */,
+				BAE8DF23209FFEB10021246E /* Error.swift */,
 			);
 			path = Commons;
 			sourceTree = "<group>";
@@ -305,6 +323,9 @@
 				BAA2EC9F208F34DD00C6F577 /* UIViewController.swift */,
 				BAA2ECAF2090A0A000C6F577 /* UIView.swift */,
 				BAFD041D2091ED5C009D132A /* UIColor.swift */,
+				BAE8DF1F209FFB610021246E /* ImagePicker+Rx.swift */,
+				BAE8DF21209FFD950021246E /* MessageListener+Rx.swift */,
+				BAE8DF2520A00BB30021246E /* UIImage.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -461,10 +482,21 @@
 		BAE8DF0D209F1B5E0021246E /* Account */ = {
 			isa = PBXGroup;
 			children = (
-				BAE8DF0E209F1B6B0021246E /* Login.swift */,
+				BAE8DF0E209F1B6B0021246E /* Account.Login.swift */,
 				BAE8DF12209F1E3B0021246E /* LoginView.xib */,
+				BAE8DF14209F2E810021246E /* RegisterView.xib */,
+				BAE8DF16209F2E900021246E /* Account.Register.swift */,
+				BAE8DF18209F328B0021246E /* Account.swift */,
 			);
 			path = Account;
+			sourceTree = "<group>";
+		};
+		BAE8DF1A209FEED30021246E /* Controls */ = {
+			isa = PBXGroup;
+			children = (
+				BAE8DF1B209FEEF20021246E /* AvatarUploadView.swift */,
+			);
+			path = Controls;
 			sourceTree = "<group>";
 		};
 		D40534D51AB1F005E30D710C /* Pods */ = {
@@ -562,6 +594,7 @@
 			files = (
 				BA783F71208CE4A200771E86 /* MenuContentView.xib in Resources */,
 				BA1A99422085DE4700FAE3FA /* LaunchScreen.storyboard in Resources */,
+				BAE8DF15209F2E810021246E /* RegisterView.xib in Resources */,
 				BA783F73208CFAEA00771E86 /* ThemePickerView.xib in Resources */,
 				BAE8DF13209F1E3B0021246E /* LoginView.xib in Resources */,
 				BAA2ECB72090AA4700C6F577 /* LaunchViewController.xib in Resources */,
@@ -591,6 +624,7 @@
 				"${BUILT_PRODUCTS_DIR}/EVE/EVE.framework",
 				"${BUILT_PRODUCTS_DIR}/Eureka/Eureka.framework",
 				"${BUILT_PRODUCTS_DIR}/JGProgressHUD/JGProgressHUD.framework",
+				"${BUILT_PRODUCTS_DIR}/KYCircularProgress/KYCircularProgress.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/LayoutKit/LayoutKit.framework",
 				"${BUILT_PRODUCTS_DIR}/MessageListener/MessageListener.framework",
@@ -616,6 +650,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EVE.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Eureka.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JGProgressHUD.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KYCircularProgress.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/LayoutKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MessageListener.framework",
@@ -682,12 +717,15 @@
 				BA3CCD9B208CD3F10000D639 /* UIButton.swift in Sources */,
 				BA013CA1208DE602004689F0 /* Profile.View.swift in Sources */,
 				BA88B7872092203A0014C860 /* AccessoryViewRevealer.swift in Sources */,
-				BAE8DF0F209F1B6B0021246E /* Login.swift in Sources */,
+				BAE8DF0F209F1B6B0021246E /* Account.Login.swift in Sources */,
 				BA8B312C209D93CD007C34CD /* Threads.swift in Sources */,
+				BAE8DF17209F2E900021246E /* Account.Register.swift in Sources */,
+				BAE8DF22209FFD950021246E /* MessageListener+Rx.swift in Sources */,
 				BAA2ECA0208F34DD00C6F577 /* UIViewController.swift in Sources */,
 				BAAFF4D3209C79360010CB4C /* EVE.swift in Sources */,
 				BAA2ECA4208F5A2000C6F577 /* Chat.HeaderView.swift in Sources */,
 				BA3CCD89208C82B90000D639 /* Main.Contacts.View.swift in Sources */,
+				BAE8DF2620A00BB30021246E /* UIImage.swift in Sources */,
 				BA3CCD79208B99820000D639 /* Main.View.swift in Sources */,
 				BAA2ECAE20906ABF00C6F577 /* CrossSizeHittableView.swift in Sources */,
 				BAFD041A2091C995009D132A /* Chat.NodeLayout.swift in Sources */,
@@ -702,12 +740,14 @@
 				BAE8DF0A209E0D9D0021246E /* EVE.Request.swift in Sources */,
 				BA88B78F2092374B0014C860 /* Settings.Model.swift in Sources */,
 				BAA2ECA2208F3AB300C6F577 /* WeakArray.swift in Sources */,
+				BAE8DF19209F328B0021246E /* Account.swift in Sources */,
 				BA8B3130209DFF03007C34CD /* Message.swift in Sources */,
 				BAFD041C2091D62A009D132A /* Chat.ContentView.swift in Sources */,
 				BAE8DF0C209E0F7F0021246E /* EVE.Account.swift in Sources */,
 				BAA2ECC9209191AD00C6F577 /* Settings.ContentView.swift in Sources */,
 				BAFF8DEC2093238500BFB1BF /* log.swift in Sources */,
 				BA013C91208DAFEA004689F0 /* Main.Conversations.Item.swift in Sources */,
+				BAE8DF1C209FEEF20021246E /* AvatarUploadView.swift in Sources */,
 				BA8B3133209E016E007C34CD /* Context+Sync.swift in Sources */,
 				BAA2ECC52091916E00C6F577 /* Settings.swift in Sources */,
 				BAA2ECA8208F821A00C6F577 /* Chat.Presenter.swift in Sources */,
@@ -723,12 +763,14 @@
 				BAA2ECC72091918100C6F577 /* Settings.View.swift in Sources */,
 				BA3CCD94208CA5040000D639 /* Root.View.swift in Sources */,
 				BAFD041E2091ED5C009D132A /* UIColor.swift in Sources */,
+				BAE8DF24209FFEB10021246E /* Error.swift in Sources */,
 				BA3CCD99208CCE910000D639 /* Menu.View.swift in Sources */,
 				BA3CCD97208CCE7B0000D639 /* Menu.swift in Sources */,
 				BAA2ECA6208F7A8E00C6F577 /* Chat.InputView.swift in Sources */,
 				BA3CCD92208CA4F90000D639 /* Root.swift in Sources */,
 				BAA2ECBF2090E12E00C6F577 /* Chat.Node.swift in Sources */,
 				BAA2ECB52090A90000C6F577 /* LaunchViewController.swift in Sources */,
+				BAE8DF20209FFB610021246E /* ImagePicker+Rx.swift in Sources */,
 				BA1A99382085DE4500FAE3FA /* AppDelegate.swift in Sources */,
 				BA3CCD7F208B9A500000D639 /* UI.swift in Sources */,
 				BA013C97208DD8EC004689F0 /* Observable.swift in Sources */,

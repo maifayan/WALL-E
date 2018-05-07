@@ -29,30 +29,20 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5VG-UC-54z" userLabel="Container">
                             <rect key="frame" x="20" y="399.5" width="335" height="88"/>
                             <subviews>
-                                <view alpha="0.54000000000000004" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BIU-T2-WhJ">
-                                    <rect key="frame" x="0.0" y="-0.5" width="335" height="88"/>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <userDefinedRuntimeAttributes>
-                                        <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
-                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                            <integer key="value" value="16"/>
-                                        </userDefinedRuntimeAttribute>
-                                    </userDefinedRuntimeAttributes>
-                                </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Iq9-rC-OQK">
                                     <rect key="frame" x="0.0" y="0.0" width="335" height="88"/>
                                     <subviews>
-                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Name/Phone" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="YIJ-Gd-pzb">
+                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Name/Phone" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="YIJ-Gd-pzb">
                                             <rect key="frame" x="16" y="0.0" width="303" height="43.5"/>
-                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
-                                            <textInputTraits key="textInputTraits"/>
+                                            <textInputTraits key="textInputTraits" keyboardType="namePhonePad" textContentType="username"/>
                                         </textField>
-                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QhT-Fe-E2g">
+                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="QhT-Fe-E2g">
                                             <rect key="frame" x="16" y="44.5" width="303" height="43.5"/>
-                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
-                                            <textInputTraits key="textInputTraits"/>
+                                            <textInputTraits key="textInputTraits" keyboardType="alphabet" secureTextEntry="YES" textContentType="password"/>
                                         </textField>
                                         <view alpha="0.40000000000000002" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2ll-F1-amQ">
                                             <rect key="frame" x="16" y="43.5" width="303" height="1"/>
@@ -62,6 +52,7 @@
                                             </constraints>
                                         </view>
                                     </subviews>
+                                    <color key="backgroundColor" white="1" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstAttribute="trailing" secondItem="YIJ-Gd-pzb" secondAttribute="trailing" constant="16" id="6BK-JF-5m2"/>
                                         <constraint firstAttribute="trailing" secondItem="2ll-F1-amQ" secondAttribute="trailing" constant="16" id="6Ds-79-OCM"/>
@@ -75,18 +66,20 @@
                                         <constraint firstItem="YIJ-Gd-pzb" firstAttribute="top" secondItem="Iq9-rC-OQK" secondAttribute="top" id="oVk-hQ-8Th"/>
                                         <constraint firstItem="QhT-Fe-E2g" firstAttribute="top" secondItem="2ll-F1-amQ" secondAttribute="bottom" id="wVR-OX-TOJ"/>
                                     </constraints>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                            <integer key="value" value="16"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
                                 </view>
                             </subviews>
                             <constraints>
-                                <constraint firstItem="BIU-T2-WhJ" firstAttribute="top" secondItem="5VG-UC-54z" secondAttribute="top" id="1or-o3-8Tv"/>
-                                <constraint firstItem="BIU-T2-WhJ" firstAttribute="leading" secondItem="5VG-UC-54z" secondAttribute="leading" id="7kb-K1-WM4"/>
                                 <constraint firstItem="Iq9-rC-OQK" firstAttribute="leading" secondItem="5VG-UC-54z" secondAttribute="leading" id="GK8-WX-XUk"/>
                                 <constraint firstItem="Iq9-rC-OQK" firstAttribute="top" secondItem="5VG-UC-54z" secondAttribute="top" id="JqE-AA-asN"/>
-                                <constraint firstAttribute="bottom" secondItem="BIU-T2-WhJ" secondAttribute="bottom" id="PS1-wk-pYT"/>
                                 <constraint firstAttribute="height" constant="88" id="RHb-sC-2QV"/>
                                 <constraint firstAttribute="trailing" secondItem="Iq9-rC-OQK" secondAttribute="trailing" id="p9A-bI-VZt"/>
                                 <constraint firstAttribute="bottom" secondItem="Iq9-rC-OQK" secondAttribute="bottom" id="ti8-BO-wDz"/>
-                                <constraint firstAttribute="trailing" secondItem="BIU-T2-WhJ" secondAttribute="trailing" id="uU0-Bf-ZSB"/>
                             </constraints>
                         </view>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="upv-e2-xnF">
@@ -146,12 +139,15 @@
                 <constraint firstItem="V2M-ye-kbz" firstAttribute="bottom" secondItem="jIR-fc-r85" secondAttribute="bottom" id="g4O-Ib-Tj7"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="jIR-fc-r85"/>
+            <connections>
+                <outlet property="containerView" destination="V2M-ye-kbz" id="7LH-WR-OH7"/>
+                <outlet property="loginBtn" destination="upv-e2-xnF" id="mwF-fZ-Eeu"/>
+                <outlet property="namePhoneTF" destination="YIJ-Gd-pzb" id="PyK-d7-HXi"/>
+                <outlet property="passwordTF" destination="QhT-Fe-E2g" id="PFH-NX-eQm"/>
+                <outlet property="registerBtn" destination="sJY-3G-end" id="6fp-Jm-VXu"/>
+            </connections>
             <point key="canvasLocation" x="68.5" y="20.5"/>
         </view>
-        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" id="DiI-TX-DBb">
-            <rect key="frame" x="0.0" y="0.0" width="51" height="31"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-        </switch>
     </objects>
     <resources>
         <image name="robot" width="290" height="304"/>

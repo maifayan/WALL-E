@@ -128,7 +128,7 @@ struct R: Rswift.Validatable {
     fileprivate init() {}
   }
   
-  /// This `R.nib` struct is generated, and contains static references to 5 nibs.
+  /// This `R.nib` struct is generated, and contains static references to 6 nibs.
   struct nib {
     /// Nib `LaunchViewController`.
     static let launchViewController = _R.nib._LaunchViewController()
@@ -138,6 +138,8 @@ struct R: Rswift.Validatable {
     static let menuContentView = _R.nib._MenuContentView()
     /// Nib `ProfileHeaderView`.
     static let profileHeaderView = _R.nib._ProfileHeaderView()
+    /// Nib `RegisterView`.
+    static let registerView = _R.nib._RegisterView()
     /// Nib `ThemePickerView`.
     static let themePickerView = _R.nib._ThemePickerView()
     
@@ -159,6 +161,11 @@ struct R: Rswift.Validatable {
     /// `UINib(name: "ProfileHeaderView", in: bundle)`
     static func profileHeaderView(_: Void = ()) -> UIKit.UINib {
       return UIKit.UINib(resource: R.nib.profileHeaderView)
+    }
+    
+    /// `UINib(name: "RegisterView", in: bundle)`
+    static func registerView(_: Void = ()) -> UIKit.UINib {
+      return UIKit.UINib(resource: R.nib.registerView)
     }
     
     /// `UINib(name: "ThemePickerView", in: bundle)`
@@ -245,10 +252,6 @@ struct _R: Rswift.Validatable {
         return instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? LoginView
       }
       
-      func secondView(owner ownerOrNil: AnyObject?, options optionsOrNil: [NSObject : AnyObject]? = nil) -> UIKit.UIView? {
-        return instantiate(withOwner: ownerOrNil, options: optionsOrNil)[1] as? UIKit.UIView
-      }
-      
       static func validate() throws {
         if UIKit.UIImage(named: "robot", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'robot' is used in nib 'LoginView', but couldn't be loaded.") }
       }
@@ -279,6 +282,17 @@ struct _R: Rswift.Validatable {
       
       func firstView(owner ownerOrNil: AnyObject?, options optionsOrNil: [NSObject : AnyObject]? = nil) -> UIKit.UIView? {
         return instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? UIKit.UIView
+      }
+      
+      fileprivate init() {}
+    }
+    
+    struct _RegisterView: Rswift.NibResourceType {
+      let bundle = R.hostingBundle
+      let name = "RegisterView"
+      
+      func firstView(owner ownerOrNil: AnyObject?, options optionsOrNil: [NSObject : AnyObject]? = nil) -> RegisterView? {
+        return instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? RegisterView
       }
       
       fileprivate init() {}
