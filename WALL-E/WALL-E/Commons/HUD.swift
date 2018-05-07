@@ -18,7 +18,7 @@ extension UIViewController {
             hud.indicatorView = JGProgressHUDErrorIndicatorView()
             hud.textLabel.text = error.localizedDescription
             hud.show(in: view)
-            hud.dismiss(afterDelay: 3, animated: true)
+            hud.dismiss(afterDelay: 2, animated: true)
         }
     }
     
@@ -29,7 +29,7 @@ extension UIViewController {
             hud.indicatorView = JGProgressHUDSuccessIndicatorView()
             hud.textLabel.text = successText
             hud.show(in: view)
-            hud.dismiss(afterDelay: 3, animated: true)
+            hud.dismiss(afterDelay: 2, animated: true)
         }
     }
     

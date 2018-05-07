@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import RxSwift
+import EVE
 
 extension Account.Login {
     final class View: UIViewController {
@@ -30,12 +32,58 @@ extension Account.Login.View {
             nc?.pushViewController(Account.Register.View(), animated: true)
         }
         _loginView.adaptToKeyboard(minSpacingToKeyboard: 20, reference: _loginView.loginBtn)
-//        _loginView.loginBtn.on(.touchUpInside)
+        _loginView.loginBtn.on(.touchUpInside) { [weak self] _ in
+            self?._login()
+        }
     }
 }
 
 private extension Account.Login.View {
-    
+    func _validateAndGetInfo() -> (nameOrPhone: String, password: String)? {
+        let np = _loginView.namePhoneTF.validateAndGetText(minCount: 6, maxCount: 24, callback: ui.textFieldValidate)
+        let p = _loginView.passwordTF.validateAndGetText(minCount: 6, maxCount: 24, callback: ui.textFieldValidate)
+        guard
+            let nameAndPhone = np,
+            let password = p
+        else { return nil }
+        return (nameAndPhone, password)
+    }
+   
+    func _login() {
+        unowned let me = self
+        Observable.just(me._validateAndGetInfo())
+            .ignoreNil()
+            .do(onNext: { _ in
+                me.view.endEditing(true)
+                me.showHUD()
+            })
+            .map { info in
+                EVELoginInfo {
+                    $0.nameOrPhone = info.nameOrPhone
+                    $0.password = info.password
+                }
+            }
+            .flatMap(EVE.workMapper(EVE.Account.shared.login))
+            .subscribeOnMain(onNext: { result in
+                me.dismissHUD()
+                // TODO: LoginSuccess!
+            }, onError: {
+                me.dismissHUD()
+                me.showHUD(error: $0)
+            })
+            .disposed(by: rx.disposeBag)
+    }
+}
+
+extension UI where Base: Account.Login.View {
+    var invalidatedRightView: UIView {
+        let ret = UIImageView(image: R.image.edit()?.withRenderingMode(.alwaysTemplate))
+        ret.tintColor = UIColor.red.withAlphaComponent(0.45)
+        return ret
+    }
+    var textFieldValidate: (UITextField, Bool) -> () {
+        return { $0.rightView = $1 ? nil : self.invalidatedRightView }
+    }
 }
 
 final class LoginView: UIView {

@@ -80,6 +80,7 @@
 		BAE8DF2620A00BB30021246E /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE8DF2520A00BB30021246E /* UIImage.swift */; };
 		BAE8DF2820A017DA0021246E /* EVE.Uploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE8DF2720A017DA0021246E /* EVE.Uploader.swift */; };
 		BAE8DF2A20A062AB0021246E /* HUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE8DF2920A062AB0021246E /* HUD.swift */; };
+		BAE8DF2C20A06D350021246E /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE8DF2B20A06D350021246E /* UITextField.swift */; };
 		BAFD041A2091C995009D132A /* Chat.NodeLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFD04192091C995009D132A /* Chat.NodeLayout.swift */; };
 		BAFD041C2091D62A009D132A /* Chat.ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFD041B2091D62A009D132A /* Chat.ContentView.swift */; };
 		BAFD041E2091ED5C009D132A /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFD041D2091ED5C009D132A /* UIColor.swift */; };
@@ -175,6 +176,7 @@
 		BAE8DF2520A00BB30021246E /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
 		BAE8DF2720A017DA0021246E /* EVE.Uploader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EVE.Uploader.swift; sourceTree = "<group>"; };
 		BAE8DF2920A062AB0021246E /* HUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HUD.swift; sourceTree = "<group>"; };
+		BAE8DF2B20A06D350021246E /* UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextField.swift; sourceTree = "<group>"; };
 		BAFD04192091C995009D132A /* Chat.NodeLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.NodeLayout.swift; sourceTree = "<group>"; };
 		BAFD041B2091D62A009D132A /* Chat.ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.ContentView.swift; sourceTree = "<group>"; };
 		BAFD041D2091ED5C009D132A /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
@@ -331,6 +333,7 @@
 				BAE8DF1F209FFB610021246E /* ImagePicker+Rx.swift */,
 				BAE8DF21209FFD950021246E /* MessageListener+Rx.swift */,
 				BAE8DF2520A00BB30021246E /* UIImage.swift */,
+				BAE8DF2B20A06D350021246E /* UITextField.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -739,6 +742,7 @@
 				BA3CCD79208B99820000D639 /* Main.View.swift in Sources */,
 				BAA2ECAE20906ABF00C6F577 /* CrossSizeHittableView.swift in Sources */,
 				BAFD041A2091C995009D132A /* Chat.NodeLayout.swift in Sources */,
+				BAE8DF2C20A06D350021246E /* UITextField.swift in Sources */,
 				BAAFF4D5209C79810010CB4C /* EVE.Connecter.swift in Sources */,
 				BAA2EC9E208F1F9800C6F577 /* Chat.Transition.swift in Sources */,
 				BAA2ECB92090CEA100C6F577 /* PreferenceStore.swift in Sources */,

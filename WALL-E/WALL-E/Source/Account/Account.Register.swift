@@ -65,10 +65,10 @@ private extension Account.Register.View {
     }
     
     func _validateAndGetTextInfo() -> (phone: String, name: String, password: String, avatarPath: String)? {
-        let p = _registerView.phoneTF._validateAndGetText(minCount: 11, maxCount: 11, callback: ui.textFieldValidate)
-        let n = _registerView.nameTF._validateAndGetText(minCount: 3, maxCount: 24, callback: ui.textFieldValidate)
-        let pa = _registerView.passwordTF._validateAndGetText(minCount: 6, maxCount: 24, callback: ui.textFieldValidate)
-        let r = _registerView.repeatPasswordTF._validateAndGetText(minCount: 6, maxCount: 24, callback: ui.textFieldValidate)
+        let p = _registerView.phoneTF.validateAndGetText(minCount: 11, maxCount: 11, callback: ui.textFieldValidate)
+        let n = _registerView.nameTF.validateAndGetText(minCount: 3, maxCount: 24, callback: ui.textFieldValidate)
+        let pa = _registerView.passwordTF.validateAndGetText(minCount: 6, maxCount: 24, callback: ui.textFieldValidate)
+        let r = _registerView.repeatPasswordTF.validateAndGetText(minCount: 6, maxCount: 24, callback: ui.textFieldValidate)
         let a = _validateAvatarAndGetURL()
         if pa != r {
             _registerView.passwordTF.rightView = ui.invalidatedRightView
@@ -85,28 +85,32 @@ private extension Account.Register.View {
     }
     
     func _register() {
-        view.endEditing(true)
-        Observable.just(_validateAndGetTextInfo())
+        unowned let me = self
+        Observable.just(me._validateAndGetTextInfo())
             .ignoreNil()
-            .do(onNext: { [weak self] _ in self?.showHUD() })
-            .flatMap { [weak self] info in
-                self?._uploadAvatar(path: info.avatarPath).map { iconURL in
-                    EVEUserRegisterInfo {
-                        $0.name = info.name
-                        $0.phone = info.phone
-                        $0.iconURL = iconURL
-                        $0.password = info.password
+            .do(onNext: { _ in
+                me.view.endEditing(true)
+                me.showHUD()
+            })
+            .flatMap { info in
+                me._uploadAvatar(path: info.avatarPath)
+                    .map { iconURL in
+                        EVEUserRegisterInfo {
+                            $0.name = info.name
+                            $0.phone = info.phone
+                            $0.password = info.password
+                            $0.iconURL = iconURL
+                        }
                     }
-                } ?? .never()
             }
             .flatMap(EVE.workMapper(EVE.Account.shared.register))
-            .subscribeOnMain(onNext: { [weak self] _ in
-                self?.dismissHUD()
-                self?.navigationController?.showHUD(successText: "Register success")
-                self?.navigationController?.popViewController(animated: true)
-            }, onError: { [weak self] in
-                self?.dismissHUD()
-                self?.showHUD(error: $0)
+            .subscribeOnMain(onNext: { _ in
+                me.dismissHUD()
+                me.navigationController?.showHUD(successText: "Register success")
+                me.navigationController?.popViewController(animated: true)
+            }, onError: {
+                me.dismissHUD()
+                me.showHUD(error: $0)
             })
             .disposed(by: rx.disposeBag)
     }
@@ -150,17 +154,5 @@ final class RegisterView: UIView {
         ui.adapt(themeKeyPath: \.mainColor, for: \.backgroundColor)
         
         [phoneTF, nameTF, passwordTF, repeatPasswordTF].forEach { $0?.rightViewMode = .always }
-    }
-}
-
-fileprivate extension UITextField {
-    func _validateAndGetText(minCount: Int = 0, maxCount: Int = .max, callback: (UITextField, Bool) -> ()) -> String? {
-        guard let text = text?.trimmingCharacters(in: .whitespacesAndNewlines)
-            else { callback(self, false); return nil }
-        let count = text.count
-        if count < minCount { callback(self, false); return nil }
-        if count > maxCount { callback(self, false); return nil }
-        callback(self, true)
-        return text
     }
 }
