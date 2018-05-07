@@ -30,7 +30,12 @@ extension Account.Login.View {
             nc?.pushViewController(Account.Register.View(), animated: true)
         }
         _loginView.adaptToKeyboard(minSpacingToKeyboard: 20, reference: _loginView.loginBtn)
+//        _loginView.loginBtn.on(.touchUpInside)
     }
+}
+
+private extension Account.Login.View {
+    
 }
 
 final class LoginView: UIView {

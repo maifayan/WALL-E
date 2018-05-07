@@ -7,13 +7,22 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
+import EVE
+import JGProgressHUD
 
 extension Account.Register {
     final class View: UIViewController {
         private var _registerView: RegisterView { return view as! RegisterView }
-        
+        private var _avatarURL: URL?
+
         override func loadView() {
             view = R.nib.registerView().instantiate(withOwner: nil, options: nil).first as! UIView
+        }
+        
+        deinit {
+            log()
         }
     }
 }
@@ -26,17 +35,104 @@ extension Account.Register.View {
             nc?.popViewController(animated: true)
         }
         _registerView.adaptToKeyboard(minSpacingToKeyboard: 20, reference: _registerView.registerBtn)
-        
-        _registerView.avatarUploadView.onTap
-            .flatMap(const(UIImagePickerController.pick(on: self) {
+        if #available(iOS 11, *) {
+            _setupPicker()
+        }
+        _registerView.registerBtn.on(.touchUpInside) { [weak self] _ in
+            self?._register()
+        }
+    }
+}
+
+private extension Account.Register.View {
+    @available(iOS 11, *)
+    func _setupPicker() {
+        unowned let me = self
+        let pickedImage = _registerView.avatarUploadView.onTap
+            .flatMap(const(UIImagePickerController.pick(on: me) {
                 $0.allowsEditing = false
                 $0.sourceType = .photoLibrary
             }))
-            .map {
-               $0[UIImagePickerControllerOriginalImage] as? UIImage
+            .share(replay: 1)
+        
+        pickedImage.map(second).bind(to: _registerView.avatarUploadView.assetObserver).disposed(by: rx.disposeBag)
+        pickedImage.map(first).subscribe(onNext: { [weak self] in self?._avatarURL = $0 }).disposed(by: rx.disposeBag)
+    }
+    
+    func _validateAvatarAndGetURL() -> URL? {
+        _registerView.avatarUploadView.isOK = _avatarURL != nil
+        return _avatarURL
+    }
+    
+    func _validateAndGetTextInfo() -> (phone: String, name: String, password: String, avatarPath: String)? {
+        let p = _registerView.phoneTF._validateAndGetText(minCount: 11, maxCount: 11, callback: ui.textFieldValidate)
+        let n = _registerView.nameTF._validateAndGetText(minCount: 3, maxCount: 24, callback: ui.textFieldValidate)
+        let pa = _registerView.passwordTF._validateAndGetText(minCount: 6, maxCount: 24, callback: ui.textFieldValidate)
+        let r = _registerView.repeatPasswordTF._validateAndGetText(minCount: 6, maxCount: 24, callback: ui.textFieldValidate)
+        let a = _validateAvatarAndGetURL()
+        if pa != r {
+            _registerView.passwordTF.rightView = ui.invalidatedRightView
+            _registerView.repeatPasswordTF.rightView = ui.invalidatedRightView
+            return nil
+        }
+        guard
+            let phone = p,
+            let name = n,
+            let password = pa,
+            let avatar = a
+        else { return nil }
+        return (phone, name, password, avatar.path)
+    }
+    
+    func _register() {
+        view.endEditing(true)
+        Observable.just(_validateAndGetTextInfo())
+            .ignoreNil()
+            .do(onNext: { [weak self] _ in self?.showHUD() })
+            .flatMap { [weak self] info in
+                self?._uploadAvatar(path: info.avatarPath).map { iconURL in
+                    EVEUserRegisterInfo {
+                        $0.name = info.name
+                        $0.phone = info.phone
+                        $0.iconURL = iconURL
+                        $0.password = info.password
+                    }
+                } ?? .never()
             }
-            .bind(to: _registerView.avatarUploadView.imageObserver)
+            .flatMap(EVE.workMapper(EVE.Account.shared.register))
+            .subscribeOnMain(onNext: { [weak self] _ in
+                self?.dismissHUD()
+                self?.navigationController?.showHUD(successText: "Register success")
+                self?.navigationController?.popViewController(animated: true)
+            }, onError: { [weak self] in
+                self?.dismissHUD()
+                self?.showHUD(error: $0)
+            })
             .disposed(by: rx.disposeBag)
+    }
+    
+    func _uploadAvatar(path: String) -> Observable<String> {
+        return EVE.Uploader.shared.upload(.file(path: path))
+            .do(onNext: { [uv = _registerView.avatarUploadView] in
+                guard case .uploading(let progress) = $0 else { return }
+                uv!.progress = Double(progress)
+            })
+            .map { progress -> String? in
+                guard case .finish(let path) = progress else { return nil }
+                return path
+            }
+            .ignoreNil()
+    }
+}
+
+extension UI where Base: Account.Register.View {
+    var invalidatedRightView: UIView {
+        let ret = UIImageView(image: R.image.edit()?.withRenderingMode(.alwaysTemplate))
+        ret.tintColor = UIColor.red.withAlphaComponent(0.45)
+        return ret
+    }
+    var textFieldValidate: (UITextField, Bool) -> () {
+        return { $0.rightView = $1 ? nil : self.invalidatedRightView }
     }
 }
 
@@ -52,5 +148,19 @@ final class RegisterView: UIView {
     override func awakeFromNib() {
         super.awakeFromNib()
         ui.adapt(themeKeyPath: \.mainColor, for: \.backgroundColor)
+        
+        [phoneTF, nameTF, passwordTF, repeatPasswordTF].forEach { $0?.rightViewMode = .always }
+    }
+}
+
+fileprivate extension UITextField {
+    func _validateAndGetText(minCount: Int = 0, maxCount: Int = .max, callback: (UITextField, Bool) -> ()) -> String? {
+        guard let text = text?.trimmingCharacters(in: .whitespacesAndNewlines)
+            else { callback(self, false); return nil }
+        let count = text.count
+        if count < minCount { callback(self, false); return nil }
+        if count > maxCount { callback(self, false); return nil }
+        callback(self, true)
+        return text
     }
 }

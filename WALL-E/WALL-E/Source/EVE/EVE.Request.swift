@@ -15,7 +15,7 @@ extension EVE {
         private let _updateService = EVEUpdate(host: Config.address)
     
         // Unowned reference to Context!
-        private unowned var _context: Context
+        private unowned let _context: Context
         
         init(_ context: Context) {
             _context = context

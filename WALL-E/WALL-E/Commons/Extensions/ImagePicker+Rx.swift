@@ -7,12 +7,14 @@
 //
 
 import UIKit
+import Photos
 import MessageListener
 import RxSwift
 
 private var imagePickerDelegateKey: UInt8 = 23
 extension UIImagePickerController {
-    static func pick(on viewController: UIViewController, config: ((UIImagePickerController) -> ())? = nil) -> Observable<[String: Any]> {
+    @available(iOS 11, *)
+    static func pick(on viewController: UIViewController, config: ((UIImagePickerController) -> ())? = nil) -> Observable<(url: URL, asset: PHAsset)> {
         let picker = UIImagePickerController()
         config?(picker)
         let delegate = _Delegate()
@@ -24,6 +26,7 @@ extension UIImagePickerController {
         return delegate.rx.listen(selector, in: UIImagePickerControllerDelegate.self)
             .do(onNext: { [weak picker] _ in picker?.dismiss(animated: true, completion: nil) })
             .map { $0[1] as! [String: Any] }
+            .map { ($0[UIImagePickerControllerImageURL] as! URL, $0[UIImagePickerControllerPHAsset] as! PHAsset) }
     }
     
     private final class _Delegate: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate { }

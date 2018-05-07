@@ -8,8 +8,10 @@
 
 import UIKit
 import RxSwift
+import Photos
 import RxCocoa
 import KYCircularProgress
+import TanImagePicker
 
 private let progressLineWidth: CGFloat = 6
 private let placeholderImageSize = CGSize(width: 80, height: 80)
@@ -53,11 +55,17 @@ class AvatarUploadView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         _progress.size = CGSize(width: width + 6, height: height + 6)
-        _progress.center = CGPoint(x: 0.5 * width - 2, y: 0.5 * height - 2)
+        _progress.center = CGPoint(x: 0.5 * width - 1.5, y: 0.5 * height - 1.5)
         _imageView.size = CGSize(width: width - 2 * progressLineWidth, height: height - 2 * progressLineWidth)
         _imageView.center = CGPoint(x: 0.5 * width, y: 0.5 * height)
     }
     
+    var isOK: Bool = true {
+        didSet {
+            _progress.guideColor = isOK ? UIColor.white.withAlphaComponent(0.25) : UIColor.red.withAlphaComponent(0.45)
+        }
+    }
+
     var image: UIImage? {
         didSet {
             guard let image = image else {
@@ -67,6 +75,21 @@ class AvatarUploadView: UIView {
             let processor = resizeAndCroppingProcessor(targetSize: _imageView.size, withCorner: 0.5 * _imageView.size.width)
             _imageView.image = processor.process(item: .image(image), options: [.scaleFactor(UIScreen.main.scale)])
         }
+    }
+    
+    var asset: PHAsset? {
+        didSet {
+            guard let asset = asset else { return }
+            TanImagePicker.ImagesManager.shared.fetchImage(with: asset, type: .thumbnail(size: _imageView.size)) { [weak self] image in
+                self?.image = image
+            }
+        }
+    }
+    
+    var assetObserver: AnyObserver<PHAsset> {
+        return Binder(self) { view, asset in
+            view.asset = asset
+        }.asObserver()
     }
     
     var progress: Double = 0 {
@@ -80,11 +103,5 @@ class AvatarUploadView: UIView {
             self?.tap { _ in subscribe.onNext(()) }
             return Disposables.create()
         }
-    }
-    
-    var imageObserver: AnyObserver<UIImage?> {
-        return Binder(self) { view, image in
-            view.image = image
-        }.asObserver()
     }
 }

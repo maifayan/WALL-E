@@ -8,6 +8,8 @@
 
 import Foundation
 
+struct UnknowError: Error { }
+
 enum WALLError: Error {
     case casting(obj: Any, toType: Any.Type)
 }

@@ -82,7 +82,7 @@ extension EVE {
         }
     }
     
-    static func workMapper<I, O>(_ item: WorkItem<I, O>, callConfig: CallConfig? = nil) -> (I) -> Observable<O> {
+    static func workMapper<I, O>(_ item: WorkItem<I, O>) -> (I) -> Observable<O> {
         return { request in
             Observable.create { subscribe in
                 let call = item.work(request: request) { response, error in

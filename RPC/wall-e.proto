@@ -115,6 +115,15 @@ message RobotUpdateInfo {
   string iconURL = 3;
 }
 
+// Upload
+service Upload {
+  rpc FetchUploadToken (Unit) returns (UploadToken) {}
+}
+
+message UploadToken {
+  string token = 1;
+}
+
 // Contact
 message Contact {
   enum Type {

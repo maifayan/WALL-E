@@ -18,8 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         _setupGlobalConfig()
         _setupWindow()
-        
-        
+
 //        // Just for test
 //        _connecter = EVE.Connecter()
 //        _connecter.connect()
@@ -31,6 +30,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        } catch {
 //            print(error)
 //        }
+        EVE.defaultSetup()
+//        testUpload()
         return true
     }
 }
