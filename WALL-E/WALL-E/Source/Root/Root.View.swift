@@ -12,8 +12,19 @@ import RxSwift
 
 extension Root {
     final class View: UIViewController {
-        private lazy var _mainView = Main.View()
+        private let _context: Context
         
+        init(context: Context) {
+            _context = context
+            super.init(nibName: nil, bundle: nil)
+        }
+        
+        required init?(coder aDecoder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+        }
+        
+        private lazy var _mainView = Main.View()
+
         private lazy var _menuView = Menu.View { [weak self] action in
             switch action {
             case .newRobot:
@@ -28,14 +39,12 @@ extension Root {
         
         private lazy var _menuButton: UIButton = {
             let button = UIButton(type: .system)
-            
             let path = UIBezierPath(roundedRect: .init(origin: .zero, size: ui.menuButtonSize), cornerRadius: 0.5 * ui.menuButtonSize.width)
             let backgroundLayer = CAShapeLayer()
             backgroundLayer.ui.adapt(themeKeyPath: \.mainColor, for: \.fillColor) { $0.cgColor }
             backgroundLayer.path = path.cgPath
             button.layer.insertSublayer(backgroundLayer, below: button.imageView?.layer)
             button.setShadow(color: .gray, offSet: CGSize(width: 5, height: 5), radius: 6, opacity: 0.6)
-
             button.setImage(R.image.menu()?.withRenderingMode(.alwaysOriginal), for: .normal)
             button.imageEdgeInsets = UIEdgeInsets(top: 3, left: 0, bottom: -3, right: 0)
             return button
@@ -61,6 +70,9 @@ extension Root.View {
         add(_mainView, viewFrame: view.bounds)
         _mainView.view.setShadow(color: .gray, offSet: CGSize(width: 0, height: 1), radius: 8, opacity: 0.5)
         _setupMenuButton()
+        
+        // Connect
+        _context.connecter.connect()
     }
     
     override func viewDidLayoutSubviews() {

@@ -7,6 +7,7 @@
 //
 
 import RealmSwift
+import EVE
 
 @objcMembers
 final class Message: Object {
@@ -23,6 +24,25 @@ final class Message: Object {
 }
 
 extension Message {
+    static func create(realm: Realm) -> (EVEMessage) -> Message? {
+        return { message in
+            guard
+                let sender = realm.object(ofType: Contact.self, forPrimaryKey: message.sender),
+                let receiver = realm.object(ofType: Contact.self, forPrimaryKey: message.receiver)
+            else {
+                log("Can not find sender or receiver for message")
+                return nil
+            }
+            
+            return Message(id: message.id_p,
+                         sender: sender,
+                         receiver: receiver,
+                         content: message.content,
+                         createdAt: message.createdAt.date,
+                         updatedAt: message.updatedAt.date)
+        }
+    }
+    
     convenience init(
         id: String,
         sender: Contact,

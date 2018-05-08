@@ -8,22 +8,21 @@
 
 import Foundation
 import RealmSwift
+import RxSwift
+import EVE
 
 final class Auto {
-    private let _asyncQueue = DispatchQueue(label: "Auto.asyncQueue")
+    private let _asyncQueue = DispatchQueue(label: "Auto.asyncQueue", attributes: .concurrent)
     // Only used in main thread
     private let _mainRealm: Realm
-    // Only used in `asyncQueue`
-    private let _asyncRealm: Realm
-   
+    private let _config: Realm.Configuration
+
     init(_ context: Context) throws {
         let config = Auto._config(of: context)
         _mainRealm = try syncInMain {
             return try Realm(configuration: config)
         }
-        _asyncRealm = try _asyncQueue.sync {
-            return try Realm(configuration: config)
-        }
+        _config = config
     }
 }
 
@@ -43,10 +42,15 @@ extension Auto {
     }
     
     // Operations in async
-    func async(_ block: @escaping (Realm) -> ()) {
+    func async(errorHandler: ((Error) -> ())? = nil, _ block: @escaping (Realm) -> ()) {
         _asyncQueue.async { [weak self] in
             guard let `self` = self else { return }
-            block(self._asyncRealm)
+            do {
+                let realm = try Realm(configuration: self._config)
+                block(realm)
+            } catch {
+                errorHandler?(error)
+            }
         }
     }
     
@@ -54,12 +58,29 @@ extension Auto {
         _asyncQueue.async { [weak self] in
             guard let `self` = self else { return }
             do {
-                try self._asyncRealm.write {
-                    try block(self._asyncRealm)
+                let realm = try Realm(configuration: self._config)
+                try realm.write {
+                    try block(realm)
                 }
             } catch {
                 errorHandler?(error)
             }
+        }
+    }
+    
+    func sync(_ block: @escaping (Realm) -> ()) throws {
+        try _asyncQueue.sync { [weak self] in
+            guard let `self` = self else { return }
+            let realm = try Realm(configuration: self._config)
+            block(realm)
+        }
+    }
+    
+    func syncWrite(_ block: @escaping (Realm) throws -> ()) throws {
+        try _asyncQueue.sync { [weak self] in
+            guard let `self` = self else { return }
+            let realm = try Realm(configuration: self._config)
+            try realm.write { try block(realm) }
         }
     }
 }

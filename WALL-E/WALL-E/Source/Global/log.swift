@@ -8,6 +8,10 @@
 
 import Foundation
 
+func log(_ str: String) {
+    print(str)
+}
+
 func log(file: String = #file, function: String = #function) {
     print("\(file) ==> \(function)")
 }

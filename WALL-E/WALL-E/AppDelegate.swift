@@ -12,53 +12,50 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
-    // Just for test
-    private var _connecter: EVE.Connecter!
-    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         _setupGlobalConfig()
         _setupWindow()
-
-//        // Just for test
-//        _connecter = EVE.Connecter()
-//        _connecter.connect()
-//        let context = Context(token: "", uid: "")
-//        do {
-//            let auto = try Auto(context)
-//            print(auto)
-//            print("ok")
-//        } catch {
-//            print(error)
-//        }
-        EVE.defaultSetup()
-//        testUpload()
         return true
     }
 }
 
 private extension AppDelegate {
     func _setupWindow() {
+        unowned let me = self
         let window = UIWindow(frame: UIScreen.main.bounds)
-        window.ui.adapt(themeKeyPath: \.mainColor, for: \.backgroundColor)
-        _setupRootViewController()
-//        window.rootViewController = LaunchViewController.obtainInstance { [weak self] in
-//            self?._setupRootViewController()
-//        }
-        window.rootViewController = Account.View()
-        window.makeKeyAndVisible()
         self.window = window
+        window.ui.adapt(themeKeyPath: \.mainColor, for: \.backgroundColor)
+        window.rootViewController = LaunchViewController.obtainInstance(finish: me._setupControllers)
+        window.makeKeyAndVisible()
     }
     
-    func _setupRootViewController() {
-        window?.rootViewController = Root.View()
-        let transition = CATransition()
-        transition.type = kCATransitionFade
-        transition.duration = 0.3
-        window?.layer.add(transition, forKey: nil)
+    func _setupControllers() {
+        let setupRootViewController: (UIViewController) -> () = { [weak self] in
+            self?.window?.rootViewController = $0
+            let transition = CATransition()
+            transition.type = kCATransitionFade
+            transition.duration = 0.3
+            self?.window?.layer.add(transition, forKey: nil)
+        }
+        
+        let showRootView: (Account.AccountInfo) -> () = {
+            let context = Context(token: $0.token, uid: $0.uid)
+            setupRootViewController(Root.View(context: context))
+        }
+
+        if let accountInfo = Account.accountInfo {
+            showRootView(accountInfo)
+        } else {
+            setupRootViewController(Account.View {
+                Account.accountInfo = $0
+                showRootView($0)
+            })
+        }
     }
     
     func _setupGlobalConfig() {
         UIViewController.adaptStatusBarStyle()
+        EVE.defaultSetup()
     }
 }
 

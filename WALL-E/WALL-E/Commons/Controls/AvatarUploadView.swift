@@ -77,18 +77,9 @@ class AvatarUploadView: UIView {
         }
     }
     
-    var asset: PHAsset? {
-        didSet {
-            guard let asset = asset else { return }
-            TanImagePicker.ImagesManager.shared.fetchImage(with: asset, type: .thumbnail(size: _imageView.size)) { [weak self] image in
-                self?.image = image
-            }
-        }
-    }
-    
-    var assetObserver: AnyObserver<PHAsset> {
-        return Binder(self) { view, asset in
-            view.asset = asset
+    var imageObserver: AnyObserver<UIImage> {
+        return Binder(self) { view, image in
+            view.image = image.resize(size: view._imageView.size)
         }.asObserver()
     }
     

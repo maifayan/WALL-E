@@ -18,6 +18,9 @@
 		BA1A993F2085DE4700FAE3FA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BA1A993E2085DE4700FAE3FA /* Assets.xcassets */; };
 		BA1A99422085DE4700FAE3FA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BA1A99402085DE4700FAE3FA /* LaunchScreen.storyboard */; };
 		BA1A994D2085DE4700FAE3FA /* WALL_ETests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1A994C2085DE4700FAE3FA /* WALL_ETests.swift */; };
+		BA373ABD20A1E59000ACC8E6 /* Auto+Sync.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA373ABC20A1E59000ACC8E6 /* Auto+Sync.swift */; };
+		BA373ABF20A1EC7700ACC8E6 /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA373ABE20A1EC7700ACC8E6 /* Time.swift */; };
+		BA373AC120A2055100ACC8E6 /* Context+Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA373AC020A2055100ACC8E6 /* Context+Event.swift */; };
 		BA3CCD77208B99770000D639 /* Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3CCD76208B99770000D639 /* Main.swift */; };
 		BA3CCD79208B99820000D639 /* Main.View.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3CCD78208B99820000D639 /* Main.View.swift */; };
 		BA3CCD7C208B99EA0000D639 /* Main.SegmentControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3CCD7B208B99EA0000D639 /* Main.SegmentControl.swift */; };
@@ -114,6 +117,9 @@
 		BA1A99482085DE4700FAE3FA /* WALL-ETests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "WALL-ETests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA1A994C2085DE4700FAE3FA /* WALL_ETests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WALL_ETests.swift; sourceTree = "<group>"; };
 		BA1A994E2085DE4700FAE3FA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BA373ABC20A1E59000ACC8E6 /* Auto+Sync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Auto+Sync.swift"; sourceTree = "<group>"; };
+		BA373ABE20A1EC7700ACC8E6 /* Time.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
+		BA373AC020A2055100ACC8E6 /* Context+Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Context+Event.swift"; sourceTree = "<group>"; };
 		BA3CCD76208B99770000D639 /* Main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Main.swift; sourceTree = "<group>"; };
 		BA3CCD78208B99820000D639 /* Main.View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Main.View.swift; sourceTree = "<group>"; };
 		BA3CCD7B208B99EA0000D639 /* Main.SegmentControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Main.SegmentControl.swift; sourceTree = "<group>"; };
@@ -306,6 +312,7 @@
 				BA8B312B209D93CD007C34CD /* Threads.swift */,
 				BAE8DF23209FFEB10021246E /* Error.swift */,
 				BAE8DF2920A062AB0021246E /* HUD.swift */,
+				BA373ABE20A1EC7700ACC8E6 /* Time.swift */,
 			);
 			path = Commons;
 			sourceTree = "<group>";
@@ -397,6 +404,7 @@
 			children = (
 				BAAFF4D7209D80D00010CB4C /* Context.swift */,
 				BA8B3132209E016E007C34CD /* Context+Sync.swift */,
+				BA373AC020A2055100ACC8E6 /* Context+Event.swift */,
 			);
 			path = Context;
 			sourceTree = "<group>";
@@ -484,6 +492,7 @@
 			isa = PBXGroup;
 			children = (
 				BAAFF4DA209D84BD0010CB4C /* Auto.swift */,
+				BA373ABC20A1E59000ACC8E6 /* Auto+Sync.swift */,
 			);
 			path = Auto;
 			sourceTree = "<group>";
@@ -635,6 +644,7 @@
 				"${BUILT_PRODUCTS_DIR}/HappyDNS/HappyDNS.framework",
 				"${BUILT_PRODUCTS_DIR}/JGProgressHUD/JGProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/KYCircularProgress/KYCircularProgress.framework",
+				"${BUILT_PRODUCTS_DIR}/KeychainAccess/KeychainAccess.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/LayoutKit/LayoutKit.framework",
 				"${BUILT_PRODUCTS_DIR}/MessageListener/MessageListener.framework",
@@ -663,6 +673,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HappyDNS.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JGProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KYCircularProgress.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KeychainAccess.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/LayoutKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MessageListener.framework",
@@ -729,6 +740,7 @@
 			files = (
 				BA3CCD9B208CD3F10000D639 /* UIButton.swift in Sources */,
 				BA013CA1208DE602004689F0 /* Profile.View.swift in Sources */,
+				BA373ABF20A1EC7700ACC8E6 /* Time.swift in Sources */,
 				BA88B7872092203A0014C860 /* AccessoryViewRevealer.swift in Sources */,
 				BAE8DF0F209F1B6B0021246E /* Account.Login.swift in Sources */,
 				BA8B312C209D93CD007C34CD /* Threads.swift in Sources */,
@@ -746,6 +758,7 @@
 				BAAFF4D5209C79810010CB4C /* EVE.Connecter.swift in Sources */,
 				BAA2EC9E208F1F9800C6F577 /* Chat.Transition.swift in Sources */,
 				BAA2ECB92090CEA100C6F577 /* PreferenceStore.swift in Sources */,
+				BA373AC120A2055100ACC8E6 /* Context+Event.swift in Sources */,
 				BAAFF4D8209D80D00010CB4C /* Context.swift in Sources */,
 				BA3CCD87208C76180000D639 /* Disposable.swift in Sources */,
 				BA3CCD84208BB4C80000D639 /* Operators.swift in Sources */,
@@ -781,6 +794,7 @@
 				BA3CCD99208CCE910000D639 /* Menu.View.swift in Sources */,
 				BA3CCD97208CCE7B0000D639 /* Menu.swift in Sources */,
 				BAA2ECA6208F7A8E00C6F577 /* Chat.InputView.swift in Sources */,
+				BA373ABD20A1E59000ACC8E6 /* Auto+Sync.swift in Sources */,
 				BAE8DF2820A017DA0021246E /* EVE.Uploader.swift in Sources */,
 				BA3CCD92208CA4F90000D639 /* Root.swift in Sources */,
 				BAA2ECBF2090E12E00C6F577 /* Chat.Node.swift in Sources */,

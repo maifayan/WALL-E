@@ -19,4 +19,5 @@ target 'WALL-E' do
   pod 'MessageListener'
   pod 'KYCircularProgress'
   pod 'Qiniu'
+  pod 'KeychainAccess'
 end

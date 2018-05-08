@@ -26,6 +26,7 @@ message ServiceEvent {
     Message message = 1;
     ContactUpdate contactUpdate = 2;
     Typing typing = 3;
+    ConnectSuccess connectSuccess = 4;
   }
 }
 
@@ -38,6 +39,10 @@ message BabyMessage {
 message Typing {
   string sender = 1;
   string receiver = 2;
+}
+
+message ConnectSuccess {
+
 }
 
 // Sent by service

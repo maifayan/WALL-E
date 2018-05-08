@@ -13,12 +13,23 @@ import EVE
 extension Account.Login {
     final class View: UIViewController {
         private var _loginView: LoginView { return view as! LoginView }
+        private let _loginSuccess: Account.LoginSuccess
+        
+        init(_ loginSuccess: @escaping Account.LoginSuccess) {
+            _loginSuccess = loginSuccess
+            super.init(nibName: nil, bundle: nil)
+        }
+        
+        required init?(coder aDecoder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+        }
         
         override func loadView() {
             view = R.nib.loginView().instantiate(withOwner: nil, options: nil).first as! UIView
         }
         
         deinit {
+            log()
             _loginView.cancelAdaptingKeyboard()
         }
     }
@@ -66,7 +77,7 @@ private extension Account.Login.View {
             .flatMap(EVE.workMapper(EVE.Account.shared.login))
             .subscribeOnMain(onNext: { result in
                 me.dismissHUD()
-                // TODO: LoginSuccess!
+                me._loginSuccess((result.token, result.contact.id_p))
             }, onError: {
                 me.dismissHUD()
                 me.showHUD(error: $0)

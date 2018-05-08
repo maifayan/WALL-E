@@ -7,6 +7,7 @@
 //
 
 import RealmSwift
+import EVE
 
 @objcMembers
 final class Contact: Object {
@@ -29,6 +30,23 @@ final class Contact: Object {
 }
 
 extension Contact {
+    convenience init(_ contact: EVEContact) {
+        let type: ContactCreationType = {
+            if contact.type == EVEContact_Type.robot {
+                return .robot(token: contact.token)
+            } else {
+                return .member(phone: contact.phone)
+            }
+        }()
+        self.init(id: contact.id_p,
+                  creationType: type,
+                  name: contact.name,
+                  iconURL: contact.iconURL,
+                  isOnline: contact.isOnline,
+                  createdAt: contact.createdAt.date,
+                  updatedAt: contact.updatedAt.date)
+    }
+    
     convenience init(
         id: String,
         creationType: ContactCreationType,
@@ -42,8 +60,12 @@ extension Contact {
         self.id = id
         
         switch creationType {
-        case .robot(let token): self.token = token
-        case .member(let phone): self.phone = phone
+        case .robot(let token):
+            self.token = token
+            self.type = .robot
+        case .member(let phone):
+            self.phone = phone
+            self.type = .member
         }
         
         self.name = name

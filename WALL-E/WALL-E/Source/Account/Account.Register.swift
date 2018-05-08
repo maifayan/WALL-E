@@ -55,7 +55,7 @@ private extension Account.Register.View {
             }))
             .share(replay: 1)
         
-        pickedImage.map(second).bind(to: _registerView.avatarUploadView.assetObserver).disposed(by: rx.disposeBag)
+        pickedImage.map(second).bind(to: _registerView.avatarUploadView.imageObserver).disposed(by: rx.disposeBag)
         pickedImage.map(first).subscribe(onNext: { [weak self] in self?._avatarURL = $0 }).disposed(by: rx.disposeBag)
     }
     
