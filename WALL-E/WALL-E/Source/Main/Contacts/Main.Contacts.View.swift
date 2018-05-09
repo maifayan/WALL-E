@@ -14,6 +14,14 @@ private let collectionCellIdentifier = "CellIdentifier"
 private let collectionHeaderIdentifier = "HeaderIdentifier"
 extension Main.Contacts {
     final class View: UIViewController {
+//        init(context: Context) {
+//            super.init(nibName: nil, bundle: nil)
+//        }
+//
+//        required init?(coder aDecoder: NSCoder) {
+//            fatalError("init(coder:) has not been implemented")
+//        }
+        
         private lazy var _collectionView: UICollectionView = {
             let collectionView = UICollectionView(frame: .zero, collectionViewLayout: _layout)
             collectionView.backgroundColor = .clear
@@ -46,6 +54,8 @@ extension Main.Contacts.View {
         super.viewDidLoad()
         view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         view.addSubview(_collectionView)
+        let section = RenderSection(type: _Cell.self)
+        _collectionView.setupRenderer(context: Context.current!, sections: [section])
     }
     
     override func viewDidLayoutSubviews() {
@@ -117,8 +127,6 @@ private extension Main.Contacts.View {
         private lazy var _avatarView: UIImageView = {
             let view = UIImageView()
             view.contentMode = .scaleAspectFill
-            let url = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1524402344412&di=4a23252a1384630713ed00984077d7aa&imgtype=0&src=http%3A%2F%2Fimg2.ph.126.net%2FiWniabDDa1xwCebyA6-75A%3D%3D%2F6597431505982826060.jpg"
-            view.kf.setImage(with: URL(string: url), options: .normalAvatarOptions(sizeValue: ui.avatarSizeValue))
             return view
         }()
         
@@ -127,7 +135,6 @@ private extension Main.Contacts.View {
             label.textAlignment = .center
             label.font = .systemFont(ofSize: 14)
             label.textColor = ui.titleColor
-            label.text = "Tangent"
             return label
         }()
         
@@ -136,6 +143,13 @@ private extension Main.Contacts.View {
             view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
             return view
         }()
+    }
+}
+
+extension Main.Contacts.View._Cell: RenderItem {
+    func render(entity: Contact) {
+        _avatarView.kf.setImage(with: URL(string: entity.iconURL), options: .normalAvatarOptions(sizeValue: ui.avatarSizeValue))
+        _titleLabel.text = entity.name
     }
 }
 

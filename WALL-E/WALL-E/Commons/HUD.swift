@@ -63,3 +63,30 @@ extension UIViewController {
         }
     }
 }
+
+struct HUD {
+    private static var _hud: JGProgressHUD?
+
+    static func show(style: JGProgressHUDStyle = .dark) {
+        syncInMain {
+            _hud?.dismiss(animated: true)
+            guard let window = UIApplication.shared.keyWindow else { return }
+            let hud = _create(style: style)
+            hud.show(in: window)
+            _hud = hud
+        }
+    }
+    
+    static func dismiss() {
+        syncInMain {
+            _hud?.dismiss(animated: true)
+            _hud = nil
+        }
+    }
+    
+    private static func _create(style: JGProgressHUDStyle) -> JGProgressHUD {
+        let hud = JGProgressHUD(style: style)
+        hud.interactionType = .blockAllTouches
+        return hud
+    }
+}

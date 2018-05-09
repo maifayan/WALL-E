@@ -9,27 +9,26 @@
 import Foundation
 import RxSwift
 
-// Create(Context) -> Connect(Connecter) -> Sync(Context) -> Fetch events from events queue
+// Create(Context) -> Connect(Connecter) -> Sync(Context) -> Handle events(Queue)
 final class Context {
+    private let _bag = DisposeBag()
     let token: String
     let uid: String
-    private let _bag = DisposeBag()
-    
+
     init(token: String, uid: String) {
         self.token = token
         self.uid = uid
+        Context.current = self
+    }
+    
+    deinit {
+        log()
     }
 
     private(set) lazy var auto = Auto(self)
     private(set) lazy var request = EVE.Request(self)
-    private(set) lazy var connecter = EVE.Connecter(self, stateUpdate: _connecterStateUpdate) { [weak self] event in
-        if self?.userState != .connected {
-            self?._eventsQueueInSync.append(event)
-        } else {
-            self?.handle(event: event)
-        }
-    }
-    
+    private(set) lazy var connecter = EVE.Connecter(self, stateUpdate: _connecterStateUpdate, handler: _receivedEvent)
+
     private var _eventsQueueInSync: [EVE.Connecter.ServiceEvent] = []
 
     // Must accessed in main thread!
@@ -50,6 +49,22 @@ final class Context {
 }
 
 extension Context {
+    private static let _lock = NSRecursiveLock()
+    private static var _current: Context?
+    
+    private(set) static var current: Context? {
+        set {
+            _lock.lock(); defer { _lock.unlock() }
+            _current = newValue
+        }
+        get {
+            _lock.lock(); defer { _lock.unlock() }
+            return _current
+        }
+    }
+}
+
+extension Context {
     enum UserState {
         case disconnected
         case connecting
@@ -60,13 +75,12 @@ extension Context {
 
 private extension Context {
     func _sync(force: Bool = false) {
-        UIApplication.shared.keyWindow?.rootViewController?.showHUD()
+        HUD.show()
         prepareSync().subscribe(onCompleted: { [weak self] in
             guard let `self` = self else { return }
-            UIApplication.shared.keyWindow?.rootViewController?.dismissHUD()
-            self._eventsQueueInSync.forEach(self.handle)
-            self._eventsQueueInSync.removeAll()
+            self._handleEventsInQueue()
             self.userState = .connected
+            HUD.dismiss()
         }) { error in
             print(error)
             // TODO: Handle error
@@ -85,5 +99,22 @@ private extension Context {
                 self?.userState = .disconnected
             }
         }
+    }
+    
+    // 如果此时处于Syncing中，为了保证时序的正确性，先把从Connecter中收到的
+    // 事件放进队列中，等Syncing完成后，再将所有事件从队列中取出handle.
+    var _receivedEvent: (EVE.Connecter.ServiceEvent) -> () {
+        return { [weak self] event in
+            if self?.userState == .connected {
+                self?.handle(event: event)
+            } else {
+                self?._eventsQueueInSync.append(event)
+            }
+        }
+    }
+    
+    func _handleEventsInQueue() {
+        _eventsQueueInSync.forEach(handle)
+        _eventsQueueInSync.removeAll()
     }
 }
