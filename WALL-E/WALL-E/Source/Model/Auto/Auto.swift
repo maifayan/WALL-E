@@ -16,8 +16,10 @@ final class Auto {
     // Only used in main thread
     private let _mainRealm: Realm
     private let _config: Realm.Configuration
+    unowned let context: Context
 
     init(_ context: Context) throws {
+        self.context = context
         let config = Auto._config(of: context)
         _mainRealm = try syncInMain {
             return try Realm(configuration: config)

@@ -15,8 +15,9 @@ extension Context {
         case .typing(let typing):
             log("User typing")
         case .message(let msg):
+            let uid = self.uid
             auto.asyncWrite {
-                guard let message = Message.create(realm: $0)(msg) else { return }
+                guard let message = Message.create(realm: $0, uid: uid)(msg) else { return }
                 $0.add(message, update: true)
                 log("New message -> \(message)")
             }

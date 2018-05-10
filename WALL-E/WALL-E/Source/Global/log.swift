@@ -8,6 +8,10 @@
 
 import Foundation
 
+func log(_ error: Error) {
+    print("Error: \(error)")
+}
+
 func log(_ str: String) {
     print(str)
 }

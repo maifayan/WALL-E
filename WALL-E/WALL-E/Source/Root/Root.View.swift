@@ -28,7 +28,8 @@ extension Root {
         private lazy var _menuView = Menu.View { [weak self] action in
             switch action {
             case .newRobot:
-                self?.present(Chat.View(), animated: true, completion: nil)
+//                self?.present(Chat.View(), animated: true, completion: nil)
+                ()
             case .theme:
                 let vc = R.nib.themePickerView().instantiate(withOwner: nil, options: nil).first as! UIViewController
                 self?.present(vc, animated: true, completion: nil)

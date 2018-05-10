@@ -11,8 +11,8 @@ import RxSwift
 
 extension Main {
     final class View: UIViewController {
-        private lazy var _contactsView = Contacts.View()
-        private lazy var _conversationView = Conversations.View()
+        private lazy var _contactsView = Contacts.View(context: Context.current!)
+        private lazy var _conversationView = Conversations.View(context: Context.current!)
         private lazy var _contentView: UIView = {
             let view = UIView()
             view.autoresizingMask = [.flexibleWidth, .flexibleHeight]

@@ -13,10 +13,12 @@ extension Chat {
     final class View: UIViewController {
         private let _transition = Transition()
 
-        init() {
+        init(contact: Contact) {
+            print(contact)
             super.init(nibName: nil, bundle: nil)
             modalPresentationStyle = .custom
             transitioningDelegate = _transition
+            print(contact.id)
         }
         
         deinit {

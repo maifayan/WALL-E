@@ -43,5 +43,10 @@
 	<string>Tap &quot;OK&quot; to send photos.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Tap &quot;OK&quot; to send photos.</string>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 </dict>
 </plist>

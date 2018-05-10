@@ -7,11 +7,25 @@
 //
 
 import UIKit
+import RealmSwift
 import LayoutKit
 import RxSwift
 
 extension Main.Conversations {
     final class View: UIViewController {
+        private let _context: Context
+        private var _token: NotificationToken?
+        private var _messages: Results<Message>?
+
+        init(context: Context) {
+            _context = context
+            super.init(nibName: nil, bundle: nil)
+        }
+        
+        required init?(coder aDecoder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+        }
+        
         private lazy var _tableView: UITableView = {
             let tableView = UITableView(frame: .zero, style: .plain)
             tableView.separatorStyle = .none
@@ -56,16 +70,39 @@ extension Main.Conversations.View {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        _render()
+        _setupRender()
     }
 }
 
 private extension Main.Conversations.View {
-    func _render(width: CGFloat = UIScreen.main.bounds.width) {
+    func _setupRender() {
+        let results = _context.auto.main.objects(Message.self).sorted(byKeyPath: "updatedAt", ascending: false).distinct(by: ["conversationId"])
+        _token = results.observe { [weak self] changes in
+            switch changes {
+            case .initial:
+                self?._render()
+            case .update(_, let deletions, let insertions, let modifications):
+                self?._render(updates: (insert: insertions, delete: deletions, reload: modifications))
+            default: ()
+            }
+        }
+        _messages = results
+    }
+    
+    func _render(width: CGFloat = UIScreen.main.bounds.width, updates: (insert: [Int], delete: [Int], reload: [Int])? = nil) {
+        let bu: BatchUpdates? = {
+            guard let updates = updates else { return nil }
+            let bu = BatchUpdates()
+            bu.insertItems.append(contentsOf: updates.insert.map { IndexPath(row: $0, section: 0) })
+            bu.deleteItems.append(contentsOf: updates.delete.map { IndexPath(row: $0, section: 0) })
+            bu.reloadItems.append(contentsOf: updates.reload.map { IndexPath(row: $0, section: 0) })
+            return bu
+        }()
+        
         _adapter.reload(
             width: width,
-            synchronous: false,
-            batchUpdates: nil,
+            synchronous: true,
+            batchUpdates: bu,
             layoutProvider: _provider
         )
     }
@@ -74,7 +111,7 @@ private extension Main.Conversations.View {
         return { [weak self] in
             return [Section(
                 header: nil,
-                items: Array(repeating: Main.Conversations.Item(conversation: "Hello"), count: 27),
+                items: self?._messages?.map(Main.Conversations.Item.init) ?? [],
                 footer: nil
             )]
         }

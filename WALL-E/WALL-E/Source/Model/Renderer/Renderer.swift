@@ -14,18 +14,26 @@ final class Renderer<Item: RenderItem>: NSObject, UITableViewDataSource, UIColle
     
     private unowned let _view: RenderView
     private let _data: [Results<Entity>]
-    private let _tokens: [NotificationToken]
+    private var _tokens: [NotificationToken] = []
+    private var _hasLoaded = false
 
-    init(context: Context, view: RenderView, sections: [RenderSection<Item>]) {
+    init<V: RenderView>(context: Context, view: V, sections: [RenderSection<Item>]) where V: UIView {
         _view = view
         _data = sections.map { $0.fetchEntities(auto: context.auto) }
         sections.forEach { view.register(for: $0.itemType) }
-        _tokens = _data.enumerated().map(Renderer._renderWork(view: view))
-        
+
         super.init()
         view.adapt(to: self)
+        nextRunLoopPeriod {
+            self._tokens = self._data.enumerated().map(self._renderWork(view: view))
+        }
     }
     
+    deinit {
+        _tokens.forEach { $0.invalidate() }
+        log()
+    }
+
     // MARK: - DataSource
     // TableView
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -33,6 +41,7 @@ final class Renderer<Item: RenderItem>: NSObject, UITableViewDataSource, UIColle
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        _hookLoading()
         return _data[section].count
     }
     
@@ -46,27 +55,45 @@ final class Renderer<Item: RenderItem>: NSObject, UITableViewDataSource, UIColle
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        _hookLoading()
         return _data[section].count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         return Item.obtainAndRender(from: collectionView, indexPath: indexPath, entity: _data[indexPath.section][indexPath.item])
     }
+    
+    // Load Completed
+    @objc private func _loadCompleted() {
+        _hasLoaded = true
+    }
+    private var _loadCompletedSelector = #selector(Renderer._loadCompleted)
+    
+    // 当加载完最后一个Cell的时候，触发勾子
+    private func _hookLoading() {
+        // 取消上一次的执行请求，因为构建Cell是在同一个Runloop周期中，所以上一次构建
+        // Cell时调用此方法执行的Perform命令的方法还未被调用（在下一个Runloo周期才调用）
+        Renderer.cancelPreviousPerformRequests(withTarget: self, selector: _loadCompletedSelector, object: nil)
+        // 并不是立即执行，放到下一个Runloop周期中
+        perform(_loadCompletedSelector, with: nil, afterDelay: 0)
+    }
 }
 
 private extension Renderer {
-    static func _renderWork(view: RenderView) -> (Int, Results<Entity>) -> NotificationToken {
-        return { [weak view] section, results in
-            results.observe { [weak view] changes in
+    func _renderWork(view: RenderView) -> (Int, Results<Entity>) -> NotificationToken {
+        return { [weak view, weak self] section, results in
+            results.observe { changes in
                 switch changes {
                 case .initial:
                     view?.render(type: .initial)
-                case .update(_, let deletions, let insertions, let modifications):
+                case .update(_, let deletions, let insertions, let modifications) where self?._hasLoaded == true:
                     view?.render(type: .update(
                         insert: (section: section, items: insertions),
                         delete: (section: section, items: deletions),
                         reload: (section: section, items: modifications))
                     )
+                case .error(let error):
+                    log(error)
                 default: ()
                 }
             }
@@ -118,7 +145,7 @@ extension RenderItem {
         let item = obtain(from: view, indexPath: indexPath)
         item.render(entity: entity)
         guard let ret = item as? T else {
-            fatalError("The item is not adapt render view")
+            fatalError("The item type is not adapt to render view cell type")
         }
         return ret
     }
@@ -140,9 +167,9 @@ extension UITableView: RenderView {
         return item
     }
     
-    func register<T>(for type: T.Type) where T : RenderItem {
+    func register<T>(for type: T.Type) where T: RenderItem {
         guard let cellType = type as? UITableViewCell.Type else {
-            fatalError("Item is not a table view cell!")
+            fatalError("Item is not a table view cell")
         }
         register(cellType, forCellReuseIdentifier: type.identifier)
     }

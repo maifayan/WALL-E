@@ -21,7 +21,7 @@ private extension Context {
     func _syncContacts(force: Bool) -> Completable {
         let oldDate = Date(timeIntervalSince1970: 0)
         let standard = force ? oldDate
-            : auto.main.objects(Contact.self).sorted(byKeyPath: "updatedAt", ascending: false).first?.createdAt
+            : auto.main.objects(Contact.self).sorted(byKeyPath: "updatedAt", ascending: false).first?.updatedAt
             ?? oldDate
         
         return EVE.workWith(request.syncContacts, request: GPBTimestamp(date: standard))
@@ -33,7 +33,7 @@ private extension Context {
     func _syncMessagaes(force: Bool) -> Completable {
         let oldDate = Date(timeIntervalSince1970: 0)
         let standard = force ? oldDate
-            : auto.main.objects(Message.self).sorted(byKeyPath: "updatedAt", ascending: false).first?.createdAt
+            : auto.main.objects(Message.self).sorted(byKeyPath: "updatedAt", ascending: false).first?.updatedAt
             ?? oldDate
         
         return EVE.workWith(request.syncMessages, request: GPBTimestamp(date: standard))

@@ -21,7 +21,6 @@
 		BA373ABD20A1E59000ACC8E6 /* Auto+Sync.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA373ABC20A1E59000ACC8E6 /* Auto+Sync.swift */; };
 		BA373ABF20A1EC7700ACC8E6 /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA373ABE20A1EC7700ACC8E6 /* Time.swift */; };
 		BA373AC120A2055100ACC8E6 /* Context+Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA373AC020A2055100ACC8E6 /* Context+Event.swift */; };
-		BA373AC320A2124A00ACC8E6 /* Main.Contacts.ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA373AC220A2124A00ACC8E6 /* Main.Contacts.ViewModel.swift */; };
 		BA3CCD77208B99770000D639 /* Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3CCD76208B99770000D639 /* Main.swift */; };
 		BA3CCD79208B99820000D639 /* Main.View.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3CCD78208B99820000D639 /* Main.View.swift */; };
 		BA3CCD7C208B99EA0000D639 /* Main.SegmentControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3CCD7B208B99EA0000D639 /* Main.SegmentControl.swift */; };
@@ -37,6 +36,8 @@
 		BA3CCD97208CCE7B0000D639 /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3CCD96208CCE7B0000D639 /* Menu.swift */; };
 		BA3CCD99208CCE910000D639 /* Menu.View.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3CCD98208CCE910000D639 /* Menu.View.swift */; };
 		BA3CCD9B208CD3F10000D639 /* UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3CCD9A208CD3F10000D639 /* UIButton.swift */; };
+		BA619ABF20A439BC00559255 /* AvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA619ABE20A439BC00559255 /* AvatarView.swift */; };
+		BA619AC120A43C0500559255 /* URL+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA619AC020A43C0500559255 /* URL+Image.swift */; };
 		BA783F71208CE4A200771E86 /* MenuContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA783F70208CE4A200771E86 /* MenuContentView.xib */; };
 		BA783F73208CFAEA00771E86 /* ThemePickerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA783F72208CFAEA00771E86 /* ThemePickerView.xib */; };
 		BA88B7872092203A0014C860 /* AccessoryViewRevealer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA88B7862092203A0014C860 /* AccessoryViewRevealer.swift */; };
@@ -123,7 +124,6 @@
 		BA373ABC20A1E59000ACC8E6 /* Auto+Sync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Auto+Sync.swift"; sourceTree = "<group>"; };
 		BA373ABE20A1EC7700ACC8E6 /* Time.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
 		BA373AC020A2055100ACC8E6 /* Context+Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Context+Event.swift"; sourceTree = "<group>"; };
-		BA373AC220A2124A00ACC8E6 /* Main.Contacts.ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Main.Contacts.ViewModel.swift; sourceTree = "<group>"; };
 		BA3CCD76208B99770000D639 /* Main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Main.swift; sourceTree = "<group>"; };
 		BA3CCD78208B99820000D639 /* Main.View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Main.View.swift; sourceTree = "<group>"; };
 		BA3CCD7B208B99EA0000D639 /* Main.SegmentControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Main.SegmentControl.swift; sourceTree = "<group>"; };
@@ -139,6 +139,8 @@
 		BA3CCD96208CCE7B0000D639 /* Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
 		BA3CCD98208CCE910000D639 /* Menu.View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Menu.View.swift; sourceTree = "<group>"; };
 		BA3CCD9A208CD3F10000D639 /* UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButton.swift; sourceTree = "<group>"; };
+		BA619ABE20A439BC00559255 /* AvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarView.swift; sourceTree = "<group>"; };
+		BA619AC020A43C0500559255 /* URL+Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Image.swift"; sourceTree = "<group>"; };
 		BA783F70208CE4A200771E86 /* MenuContentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MenuContentView.xib; sourceTree = "<group>"; };
 		BA783F72208CFAEA00771E86 /* ThemePickerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThemePickerView.xib; sourceTree = "<group>"; };
 		BA88B7862092203A0014C860 /* AccessoryViewRevealer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessoryViewRevealer.swift; sourceTree = "<group>"; };
@@ -227,7 +229,6 @@
 			isa = PBXGroup;
 			children = (
 				BA3CCD88208C82B90000D639 /* Main.Contacts.View.swift */,
-				BA373AC220A2124A00ACC8E6 /* Main.Contacts.ViewModel.swift */,
 			);
 			path = Contacts;
 			sourceTree = "<group>";
@@ -348,6 +349,7 @@
 				BAE8DF21209FFD950021246E /* MessageListener+Rx.swift */,
 				BAE8DF2520A00BB30021246E /* UIImage.swift */,
 				BAE8DF2B20A06D350021246E /* UITextField.swift */,
+				BA619AC020A43C0500559255 /* URL+Image.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -530,6 +532,7 @@
 			isa = PBXGroup;
 			children = (
 				BAE8DF1B209FEEF20021246E /* AvatarUploadView.swift */,
+				BA619ABE20A439BC00559255 /* AvatarView.swift */,
 			);
 			path = Controls;
 			sourceTree = "<group>";
@@ -759,7 +762,6 @@
 				BA013CA1208DE602004689F0 /* Profile.View.swift in Sources */,
 				BA373ABF20A1EC7700ACC8E6 /* Time.swift in Sources */,
 				BA88B7872092203A0014C860 /* AccessoryViewRevealer.swift in Sources */,
-				BA373AC320A2124A00ACC8E6 /* Main.Contacts.ViewModel.swift in Sources */,
 				BAE8DF0F209F1B6B0021246E /* Account.Login.swift in Sources */,
 				BA8B312C209D93CD007C34CD /* Threads.swift in Sources */,
 				BAE8DF17209F2E900021246E /* Account.Register.swift in Sources */,
@@ -790,6 +792,7 @@
 				BA8B3130209DFF03007C34CD /* Message.swift in Sources */,
 				BAFD041C2091D62A009D132A /* Chat.ContentView.swift in Sources */,
 				BAE8DF0C209E0F7F0021246E /* EVE.Account.swift in Sources */,
+				BA619AC120A43C0500559255 /* URL+Image.swift in Sources */,
 				BAA2ECC9209191AD00C6F577 /* Settings.ContentView.swift in Sources */,
 				BAFF8DEC2093238500BFB1BF /* log.swift in Sources */,
 				BA013C91208DAFEA004689F0 /* Main.Conversations.Item.swift in Sources */,
@@ -805,6 +808,7 @@
 				BA013C9D208DE5EA004689F0 /* Profile.swift in Sources */,
 				BA8B312E209DF6CF007C34CD /* Contact.swift in Sources */,
 				BAA2EC94208F172800C6F577 /* Chat.swift in Sources */,
+				BA619ABF20A439BC00559255 /* AvatarView.swift in Sources */,
 				BAA2EC96208F173600C6F577 /* Chat.View.swift in Sources */,
 				BAA2ECC72091918100C6F577 /* Settings.View.swift in Sources */,
 				BA3CCD94208CA5040000D639 /* Root.View.swift in Sources */,

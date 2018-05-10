@@ -37,12 +37,13 @@ extension Auto {
     
     var syncMessages: ([EVEMessage]) -> Completable {
         let scheduler = ConcurrentDispatchQueueScheduler(qos: .default)
+        let uid = context.uid
         return { [weak self] arr in
             Observable<()>.create { subscribe in
                 do {
                     let time = try timeElapsed {
                         try self?.syncWrite {
-                            let messages = arr.compactMap(Message.create(realm: $0))
+                            let messages = arr.compactMap(Message.create(realm: $0, uid: uid))
                             $0.add(messages, update: true)
                             log("Sync messages | count: \(messages.count) --> \(messages)")
                         }

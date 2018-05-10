@@ -94,7 +94,7 @@ private extension EVE.Uploader {
 
 extension EVE.Uploader {
     struct Config {
-        static let bucketIdentifier = ""
+        static let bucketIdentifier = "http://p8cgjx6wx.bkt.clouddn.com"
         static let managerConfig = QNConfiguration.build { builder in
             // TODO: Build
         }

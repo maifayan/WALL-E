@@ -12,6 +12,7 @@ import EVE
 @objcMembers
 final class Message: Object {
     dynamic var id = ""
+    dynamic var conversationId = ""
     dynamic var sender: Contact?
     dynamic var receiver: Contact?
     dynamic var content = ""
@@ -24,7 +25,7 @@ final class Message: Object {
 }
 
 extension Message {
-    static func create(realm: Realm) -> (EVEMessage) -> Message? {
+    static func create(realm: Realm, uid: String) -> (EVEMessage) -> Message? {
         return { message in
             guard
                 let sender = realm.object(ofType: Contact.self, forPrimaryKey: message.sender),
@@ -34,17 +35,21 @@ extension Message {
                 return nil
             }
             
+            let conversationId = sender.id == uid ? receiver.id : sender.id
+            
             return Message(id: message.id_p,
-                         sender: sender,
-                         receiver: receiver,
-                         content: message.content,
-                         createdAt: message.createdAt.date,
-                         updatedAt: message.updatedAt.date)
+                           conversationId: conversationId,
+                           sender: sender,
+                           receiver: receiver,
+                           content: message.content,
+                           createdAt: message.createdAt.date,
+                           updatedAt: message.updatedAt.date)
         }
     }
     
     convenience init(
         id: String,
+        conversationId: String,
         sender: Contact,
         receiver: Contact,
         content: String,
@@ -53,10 +58,18 @@ extension Message {
     ) {
         self.init()
         self.id = id
+        self.conversationId = conversationId
         self.sender = sender
         self.receiver = receiver
         self.content = content
         self.createdAt = createdAt
         self.updatedAt = updatedAt
+    }
+}
+
+extension Message {
+    // Sender or receiver, except me
+    var other: Contact? {
+        return sender?.id == conversationId ? sender : receiver
     }
 }

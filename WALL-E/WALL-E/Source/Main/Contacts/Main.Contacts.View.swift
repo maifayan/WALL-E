@@ -10,17 +10,19 @@ import UIKit
 import Kingfisher
 import RxSwift
 
-private let collectionCellIdentifier = "CellIdentifier"
 private let collectionHeaderIdentifier = "HeaderIdentifier"
 extension Main.Contacts {
     final class View: UIViewController {
-//        init(context: Context) {
-//            super.init(nibName: nil, bundle: nil)
-//        }
-//
-//        required init?(coder aDecoder: NSCoder) {
-//            fatalError("init(coder:) has not been implemented")
-//        }
+        private let _context: Context
+        
+        init(context: Context) {
+            _context = context
+            super.init(nibName: nil, bundle: nil)
+        }
+
+        required init?(coder aDecoder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+        }
         
         private lazy var _collectionView: UICollectionView = {
             let collectionView = UICollectionView(frame: .zero, collectionViewLayout: _layout)
@@ -28,7 +30,6 @@ extension Main.Contacts {
             collectionView.delegate = self
             collectionView.dataSource = self
             collectionView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-            collectionView.register(_Cell.self, forCellWithReuseIdentifier: collectionCellIdentifier)
             collectionView.register(_Header.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: collectionHeaderIdentifier)
             return collectionView
         }()
@@ -46,6 +47,8 @@ extension Main.Contacts {
             layout.headerReferenceSize = .init(width: UIScreen.main.bounds.width, height: ui.collectionHeaderHeight)
             return layout
         }()
+        
+        private var _renderer: Renderer<_Cell>!
     }
 }
 
@@ -54,44 +57,50 @@ extension Main.Contacts.View {
         super.viewDidLoad()
         view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         view.addSubview(_collectionView)
-        let section = RenderSection(type: _Cell.self)
-        _collectionView.setupRenderer(context: Context.current!, sections: [section])
+        _setupRenderer()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         _collectionView.frame = view.bounds
     }
+    
+    private func _setupRenderer() {
+        let sections = [
+            RenderSection(type: _Cell.self, filter: Contact.predicateForMember, sort: nil),
+            RenderSection(type: _Cell.self, filter: Contact.predicateForRobot, sort: nil),
+        ]
+        _renderer = _collectionView.setupRenderer(context: _context, sections: sections)
+        // Reset dataSource: Renderer -> Self
+        // 为什么要将DataSource从Renderer转移到Self
+        // 因为Renderer不提供给CollectionView设置Header、Footer的功能
+        // 所以这里要用Self包装Renderer
+        _collectionView.dataSource = self
+    }
 }
 
 extension Main.Contacts.View: UICollectionViewDelegate, UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 2
+        return _renderer.numberOfSections(in: collectionView)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return _renderer.collectionView(collectionView, numberOfItemsInSection: section)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return collectionView.dequeueReusableCell(withReuseIdentifier: collectionCellIdentifier, for: indexPath) as! _Cell
+        return _renderer.collectionView(collectionView, cellForItemAt: indexPath)
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: collectionHeaderIdentifier, for: indexPath) as! _Header
-        switch indexPath.section {
-        case 0:
-            header.title = "Members"
-        case 1:
-            header.title = "Robots"
-        default:
-            fatalError("Impossible!")
-        }
+        header.title = indexPath.section == 0 ? "Members" : "Robots"
         return header
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        present(Profile.View(contact: ""), animated: true, completion: nil)
+        let contact = _renderer.entity(of: indexPath)
+        present(Profile.View(contact: contact), animated: true, completion: nil)
     }
 }
 
@@ -124,12 +133,8 @@ private extension Main.Contacts.View {
             fatalError("init(coder:) has not been implemented")
         }
         
-        private lazy var _avatarView: UIImageView = {
-            let view = UIImageView()
-            view.contentMode = .scaleAspectFill
-            return view
-        }()
-        
+        private lazy var _avatarView = AvatarView()
+
         private lazy var _titleLabel: UILabel = {
             let label = UILabel()
             label.textAlignment = .center
@@ -148,7 +153,7 @@ private extension Main.Contacts.View {
 
 extension Main.Contacts.View._Cell: RenderItem {
     func render(entity: Contact) {
-        _avatarView.kf.setImage(with: URL(string: entity.iconURL), options: .normalAvatarOptions(sizeValue: ui.avatarSizeValue))
+        _avatarView.set(entity, sizeValue: ui.avatarSizeValue)
         _titleLabel.text = entity.name
     }
 }

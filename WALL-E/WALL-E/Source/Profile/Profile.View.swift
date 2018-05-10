@@ -11,7 +11,9 @@ import WXWaveView
 
 extension Profile {
     final class View: UIViewController {
-        init(contact: String) {
+        private let _contact: Contact
+        init(contact: Contact) {
+            _contact = contact
             super.init(nibName: nil, bundle: nil)
             modalTransitionStyle = .crossDissolve
             modalPresentationStyle = .overCurrentContext
@@ -27,7 +29,7 @@ extension Profile {
             return view
         }()
         
-        private lazy var _contentView = _ContentView()
+        private lazy var _contentView = _ContentView(contact: _contact)
     }
     
     enum Event {
@@ -96,7 +98,9 @@ extension UI where Base: Profile.View {
 
 private extension Profile.View {
     final class _ContentView: UIViewController {
-        init() {
+        private let _contact: Contact
+        init(contact: Contact) {
+            _contact = contact
             super.init(nibName: nil, bundle: nil)
         }
         
@@ -104,12 +108,13 @@ private extension Profile.View {
             fatalError("init(coder:) has not been implemented")
         }
         
-        private lazy var _headerView = _HeaderView()
-        private lazy var _footerView = _FooterView { [weak self] in
+        private lazy var _headerView = _HeaderView(contact: _contact)
+        private lazy var _footerView = _FooterView {
+            [weak self, weak viewController = presentingViewController, c = _contact] in
             switch $0 {
             case .chat:
-                self?.dismiss(animated: true) { [weak viewController = self?.presentingViewController] in
-                    viewController?.present(Chat.View(), animated: true, completion: nil)
+                self?.dismiss(animated: true) {
+                    viewController?.present(Chat.View(contact: c), animated: true, completion: nil)
                 }
             }
         }
@@ -157,8 +162,10 @@ extension UI where Base: Profile.View._ContentView {
 
 private extension Profile.View._ContentView {
     final class _HeaderView: UIView {
-        override init(frame: CGRect) {
-            super.init(frame: frame)
+        private let _contact: Contact
+        init(contact: Contact) {
+            _contact = contact
+            super.init(frame: .zero)
             ui.adapt(themeKeyPath: \.mainColor, for: \.backgroundColor)
             addSubview(_avatarView)
             addSubview(_nickLabel)
@@ -172,13 +179,10 @@ private extension Profile.View._ContentView {
             fatalError("init(coder:) has not been implemented")
         }
         
-        private lazy var _avatarView: UIImageView = {
-            let imageView = UIImageView()
-            let url = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1524402344412&di=4a23252a1384630713ed00984077d7aa&imgtype=0&src=http%3A%2F%2Fimg2.ph.126.net%2FiWniabDDa1xwCebyA6-75A%3D%3D%2F6597431505982826060.jpg"
-            imageView.kf.setImage(with: URL(string: url), options: .normalAvatarOptions(sizeValue: ui.avatarSizeValue))
-            imageView.contentMode = .scaleAspectFill
-            imageView.setShadow(color: .gray, offSet: CGSize(width: 3.5, height: 3.5), radius: 6, opacity: 0.45)
-            return imageView
+        private lazy var _avatarView: AvatarView = {
+            let view = AvatarView(_contact, sizeValue: ui.avatarSizeValue, onlineStateViewSizeValue: 18)
+            view.setShadow(color: .gray, offSet: CGSize(width: 3.5, height: 3.5), radius: 6, opacity: 0.45)
+            return view
         }()
         
         private lazy var _nickLabel: UILabel = {
@@ -186,7 +190,7 @@ private extension Profile.View._ContentView {
             label.textColor = .white
             label.font = .systemFont(ofSize: 28, weight: .bold)
             label.textAlignment = .center
-            label.text = "Tangent"
+            label.text = _contact.name
             label.numberOfLines = 1
             return label
         }()
@@ -196,7 +200,7 @@ private extension Profile.View._ContentView {
             label.textColor = .white
             label.font = .systemFont(ofSize: 20, weight: .bold)
             label.textAlignment = .center
-            label.text = "18565850472"
+            label.text = _contact.phone
             label.numberOfLines = 1
             return label
         }()

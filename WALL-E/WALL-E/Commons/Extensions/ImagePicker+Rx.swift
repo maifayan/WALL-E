@@ -26,7 +26,6 @@ extension UIImagePickerController {
         return delegate.rx.listen(selector, in: UIImagePickerControllerDelegate.self)
             .do(onNext: { [weak picker] _ in picker?.dismiss(animated: true, completion: nil) })
             .map { $0[1] as! [String: Any] }
-            .do(onNext: { print($0) })
             .map { ($0[UIImagePickerControllerImageURL] as! URL, $0[UIImagePickerControllerOriginalImage] as! UIImage) }
     }
     

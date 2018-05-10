@@ -99,3 +99,14 @@ extension Contact {
         case member(phone: String)
     }
 }
+
+// MARK: - Predicates
+extension Contact {
+    static var predicateForMember: NSPredicate {
+        return NSPredicate(format: "typeValue == %@", ContactType.member.rawValue)
+    }
+    
+    static var predicateForRobot: NSPredicate {
+        return NSPredicate(format: "typeValue == %@", ContactType.robot.rawValue)
+    }
+}
