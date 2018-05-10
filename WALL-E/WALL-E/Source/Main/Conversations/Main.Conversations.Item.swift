@@ -82,7 +82,7 @@ private extension Main.Conversations.Item {
     static func _makeSummaryLayout(message: Message) -> Layout {
         return LabelLayout(
             text: message.content,
-            font: .systemFont(ofSize: 13, weight: .bold),
+            font: .systemFont(ofSize: 16, weight: .bold),
             numberOfLines: 3,
             viewReuseId: "SummaryLayout"
         ) { $0.textColor = UIColor(rgb: triple(119)) }
