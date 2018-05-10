@@ -57,9 +57,8 @@ private extension Main.Conversations.Item {
             $0.backgroundColor = (message.other?.isOnline ?? false) ? onlineColor : .gray
         }
         
-        // TODO: Time
         let timeLayout = LabelLayout(
-            text: "3分钟前",
+            text: message.createdAt.shortString,
             font: .systemFont(ofSize: 12),
             numberOfLines: 1,
             alignment: .centerTrailing,

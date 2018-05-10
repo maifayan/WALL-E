@@ -38,6 +38,7 @@
 		BA3CCD9B208CD3F10000D639 /* UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3CCD9A208CD3F10000D639 /* UIButton.swift */; };
 		BA619ABF20A439BC00559255 /* AvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA619ABE20A439BC00559255 /* AvatarView.swift */; };
 		BA619AC120A43C0500559255 /* URL+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA619AC020A43C0500559255 /* URL+Image.swift */; };
+		BA619AC520A4AB5500559255 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA619AC420A4AB5500559255 /* Date.swift */; };
 		BA783F71208CE4A200771E86 /* MenuContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA783F70208CE4A200771E86 /* MenuContentView.xib */; };
 		BA783F73208CFAEA00771E86 /* ThemePickerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA783F72208CFAEA00771E86 /* ThemePickerView.xib */; };
 		BA88B7872092203A0014C860 /* AccessoryViewRevealer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA88B7862092203A0014C860 /* AccessoryViewRevealer.swift */; };
@@ -141,6 +142,7 @@
 		BA3CCD9A208CD3F10000D639 /* UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButton.swift; sourceTree = "<group>"; };
 		BA619ABE20A439BC00559255 /* AvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarView.swift; sourceTree = "<group>"; };
 		BA619AC020A43C0500559255 /* URL+Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Image.swift"; sourceTree = "<group>"; };
+		BA619AC420A4AB5500559255 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		BA783F70208CE4A200771E86 /* MenuContentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MenuContentView.xib; sourceTree = "<group>"; };
 		BA783F72208CFAEA00771E86 /* ThemePickerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThemePickerView.xib; sourceTree = "<group>"; };
 		BA88B7862092203A0014C860 /* AccessoryViewRevealer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessoryViewRevealer.swift; sourceTree = "<group>"; };
@@ -350,6 +352,7 @@
 				BAE8DF2520A00BB30021246E /* UIImage.swift */,
 				BAE8DF2B20A06D350021246E /* UITextField.swift */,
 				BA619AC020A43C0500559255 /* URL+Image.swift */,
+				BA619AC420A4AB5500559255 /* Date.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -793,6 +796,7 @@
 				BAFD041C2091D62A009D132A /* Chat.ContentView.swift in Sources */,
 				BAE8DF0C209E0F7F0021246E /* EVE.Account.swift in Sources */,
 				BA619AC120A43C0500559255 /* URL+Image.swift in Sources */,
+				BA619AC520A4AB5500559255 /* Date.swift in Sources */,
 				BAA2ECC9209191AD00C6F577 /* Settings.ContentView.swift in Sources */,
 				BAFF8DEC2093238500BFB1BF /* log.swift in Sources */,
 				BA013C91208DAFEA004689F0 /* Main.Conversations.Item.swift in Sources */,
