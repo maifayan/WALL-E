@@ -32,9 +32,9 @@ extension Chat {
             return label
         }()
         
-        var message: String? {
+        var message: Message? {
             didSet {
-                _dateLabel.text = message
+                _dateLabel.text = message?.createdAt.shortTimeString ?? ""
             }
         }
     }

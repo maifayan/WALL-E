@@ -10,12 +10,15 @@ import UIKit
 import YYText
 import RxSwift
 import LayoutKit
+import RealmSwift
 
 extension Chat {
     final class Presenter: NSObject {
         private weak var _chatView: Chat.View?
-        
-        init(_ chatView: Chat.View) {
+        private let _change: Observable<RealmCollectionChange<Results<Message>>>
+
+        init(change: Observable<RealmCollectionChange<Results<Message>>>, chatView: Chat.View) {
+            _change = change
             _chatView = chatView
             super.init()
             YYTextKeyboardManager.default()?.add(self)
@@ -35,10 +38,16 @@ extension Chat {
         private let _nodeEventSubject = PublishSubject<NodeEvent>()
         
         // ContentView Refresh
+        private(set) lazy var refreshContentView: Observable<ContentViewRefreshing> = Observable.merge(
+            _renderObserver,
+            _keyboardChangedSubject.asObserver().map { .scrollWithKeyboard($0) },
+            _scrollToBottomSubject.map { .scrollToBottom }
+        )
         
-        // ContentView Refresh
-        private(set) lazy var refreshContentView: Observable<ContentViewRefreshing> = _makeRefresh()
         private let _scrollToBottomSubject = PublishSubject<()>()
+
+        // Token for messages results
+        private var _token: NotificationToken?
     }
 }
 
@@ -55,17 +64,44 @@ extension Chat.Presenter {
 
 // MARK: - ContentViewRefresh
 private extension Chat.Presenter {
-    func _makeRefresh() -> Observable<ContentViewRefreshing> {
-        let nodes: Observable<ContentViewRefreshing> =  Observable.create { [weak self] subscribe in
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                guard let layouts = self?.makeTestNode() else { return }
-                subscribe.onNext(.nodes(layouts: layouts, batchUpdates: nil))
-            }
-            return Disposables.create()
+    var _renderObserver: Observable<Chat.Presenter.ContentViewRefreshing> {
+        let mapper: (Results<Message>) -> [Layout] = { [weak self] in
+            guard let `self` = self else { return [] }
+            return $0.map(Chat.Presenter._message2NodeMapper(event: self._nodeEventSubject))
         }
-        let scroll: Observable<ContentViewRefreshing> = _keyboardChangedSubject.asObserver().map { .scrollWithKeyboard($0) }
-        let scrollToBottom: Observable<ContentViewRefreshing> = _scrollToBottomSubject.map { .scrollToBottom }
-        return Observable.merge(nodes, scroll, scrollToBottom)
+        
+        return _change.map {
+            switch $0 {
+            case .initial(let messages):
+                return .nodes(layouts: mapper(messages), batchUpdates: nil)
+            case .update(let messages, let deletions, let insertions, let modifications):
+                let bu: BatchUpdates = {
+                    let bu = BatchUpdates()
+                    bu.insertItems = insertions.map { IndexPath(row: $0, section: 0) }
+                    bu.deleteItems = deletions.map { IndexPath(row: $0, section: 0) }
+                    bu.reloadItems = modifications.map { IndexPath(row: $0, section: 0) }
+                    return bu
+                }()
+                return .nodes(layouts: mapper(messages), batchUpdates: bu)
+            default:
+                return nil
+            }
+        }.ignoreNil()
+    }
+    
+    static func _message2NodeMapper(event: PublishSubject<Chat.Presenter.NodeEvent>) -> (Message) -> Chat.Node {
+        return { msg in
+            let provider: ChatNodeLayoutProvider = {
+                switch msg.type {
+                case .normal:
+                    return TextLayoutProvider(message: msg)
+                case .typing:
+                    return TypingProvider()
+                }
+            }()
+            
+            return Chat.Node(provider: provider, event: event)
+        }
     }
 }
 
@@ -116,46 +152,5 @@ extension Chat.Presenter {
     
     enum NodeEvent {
         case longPress(on: UIView)
-    }
-}
-
-extension Chat.Presenter {
-    func makeTestNode() -> [Layout] {
-        let texts = [
-            "今天天气不错哦",
-            "今天天气不错哦",
-            "今天天气不错哦",
-            "今天我寒夜里看雪飘过怀着冷却了的心窝票远方，风雨里追赶夜里分不清影踪天空海阔你与我可会边谁没在变",
-            "原谅我这一生不羁放纵爱自由",
-            "也会怕有一天会跌倒",
-            "背弃了理想谁人都可以",
-            "也会怕有一天只你共我",
-            "今天天气不错哦",
-            "今天我寒夜里看雪飘过怀着冷却了的心窝票远方，风雨里追赶夜里分不清影踪天空海阔你与我可会边谁没在变",
-            "原谅我这一生不羁放纵爱自由",
-            "也会怕有一天会跌倒",
-            "背弃了理想谁人都可以",
-            "也会怕有一天只你共我",
-            "背弃了理想谁人都可以",
-            "也会怕有一天只你共我",
-            "今天天气不错哦",
-            "今天我寒夜里看雪飘过怀着冷却了的心窝票远方，风雨里追赶夜里分不清影踪天空海阔你与我可会边谁没在变",
-            "原谅我这一生不羁放纵爱自由",
-            "也会怕有一天会跌倒",
-            "背弃了理想谁人都可以",
-            "也会怕有一天只你共我",
-            "今天天气不错哦",
-            "今天我寒夜里看雪飘过怀着冷却了的心窝票远方，风雨里追赶夜里分不清影踪天空海阔你与我可会边谁没在变",
-            "原谅我这一生不羁放纵爱自由",
-            "也会怕有一天会跌倒",
-            "背弃了理想谁人都可以",
-            "也会怕有一天只你共我",
-            "背弃了理想谁人都可以",
-            "也会怕有一天只你共我",
-            "今天天气不错哦",
-            "今天我寒夜里看雪飘过怀着冷却了的心窝票远方，风雨里追赶夜里分不清影踪天空海阔你与我可会边谁没在变",
-            "原谅我这一生不羁放纵爱自由",
-            ]
-        return texts.map(TextLayoutProvider.init).map { Chat.Node(provider: $0, event: _nodeEventSubject) }
     }
 }

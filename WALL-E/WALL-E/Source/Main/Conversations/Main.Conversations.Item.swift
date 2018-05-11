@@ -35,6 +35,7 @@ private extension Main.Conversations.Item {
             $0.set(contact, sizeValue: avatarSizeValue, showOnlineState: false)
         }
         
+        // TODO: 未读消息名字显示颜色
         let nickColor = UIColor(rgb: triple(133))
         let randomColor = arc4random_uniform(2) + 1 == 1 ? nickColor : Theme.shared.mainColor
         let nickLayout = LabelLayout(

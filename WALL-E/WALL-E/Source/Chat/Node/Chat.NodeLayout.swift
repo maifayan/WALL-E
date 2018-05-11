@@ -17,14 +17,14 @@ protocol ChatNodeLayoutProvider {
 }
 
 final class TextLayoutProvider: ChatNodeLayoutProvider {
-    private let _text: String
+    private let _msg: Message
     
-    init(text: String) {
-        _text = text
+    init(message: Message) {
+        _msg = message
     }
     
     var isMyOwn: Bool {
-        return _text.count % 2 == 0
+        return _msg.sender?.id == Context.current?.uid
     }
     
     var insets: UIEdgeInsets {
@@ -36,7 +36,7 @@ final class TextLayoutProvider: ChatNodeLayoutProvider {
         let paragraph = NSMutableParagraphStyle()
         paragraph.lineSpacing = 4
         let attributedString = NSAttributedString(
-            string: _text,
+            string: _msg.content,
             attributes: [
                 .paragraphStyle: paragraph,
             ]
@@ -54,7 +54,7 @@ final class TextLayoutProvider: ChatNodeLayoutProvider {
         if Settings.showMessageDate {
             sublayouts.append(
                 LabelLayout(
-                    text: "19:32",
+                    text: _msg.createdAt.shortTimeString,
                     font: .boldSystemFont(ofSize: 14),
                     numberOfLines: 1,
                     viewReuseId: "TimeLabel"
@@ -70,5 +70,18 @@ final class TextLayoutProvider: ChatNodeLayoutProvider {
             viewReuseId: "TextContentLayout",
             sublayouts: sublayouts
         )
+    }
+}
+
+final class TypingProvider: ChatNodeLayoutProvider {
+    // Always return false
+    var isMyOwn: Bool { return false }
+    
+    var insets: UIEdgeInsets {
+        return .init(top: 16, left: 16, bottom: 16, right: 16)
+    }
+    
+    func layout(event: PublishSubject<Chat.Presenter.NodeEvent>) -> Layout {
+        return SizeLayout<Chat.NodeTypingView>(size: Chat.NodeTypingView.size, viewReuseId: "TypingContentLayout") { _ in }
     }
 }

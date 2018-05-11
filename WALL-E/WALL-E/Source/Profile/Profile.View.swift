@@ -11,8 +11,11 @@ import WXWaveView
 
 extension Profile {
     final class View: UIViewController {
+        private let _context: Context
         private let _contact: Contact
-        init(contact: Contact) {
+        
+        init(context: Context, contact: Contact) {
+            _context = context
             _contact = contact
             super.init(nibName: nil, bundle: nil)
             modalTransitionStyle = .crossDissolve
@@ -29,7 +32,7 @@ extension Profile {
             return view
         }()
         
-        private lazy var _contentView = _ContentView(contact: _contact)
+        private lazy var _contentView = _ContentView(context: _context, contact: _contact)
     }
     
     enum Event {
@@ -98,8 +101,11 @@ extension UI where Base: Profile.View {
 
 private extension Profile.View {
     final class _ContentView: UIViewController {
+        private let _context: Context
         private let _contact: Contact
-        init(contact: Contact) {
+        
+        init(context: Context, contact: Contact) {
+            _context = context
             _contact = contact
             super.init(nibName: nil, bundle: nil)
         }
@@ -110,11 +116,11 @@ private extension Profile.View {
         
         private lazy var _headerView = _HeaderView(contact: _contact)
         private lazy var _footerView = _FooterView {
-            [weak self, weak viewController = presentingViewController, c = _contact] in
+            [weak self, weak viewController = presentingViewController, con = _contact, ctx = _context] in
             switch $0 {
             case .chat:
                 self?.dismiss(animated: true) {
-                    viewController?.present(Chat.View(contact: c), animated: true, completion: nil)
+                    viewController?.present(Chat.View(context: ctx, contact: con), animated: true, completion: nil)
                 }
             }
         }

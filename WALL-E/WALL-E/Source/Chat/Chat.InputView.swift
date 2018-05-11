@@ -104,6 +104,7 @@ extension Chat {
     enum Content {
         case text(String)
         case assets([PHAsset])
+        case typing
     }
 }
 
@@ -266,6 +267,7 @@ private extension Chat.InputView {
         if ui._supportNewLine {
             _switchSendButtonDisplayIfNeeds(!_text.isEmpty || _imagesPickerHelper.hasSelectedAssets)
         }
+        _send(.typing)
 
         // Check: Should re-layout height
         let expectedContentViewHeight = min(_contentView.sizeThatFits(.init(width: _contentView.width, height: .infinity)).height, ui.maxHeightForContentView)

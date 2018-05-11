@@ -8,17 +8,20 @@
 
 import UIKit
 import RxSwift
+import RealmSwift
 
 extension Chat {
     final class View: UIViewController {
+        private let _context: Context
+        private let _contact: Contact
         private let _transition = Transition()
 
-        init(contact: Contact) {
-            print(contact)
+        init(context: Context, contact: Contact) {
+            _context = context
+            _contact = contact
             super.init(nibName: nil, bundle: nil)
             modalPresentationStyle = .custom
             transitioningDelegate = _transition
-            print(contact.id)
         }
         
         deinit {
@@ -29,11 +32,14 @@ extension Chat {
             fatalError("init(coder:) has not been implemented")
         }
         
-        // Views
-        private lazy var _presenter = Presenter(self)
-        private lazy var _headerView = HeaderView()
+        // ViewModel
+        private lazy var _viewModel = ViewModel(context: _context, contact: _contact)
         
-        private lazy var _contentView = ContentView(refresh: _presenter.refreshContentView) { [weak self] event in
+        // Views
+        private lazy var _presenter = Presenter(change: _viewModel.change, chatView: self)
+        private lazy var _headerView = HeaderView(contact: _contact)
+        
+        private lazy var _contentView = ContentView(messages: _viewModel.messages, refresh: _presenter.refreshContentView) { [weak self] event in
             switch event {
             case .tap:
                 self?._presenter.dismissKeyboard()
@@ -54,12 +60,14 @@ extension Chat {
             self?._presenter.scrollToBottom()
         }
 
-        private lazy var _inputView = InputView { content in
+        private lazy var _inputView = InputView { [weak self] content in
             switch content {
             case let .text(text):
-                print("Send \(text)")
+                self?._viewModel.send(text)
             case let .assets(assets):
                 print("Send assets, count: \(assets.count)")
+            case .typing:
+                self?._viewModel.typing()
             }
         }
     }

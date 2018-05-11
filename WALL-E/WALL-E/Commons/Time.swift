@@ -13,3 +13,8 @@ func timeElapsed(_ block: () throws -> ()) rethrows -> TimeInterval {
     try block()
     return CFAbsoluteTimeGetCurrent() - start
 }
+
+func after(_ timeInterval: TimeInterval, onMainThread: Bool = true, _ todo: @escaping () -> ()) {
+    if onMainThread { DispatchQueue.main.asyncAfter(deadline: .now() + timeInterval, execute: todo) }
+    else { DispatchQueue.global().asyncAfter(deadline: .now() + timeInterval, execute: todo) }
+}

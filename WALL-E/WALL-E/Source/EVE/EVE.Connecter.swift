@@ -17,6 +17,8 @@ extension EVE {
         private unowned let _context: Context
         private let _stateUpdate: (State) -> ()
         private let _handler: (ServiceEvent) -> ()
+        
+        private weak var _writer: GRXBufferedPipe?
 
         init(_ context: Context, stateUpdate: @escaping (State) -> (), handler: @escaping (ServiceEvent) -> ()) {
             _context = context
@@ -85,11 +87,33 @@ extension EVE.Connecter {
     }
 }
 
+extension EVE.Connecter {
+    enum MessageType {
+        case typing(to: Contact)
+        case message(to: Contact, content: String)
+    }
+    
+    func send(_ type: MessageType) {
+        let event = EVEClientEvent()
+        switch type {
+        case .typing(let to):
+            event.typingTo = to.id
+        case .message(let to, let content):
+            let babyMsg = EVEBabyMessage()
+            babyMsg.receiver = to.id
+            babyMsg.content = content
+            event.message = babyMsg
+        }
+        _writer?.writeValue(event)
+    }
+}
+
 private extension EVE.Connecter {
     func _connect() -> Observable<ServiceEvent> {
-        let writer = GRXBufferedPipe()
         return .create { [weak self] subscribe in
             guard let `self` = self else { return Disposables.create() }
+            let writer = GRXBufferedPipe()
+            self._writer = writer
             let call = self._service.rpcToConnect(withRequestsWriter: writer) { done, serviceEvent, error in
                 if let serviceEvent = serviceEvent, let event = serviceEvent.event {
                     subscribe.onNext(event)

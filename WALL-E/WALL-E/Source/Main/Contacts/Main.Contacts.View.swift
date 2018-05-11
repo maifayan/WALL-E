@@ -100,7 +100,7 @@ extension Main.Contacts.View: UICollectionViewDelegate, UICollectionViewDataSour
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let contact = _renderer.entity(of: indexPath)
-        present(Profile.View(contact: contact), animated: true, completion: nil)
+        present(Profile.View(context: _context, contact: contact), animated: true, completion: nil)
     }
 }
 

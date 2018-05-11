@@ -11,13 +11,16 @@ import LayoutKit
 import RxSwift
 import RxCocoa
 import MessageListener
+import RealmSwift
 
 extension Chat {
     final class ContentView: UITableViewController {
+        private let _messages: Results<Message>
         private let _refresh: Observable<Presenter.ContentViewRefreshing>
         private let _eventCallback: (Event) -> ()
         
-        init(refresh: Observable<Presenter.ContentViewRefreshing>, eventCallback: @escaping (Event) -> ()) {
+        init(messages: Results<Message>, refresh: Observable<Presenter.ContentViewRefreshing>, eventCallback: @escaping (Event) -> ()) {
+            _messages = messages
             _refresh = refresh
             _eventCallback = eventCallback
             super.init(style: .plain)
@@ -47,10 +50,21 @@ extension Chat.ContentView {
 }
 
 extension Chat.ContentView {
+    override func loadView() {
+        super.loadView()
+        // isa-swizzling
+        object_setClass(view, Chat.TableView.self)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         _bindEvents()
         _setupTableView()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.scrollToBottom(animated: false)
     }
 }
 
@@ -70,7 +84,7 @@ extension Chat.ContentView {
         let item = _adapter.currentArrangement[indexPath.section].items[indexPath.item]
         item.makeViews(in: cell.contentView)
         // Date
-        cell.message = "16:20"
+        cell.message = _messages[indexPath.row]
         return cell
     }
 }
@@ -86,14 +100,14 @@ private extension Chat.ContentView {
     }
     
     func _reload(layouts: [Layout], batchUpdates: BatchUpdates?) {
-        _adapter.reload(width: view.width, synchronous: false, batchUpdates: batchUpdates, layoutProvider: {
+        _adapter.reload(width: UIScreen.main.bounds.width, synchronous: true, batchUpdates: batchUpdates, layoutProvider: {
             return [Section(header: nil, items: layouts, footer: nil)]
         }) { [weak self] in
-            if batchUpdates == nil {
-                DispatchQueue.main.async {
-                    self?._scrollToBottom(animated: false)
-                }
-            }
+            nextRunLoopPeriod { nextRunLoopPeriod {
+                guard batchUpdates == nil || (batchUpdates != nil && (batchUpdates?.insertItems.count ?? 0) > 0) else { return }
+                guard let count = self?.tableView.numberOfRows(inSection: 0), count > 0 else { return }
+                self?.tableView.scrollToRow(at: IndexPath(row: count - 1, section: 0), at: .top, animated: batchUpdates != nil)
+            }}
         }
     }
     
@@ -105,12 +119,12 @@ private extension Chat.ContentView {
             case .nodes(let layouts, let batchUpdates):
                 self._reload(layouts: layouts, batchUpdates: batchUpdates)
             case .scrollWithKeyboard(let info):
-                guard self._isOnBottom == true else { return }
+                guard self.tableView.isAtBottom == true else { return }
                 UIView.animate(withDuration: info.duration, delay: 0, options: info.animationOptions, animations: {
                     self.tableView.contentOffset.y -= info.constant
                 })
             case .scrollToBottom:
-                self._scrollToBottom()
+                self.tableView.scrollToBottom(animated: true)
             }
         }).disposed(by: rx.disposeBag)
         
@@ -128,26 +142,11 @@ private extension Chat.ContentView {
 }
 
 private extension Chat.ContentView {
-    var _isOnBottom: Bool {
-        return (tableView.contentOffset.y - (tableView.contentSize.height - tableView.height))._standard >= 0
-    }
-    
     var _bottomOffset: CGPoint {
-        return CGPoint(x: 0, y: tableView.contentSize.height - tableView.frame.height)
-    }
-    
-    func _scrollToBottom(animated: Bool = true) {
-        tableView.setContentOffset(_bottomOffset, animated: animated)
+        return CGPoint(x: 0, y: tableView.contentSize.height - tableView.height + tableView.contentInset.bottom)
     }
 }
 
 extension UI where Base: Chat.ContentView {
     var reuseIdentifier: String { return "Chat.Identifier" }
-}
-
-fileprivate extension CGFloat {
-    // 四舍五入取两位小数
-    var _standard: CGFloat {
-        return CGFloat(lroundf(Float(self) * 100)) / 100
-    }
 }

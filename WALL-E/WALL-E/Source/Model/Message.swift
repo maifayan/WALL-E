@@ -18,9 +18,30 @@ final class Message: Object {
     dynamic var content = ""
     dynamic var createdAt = Date()
     dynamic var updatedAt = Date()
+    dynamic var typeValue = "normal"
     
     static override func primaryKey() -> String? {
         return "id"
+    }
+}
+
+extension Message {
+    enum MessageType: String {
+        case typing
+        case normal
+    }
+    
+    var type: MessageType {
+        get {
+            guard let ret = MessageType(rawValue: typeValue) else {
+                fatalError("Impossible type value!")
+            }
+            return ret
+        }
+        
+        set {
+            typeValue = newValue.rawValue
+        }
     }
 }
 
@@ -64,6 +85,7 @@ extension Message {
         self.content = content
         self.createdAt = createdAt
         self.updatedAt = updatedAt
+        type = .normal
     }
 }
 
@@ -71,5 +93,20 @@ extension Message {
     // Sender or receiver, except me
     var other: Contact? {
         return sender?.id == conversationId ? sender : receiver
+    }
+    
+    var eveMessage: EVEMessage {
+        let ret = EVEMessage()
+        ret.id_p = id
+        ret.sender = sender?.id ?? ""
+        ret.receiver = receiver?.id ?? ""
+        ret.content = content
+        ret.createdAt = GPBTimestamp(date: createdAt)
+        ret.updatedAt = GPBTimestamp(date: updatedAt)
+        return ret
+    }
+    
+    static func predicateForContact(_ contact: Contact) -> NSPredicate {
+        return NSPredicate(format: "sender.id == %@ OR receiver.id == %@", contact.id, contact.id)
     }
 }

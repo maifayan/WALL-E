@@ -37,7 +37,6 @@ extension Main.Conversations {
         private lazy var _adapter: ReloadableViewLayoutAdapter = {
             let adapter = ReloadableViewLayoutAdapter(reloadableView: _tableView)
             _tableView.register(_Cell.self, forCellReuseIdentifier: View.cellIdentifier)
-            _tableView.delegate = adapter
             _tableView.dataSource = adapter
             return adapter
         }()
@@ -56,6 +55,13 @@ extension Main.Conversations.View {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(_tableView)
+        _adapter.listen(#selector(UITableViewDelegate.tableView(_:didSelectRowAt:)), in: UITableViewDelegate.self) { [weak self] in
+            guard $0.count == 2, let indexPath = $0[1] as? IndexPath, let context = self?._context, let contact = self?._messages?[indexPath.row].other else { return }
+            let view = Chat.View(context: context, contact: contact)
+            self?.present(view, animated: true, completion: nil)
+            self?._tableView.deselectRow(at: indexPath, animated: true)
+        }
+        _tableView.delegate = _adapter
     }
     
     override func viewDidLayoutSubviews() {
@@ -76,7 +82,7 @@ extension Main.Conversations.View {
 
 private extension Main.Conversations.View {
     func _setupRender() {
-        let results = _context.auto.main.objects(Message.self).sorted(byKeyPath: "updatedAt", ascending: false).distinct(by: ["conversationId"])
+        let results = _context.auto.main.objects(Message.self).filter("typeValue != %@", Message.MessageType.typing.rawValue).sorted(byKeyPath: "updatedAt", ascending: false).distinct(by: ["conversationId"])
         _token = results.observe { [weak self] changes in
             switch changes {
             case .initial:

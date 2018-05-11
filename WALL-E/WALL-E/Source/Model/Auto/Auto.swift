@@ -56,7 +56,7 @@ extension Auto {
         }
     }
     
-    func asyncWrite(errorHandler: ((Error) -> ())? = nil, _ block: @escaping (Realm) throws -> ()) {
+    func asyncWrite(errorHandler: ((Error) -> ())? = nil, completed: (() -> ())? = nil, _ block: @escaping (Realm) throws -> ()) {
         _asyncQueue.async { [weak self] in
             guard let `self` = self else { return }
             do {
@@ -64,6 +64,7 @@ extension Auto {
                 try realm.write {
                     try block(realm)
                 }
+                DispatchQueue.main.async { completed?() }
             } catch {
                 errorHandler?(error)
             }

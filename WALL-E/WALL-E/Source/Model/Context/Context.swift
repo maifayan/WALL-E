@@ -46,6 +46,10 @@ final class Context {
             print("User State -> \(userState)")
         }
     }
+    
+    // For Notification
+    let typingSubject = PublishSubject<String>()
+    let messageSubject = PublishSubject<String>()
 }
 
 extension Context {

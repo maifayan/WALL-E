@@ -13,10 +13,12 @@ extension Context {
     func handle(event: EVE.Connecter.ServiceEvent) {
         switch event {
         case .typing(let typing):
-            log("User typing")
+            typingSubject.onNext(typing.sender)
         case .message(let msg):
             let uid = self.uid
-            auto.asyncWrite {
+            auto.asyncWrite(completed: { [weak self] in
+                self?.messageSubject.onNext(msg.id_p)
+            }) {
                 guard let message = Message.create(realm: $0, uid: uid)(msg) else { return }
                 $0.add(message, update: true)
                 log("New message -> \(message)")
