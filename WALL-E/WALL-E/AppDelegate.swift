@@ -25,32 +25,8 @@ private extension AppDelegate {
         let window = UIWindow(frame: UIScreen.main.bounds)
         self.window = window
         window.ui.adapt(themeKeyPath: \.mainColor, for: \.backgroundColor)
-        window.rootViewController = LaunchViewController.obtainInstance(finish: me._setupControllers)
+        window.rootViewController = LaunchViewController.obtainInstance(finish: me.setupViewControllers)
         window.makeKeyAndVisible()
-    }
-    
-    func _setupControllers() {
-        let setupRootViewController: (UIViewController) -> () = { [weak self] in
-            self?.window?.rootViewController = $0
-            let transition = CATransition()
-            transition.type = kCATransitionFade
-            transition.duration = 0.3
-            self?.window?.layer.add(transition, forKey: nil)
-        }
-        
-        let showRootView: (Account.AccountInfo) -> () = {
-            let context = Context(token: $0.token, uid: $0.uid)
-            setupRootViewController(Root.View(context: context))
-        }
-
-        if let accountInfo = Account.accountInfo {
-            showRootView(accountInfo)
-        } else {
-            setupRootViewController(Account.View {
-                Account.accountInfo = $0
-                showRootView($0)
-            })
-        }
     }
     
     func _setupGlobalConfig() {
@@ -59,3 +35,23 @@ private extension AppDelegate {
     }
 }
 
+extension AppDelegate {
+    func setupViewControllers() {
+        let setupRootViewController: (UIViewController) -> () = { [weak self] in
+            self?.window?.rootViewController = $0
+            let transition = CATransition()
+            transition.type = kCATransitionFade
+            transition.duration = 0.3
+            self?.window?.layer.add(transition, forKey: nil)
+        }
+        
+        if let context = Context.createFromPreviousAccount() {
+            setupRootViewController(Root.View(context: context))
+        } else {
+            setupRootViewController(Account.View {
+                let context = Context.createAndStoreAccount(token: $0.token, uid: $0.uid)
+                setupRootViewController(Root.View(context: context))
+            })
+        }
+    }
+}

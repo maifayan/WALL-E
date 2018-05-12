@@ -13,17 +13,26 @@ import RxCocoa
 
 extension Settings {
     final class ContentView: UIViewController {
+        init(context: Context) {
+            _model = Model(context: context)
+            super.init(nibName: nil, bundle: nil)
+        }
+        
+        required init?(coder aDecoder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+        }
+        
         private lazy var _formView = _FormView(model: _model)
         private lazy var _avatarView: UIImageView = {
             let imageView = UIImageView()
-            let url = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1524402344412&di=4a23252a1384630713ed00984077d7aa&imgtype=0&src=http%3A%2F%2Fimg2.ph.126.net%2FiWniabDDa1xwCebyA6-75A%3D%3D%2F6597431505982826060.jpg"
-            imageView.kf.setImage(with: URL(string: url), options: .normalAvatarOptions(sizeValue: ui.avatarSizeValue))
             imageView.contentMode = .scaleAspectFill
+            imageView.isUserInteractionEnabled = true
+            imageView.tap { [weak self] _ in self?._model.pickIconAndUpload() }
             imageView.setShadow(color: .gray, offSet: CGSize(width: 3.5, height: 3.5), radius: 6, opacity: 0.45)
             return imageView
         }()
-        
-        private let _model = Model()
+
+        private let _model: Model
         
         deinit {
             log()
@@ -64,11 +73,40 @@ extension Settings.ContentView {
             _avatarView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             _avatarView.topAnchor.constraint(equalTo: view.topAnchor, constant: -40)
         ])
+        
+        _bindAvatarView()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        _model.loadSettings()
+    private func _bindAvatarView() {
+        _model.iconVal.subscribeOnMain(onNext: { [weak self] in
+            self?._setAvatar($0)
+        }).disposed(by: rx.disposeBag)
+    }
+    
+    private func _setAvatar(_ source: Settings.Model.IconType) {
+        switch source {
+        case .image(let image):
+            let avatar = resizeAndCroppingProcessor(
+                targetSize: .init(width: ui.avatarSizeValue, height: ui.avatarSizeValue),
+                withCorner: 0.5 * ui.avatarSizeValue
+            ).process(item: .image(image), options: [])
+            _avatarView.image = avatar
+        case .url(let string):
+            if let url = URL(string: string) {
+                _avatarView.kf.setImage(
+                    with: url.resize(
+                        to: CGSize(width: ui.avatarSizeValue, height: ui.avatarSizeValue)
+                    ),
+                    options: .normalAvatarOptions(sizeValue: ui.avatarSizeValue)
+                )
+            }
+        case .none: ()
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        _model.saveAndUpdate()
     }
 }
 
@@ -164,11 +202,13 @@ private extension Settings.ContentView._FormView {
         form +++ Section("Profile")
             <<< NameRow() { row in
                 row.title = "User Name"
-                row.value = "Tangent"
+                row.onChange(onChange(val: model.nameVal, mapper: id))
+                row.cellSetup { subscribe(row: $1, val: model.nameVal, mapper: id)}
             }
             <<< PhoneRow() { row in
                 row.title = "Phone"
-                row.value = "18565850472"
+                row.onChange(onChange(val: model.phoneVal, mapper: id))
+                row.cellSetup { subscribe(row: $1, val: model.phoneVal, mapper: id)}
             }
             <<< LabelRow() { row in
                 row.title = "Change Password"
@@ -209,6 +249,10 @@ private extension Settings.ContentView._FormView {
             }
             <<< LabelRow() { row in
                 row.title = "Sign Out"
+                row.onCellSelection { _, _ in model.signOut() }
+                row.cellSetup { cell, _ in
+                    cell.selectionStyle = .default
+                }
             }
     }
 }

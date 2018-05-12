@@ -46,6 +46,7 @@
 		BA8195DF20A59E1E00689B94 /* Chat.ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA8195DE20A59E1E00689B94 /* Chat.ViewModel.swift */; };
 		BA8195E120A5A31D00689B94 /* Context+Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA8195E020A5A31D00689B94 /* Context+Notification.swift */; };
 		BA8195E320A5BD4700689B94 /* Chat.NodeTypingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA8195E220A5BD4600689B94 /* Chat.NodeTypingView.swift */; };
+		BA8195E520A6E4A000689B94 /* Context+Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA8195E420A6E4A000689B94 /* Context+Account.swift */; };
 		BA88B7872092203A0014C860 /* AccessoryViewRevealer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA88B7862092203A0014C860 /* AccessoryViewRevealer.swift */; };
 		BA88B789209220DB0014C860 /* Chat.Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA88B788209220DB0014C860 /* Chat.Cell.swift */; };
 		BA88B78F2092374B0014C860 /* Settings.Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA88B78E2092374B0014C860 /* Settings.Model.swift */; };
@@ -155,6 +156,7 @@
 		BA8195DE20A59E1E00689B94 /* Chat.ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.ViewModel.swift; sourceTree = "<group>"; };
 		BA8195E020A5A31D00689B94 /* Context+Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Context+Notification.swift"; sourceTree = "<group>"; };
 		BA8195E220A5BD4600689B94 /* Chat.NodeTypingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.NodeTypingView.swift; sourceTree = "<group>"; };
+		BA8195E420A6E4A000689B94 /* Context+Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Context+Account.swift"; sourceTree = "<group>"; };
 		BA88B7862092203A0014C860 /* AccessoryViewRevealer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessoryViewRevealer.swift; sourceTree = "<group>"; };
 		BA88B788209220DB0014C860 /* Chat.Cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.Cell.swift; sourceTree = "<group>"; };
 		BA88B78E2092374B0014C860 /* Settings.Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.Model.swift; sourceTree = "<group>"; };
@@ -438,6 +440,7 @@
 				BA8B3132209E016E007C34CD /* Context+Sync.swift */,
 				BA373AC020A2055100ACC8E6 /* Context+Event.swift */,
 				BA8195E020A5A31D00689B94 /* Context+Notification.swift */,
+				BA8195E420A6E4A000689B94 /* Context+Account.swift */,
 			);
 			path = Context;
 			sourceTree = "<group>";
@@ -855,6 +858,7 @@
 				BAA2ECAA209058AC00C6F577 /* Chat.ImagesPickerAdapter.swift in Sources */,
 				BAA2ECB02090A0A000C6F577 /* UIView.swift in Sources */,
 				BA3CCD82208BB0940000D639 /* Simple.swift in Sources */,
+				BA8195E520A6E4A000689B94 /* Context+Account.swift in Sources */,
 				BA3CCD8F208C9E810000D639 /* R.generated.swift in Sources */,
 				BA013C95208DD7B9004689F0 /* UITableView+Rx.swift in Sources */,
 			);
@@ -1013,10 +1017,7 @@
 				DEVELOPMENT_TEAM = 9PA6Z533LV;
 				INFOPLIST_FILE = "WALL-E/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "personal.tangent.WALL-E";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -1033,10 +1034,7 @@
 				DEVELOPMENT_TEAM = 9PA6Z533LV;
 				INFOPLIST_FILE = "WALL-E/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "personal.tangent.WALL-E";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -1052,11 +1050,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9PA6Z533LV;
 				INFOPLIST_FILE = "WALL-ETests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "personal.tangent.WALL-ETests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -1073,11 +1067,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9PA6Z533LV;
 				INFOPLIST_FILE = "WALL-ETests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "personal.tangent.WALL-ETests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;

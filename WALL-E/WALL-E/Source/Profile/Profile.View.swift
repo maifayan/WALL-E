@@ -13,10 +13,12 @@ extension Profile {
     final class View: UIViewController {
         private let _context: Context
         private let _contact: Contact
+        private let _showChatButton: Bool
         
-        init(context: Context, contact: Contact) {
+        init(context: Context, contact: Contact, showChatButton: Bool = true) {
             _context = context
             _contact = contact
+            _showChatButton = showChatButton
             super.init(nibName: nil, bundle: nil)
             modalTransitionStyle = .crossDissolve
             modalPresentationStyle = .overCurrentContext
@@ -32,7 +34,7 @@ extension Profile {
             return view
         }()
         
-        private lazy var _contentView = _ContentView(context: _context, contact: _contact)
+        private lazy var _contentView = _ContentView(context: _context, contact: _contact, showChatButton: _showChatButton)
     }
     
     enum Event {
@@ -103,10 +105,12 @@ private extension Profile.View {
     final class _ContentView: UIViewController {
         private let _context: Context
         private let _contact: Contact
+        private let _showChatButton: Bool
         
-        init(context: Context, contact: Contact) {
+        init(context: Context, contact: Contact, showChatButton: Bool) {
             _context = context
             _contact = contact
+            _showChatButton = showChatButton
             super.init(nibName: nil, bundle: nil)
         }
         
@@ -134,30 +138,47 @@ extension Profile.View._ContentView {
         view.setShadow(color: .gray, offSet: CGSize(width: 3.5, height: 3.5), radius: 6, opacity: 0.45)
 
         view.addSubview(_headerView)
-        view.addSubview(_footerView)
+        if _showChatButton {
+            view.addSubview(_footerView)
+        }
         _layoutViews()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        _headerView.roundCorners([.topLeft, .topRight], radius: ui.cornerRadius)
+        let cornerForHeader: UIRectCorner = {
+            if _showChatButton {
+                return [.topLeft, .topRight]
+            } else {
+                return .allCorners
+            }
+        }()
+        _headerView.roundCorners(cornerForHeader, radius: ui.cornerRadius)
         _footerView.roundCorners([.bottomLeft, .bottomRight], radius: ui.cornerRadius)
     }
     
     private func _layoutViews() {
         _headerView.translatesAutoresizingMaskIntoConstraints = false
         _footerView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        var constraints = [
             _headerView.leftAnchor.constraint(equalTo: view.leftAnchor),
             _headerView.rightAnchor.constraint(equalTo: view.rightAnchor),
             _headerView.topAnchor.constraint(equalTo: view.topAnchor),
-            _headerView.bottomAnchor.constraint(equalTo: _footerView.topAnchor, constant: 1),
-            
-            _footerView.leftAnchor.constraint(equalTo: view.leftAnchor),
-            _footerView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            _footerView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            _footerView.heightAnchor.constraint(equalToConstant: ui.footerViewHeight)
-        ])
+        ]
+        if _showChatButton {
+            constraints.append(contentsOf: [
+                _headerView.bottomAnchor.constraint(equalTo: _footerView.topAnchor, constant: 1),
+                _footerView.leftAnchor.constraint(equalTo: view.leftAnchor),
+                _footerView.rightAnchor.constraint(equalTo: view.rightAnchor),
+                _footerView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+                _footerView.heightAnchor.constraint(equalToConstant: ui.footerViewHeight)
+            ])
+        } else {
+            constraints.append(
+                _headerView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 1)
+            )
+        }
+        NSLayoutConstraint.activate(constraints)
     }
 }
 

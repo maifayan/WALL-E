@@ -28,6 +28,7 @@ extension EVE {
         
         deinit {
             _connectDisposable?.dispose()
+            log()
         }
         
         private(set) var state: State = .disconnected {

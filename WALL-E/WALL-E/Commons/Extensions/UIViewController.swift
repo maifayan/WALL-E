@@ -83,6 +83,17 @@ extension UIViewController {
         present(ac, animated: true, completion: completion)
         return ac
     }
+    
+    @discardableResult
+    func showChooseAlert(title: String? = nil, message: String? = nil, yesAction: (() -> ())? = nil, noAction: (() -> ())? = nil, completion: (() -> ())? = nil) -> UIAlertController {
+        let ac = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let yes = UIAlertAction(title: "YES", style: .default) { _ in yesAction?() }
+        let no = UIAlertAction(title: "NO", style: .cancel) { _ in noAction?() }
+        ac.addAction(yes)
+        ac.addAction(no)
+        present(ac, animated: true, completion: completion)
+        return ac
+    }
 }
 
 // MARK: - Add

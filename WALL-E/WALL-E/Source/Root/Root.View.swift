@@ -23,9 +23,11 @@ extension Root {
             fatalError("init(coder:) has not been implemented")
         }
         
-        private lazy var _mainView = Main.View()
+        deinit { log() }
+        
+        private lazy var _mainView = Main.View(context: _context)
 
-        private lazy var _menuView = Menu.View { [weak self] action in
+        private lazy var _menuView = Menu.View { [weak self, _context] action in
             switch action {
             case .newRobot:
 //                self?.present(Chat.View(), animated: true, completion: nil)
@@ -34,7 +36,7 @@ extension Root {
                 let vc = R.nib.themePickerView().instantiate(withOwner: nil, options: nil).first as! UIViewController
                 self?.present(vc, animated: true, completion: nil)
             case .settings:
-                self?.present(Settings.View(), animated: true, completion: nil)
+                self?.present(Settings.View(context: _context), animated: true, completion: nil)
             }
         }
         

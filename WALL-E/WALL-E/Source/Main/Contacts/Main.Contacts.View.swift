@@ -24,6 +24,10 @@ extension Main.Contacts {
             fatalError("init(coder:) has not been implemented")
         }
         
+        deinit {
+            log()
+        }
+        
         private lazy var _collectionView: UICollectionView = {
             let collectionView = UICollectionView(frame: .zero, collectionViewLayout: _layout)
             collectionView.backgroundColor = .clear

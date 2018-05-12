@@ -54,7 +54,7 @@ final class Context {
 
 extension Context {
     private static let _lock = NSRecursiveLock()
-    private static var _current: Context?
+    private static weak var _current: Context?
     
     private(set) static var current: Context? {
         set {

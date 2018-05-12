@@ -13,6 +13,7 @@ final class AvatarView: UIView {
     private var _token: NotificationToken?
     private var _preContactId: String?
     private var _onlineStateViewSizeValue: CGFloat = 15
+    private var _gestureRecognizer: UITapGestureRecognizer?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -20,20 +21,41 @@ final class AvatarView: UIView {
         addSubview(_onlineStateView)
     }
     
-    convenience init(_ contact: Contact, sizeValue: CGFloat, showOnlineState: Bool = true, onlineStateViewSizeValue: CGFloat = 15) {
+    convenience init(_ contact: Contact, sizeValue: CGFloat, showOnlineState: Bool = true, onlineStateViewSizeValue: CGFloat = 15, action: ActionType = .none) {
         self.init(frame: .zero)
         _onlineStateViewSizeValue = onlineStateViewSizeValue
-        set(contact, sizeValue: sizeValue, showOnlineState: showOnlineState)
+        set(contact, sizeValue: sizeValue, showOnlineState: showOnlineState, action: action)
     }
     
-    func set(_ contact: Contact, sizeValue: CGFloat, showOnlineState: Bool = true) {
+    func set(_ contact: Contact, sizeValue: CGFloat, showOnlineState: Bool = true, action: ActionType = .none) {
         guard _preContactId != contact.id else { return }
         _token?.invalidate()
 
         _setImage(contact.iconURL, sizeValue: sizeValue)
-        _onlineStateView.isHidden = !showOnlineState
-        if showOnlineState { _setOnlineState(contact.isOnline) }
         
+        if showOnlineState { _setOnlineState(contact.isOnline) }
+        else { _onlineStateView.isHidden = true }
+        
+        var actionHandler: ((Contact) -> ())?
+        switch action {
+        case .action(let callback):
+            actionHandler = callback
+        case .showProfile(let showChatButton):
+            actionHandler = {
+                guard let context = Context.current else { return }
+                UIViewController.topMost?.present(Profile.View(context: context, contact: $0, showChatButton: showChatButton), animated: true, completion: nil)
+            }
+        case .none: ()
+        }
+        
+        if let gr = _gestureRecognizer {
+            removeGestureRecognizer(gr)
+        }
+        if let ah = actionHandler {
+            let gr = UITapGestureRecognizer()
+            on(gr) { _ in ah(contact) }
+        }
+
         _token = contact.observe { [weak self] change in
             switch change {
             case .change(let properties):
@@ -51,7 +73,7 @@ final class AvatarView: UIView {
         }
         _preContactId = contact.id
     }
-    
+
     override func layoutSubviews() {
         super.layoutSubviews()
         _imageView.frame = bounds
@@ -78,6 +100,14 @@ final class AvatarView: UIView {
     }()
     
     private let _onlineStateView = _OnlineStateView()
+}
+
+extension AvatarView {
+    enum ActionType {
+        case none
+        case action((Contact) -> ())
+        case showProfile(showChatButton: Bool)
+    }
 }
 
 private extension AvatarView {

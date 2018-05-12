@@ -45,6 +45,13 @@ extension EVE.Uploader {
             return self._rawUpload(resource: resource, token: token)
         }
     }
+    
+    var uploadMapper: (Resource) -> Observable<Progress> {
+        return { [weak self] in
+            guard let `self` = self else { return .empty() }
+            return self.upload($0)
+        }
+    }
 }
 
 private extension EVE.Uploader {

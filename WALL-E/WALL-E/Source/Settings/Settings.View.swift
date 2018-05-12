@@ -10,7 +10,10 @@ import UIKit
 
 extension Settings {
     final class View: UIViewController {
-        init() {
+        private let _context: Context
+        
+        init(context: Context) {
+            _context = context
             super.init(nibName: nil, bundle: nil)
             modalPresentationStyle = .overCurrentContext
             modalTransitionStyle = .crossDissolve
@@ -31,7 +34,7 @@ extension Settings {
             return view
         }()
         
-        private lazy var _contentView = ContentView()
+        private lazy var _contentView = ContentView(context: _context)
     }
 }
 

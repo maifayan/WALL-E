@@ -26,6 +26,10 @@ extension Main.Conversations {
             fatalError("init(coder:) has not been implemented")
         }
         
+        deinit {
+            log()
+        }
+        
         private lazy var _tableView: UITableView = {
             let tableView = UITableView(frame: .zero, style: .plain)
             tableView.separatorStyle = .none

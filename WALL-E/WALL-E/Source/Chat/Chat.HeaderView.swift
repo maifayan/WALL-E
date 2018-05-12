@@ -29,11 +29,7 @@ extension Chat {
             return button
         } { [weak self] in self?.dismiss(animated: true, completion: nil) }
         
-        private lazy var _avatarView: AvatarView = {
-            let view = AvatarView()
-            view.set(_contact, sizeValue: ui.avatarSizeValue, showOnlineState: true)
-            return view
-        }()
+        private lazy var _avatarView = AvatarView(_contact, sizeValue: ui.avatarSizeValue, action: .showProfile(showChatButton: false))
         
         private lazy var _nickLabel: UILabel = {
             let label = UILabel()

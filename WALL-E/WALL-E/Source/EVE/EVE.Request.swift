@@ -8,6 +8,7 @@
 
 import Foundation
 import EVE
+import RxSwift
 
 extension EVE {
     final class Request {
@@ -20,7 +21,7 @@ extension EVE {
         init(_ context: Context) {
             _context = context
         }
-        
+
         // For Sync
         private(set) lazy var syncContacts = WorkItem(
             _syncService.rpcToSyncContacts,
@@ -47,5 +48,34 @@ extension EVE {
             _updateService.rpcToCreate,
             .auth(self._context.token)
         )
+        
+        private let _updateBag = DisposeBag()
+    }
+}
+
+extension EVE.Request {
+    func updateMemberIfNeeds(iconURL: String? = nil, name: String? = nil, phone: String? = nil) {
+        let me = _context.me
+        let info = EVEMemberUpdateInfo()
+        var shouldUpdate = false
+        if let iconURL = iconURL, iconURL != me.iconURL {
+            info.iconURL = iconURL
+            shouldUpdate = true
+        }
+        if let name = name, name != me.name {
+            info.name = name
+            shouldUpdate = true
+        }
+        if let phone = phone, phone != me.phone {
+            info.phone = phone
+            shouldUpdate = true
+        }
+        guard shouldUpdate else { return }
+        EVE.workWith(updateMember, request: info)
+            .subscribe(onError: {
+                log("update member error!")
+                log($0)
+            })
+            .disposed(by: _updateBag)
     }
 }
