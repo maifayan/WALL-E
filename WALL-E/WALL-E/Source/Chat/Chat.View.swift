@@ -65,7 +65,7 @@ extension Chat {
             case let .text(text):
                 self?._viewModel.send(text)
             case let .assets(assets):
-                print("Send assets, count: \(assets.count)")
+                self?._viewModel.send(assets)
             case .typing:
                 self?._viewModel.typing()
             }

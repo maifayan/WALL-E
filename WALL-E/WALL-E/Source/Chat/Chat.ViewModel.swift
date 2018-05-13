@@ -8,6 +8,7 @@
 
 import Foundation
 import RxSwift
+import Photos
 import RealmSwift
 
 extension Chat {
@@ -28,7 +29,7 @@ extension Chat {
         
         deinit {
             _token?.invalidate()
-            deleteTypingMessage()
+            _deleteTypingMessage()
         }
         
         private(set) lazy var change: Observable<RealmCollectionChange<Results<Message>>> = {
@@ -51,6 +52,10 @@ extension Chat {
 extension Chat.ViewModel {
     func send(_ text: String) {
         _context.connecter.send(.message(to: _contact, content: text))
+    }
+    
+    func send(_ assets: [PHAsset]) {
+        assets.forEach(_uploadAndSendImageMessage)
     }
     
     func typing() {
@@ -93,15 +98,15 @@ private extension Chat.ViewModel {
     
     func _insertOrDeleteTypingMessage(_ flag: Bool) {
         if flag {
-            createTypingMessage()
+            _createTypingMessage()
         } else {
-            deleteTypingMessage()
+            _deleteTypingMessage()
         }
     }
 }
 
-extension Chat.ViewModel {
-    func createTypingMessage() {
+private extension Chat.ViewModel {
+    func _createTypingMessage() {
         let msg = Message(
             id: NSUUID().uuidString,
             conversationId: _contact.id,
@@ -109,9 +114,9 @@ extension Chat.ViewModel {
             receiver: _context.me,
             content: "\(_contact.name) is typing...",
             createdAt: .init(),
-            updatedAt: .init()
+            updatedAt: .init(),
+            type: .typing
         )
-        msg.type = .typing
         do {
             try _context.auto.writeInMain { $0.add(msg) }
         } catch {
@@ -119,7 +124,7 @@ extension Chat.ViewModel {
         }
     }
     
-    func deleteTypingMessage() {
+    func _deleteTypingMessage() {
         do {
             try _context.auto.writeInMain { realm in
                 realm.delete(
@@ -130,5 +135,16 @@ extension Chat.ViewModel {
         } catch {
             log(error)
         }
+    }
+    
+    func _uploadAndSendImageMessage(_ asset: PHAsset) {
+        return Observable.just(EVE.Uploader.Resource.asset(asset))
+            .flatMap(EVE.Uploader.shared.uploadMapper)
+            .map { $0.url }
+            .ignoreNil()
+            .subscribeOnMain(onNext: { [con = _contact, ctx = _context] in
+                ctx.connecter.send(.image(to: con, url: $0))
+            }, onError: { log($0) })
+            .disposed(by: _bag)
     }
 }

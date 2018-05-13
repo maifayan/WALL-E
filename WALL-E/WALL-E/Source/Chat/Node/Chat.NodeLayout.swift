@@ -9,6 +9,7 @@
 import UIKit
 import LayoutKit
 import RxSwift
+import Kingfisher
 
 protocol ChatNodeLayoutProvider {
     var isMyOwn: Bool { get }
@@ -83,5 +84,46 @@ final class TypingProvider: ChatNodeLayoutProvider {
     
     func layout(event: PublishSubject<Chat.Presenter.NodeEvent>) -> Layout {
         return SizeLayout<Chat.NodeTypingView>(size: Chat.NodeTypingView.size, viewReuseId: "TypingContentLayout") { _ in }
+    }
+}
+
+final class ImageProvider: ChatNodeLayoutProvider {
+    private let _msg: Message
+    init(_ msg: Message) {
+        _msg = msg
+    }
+    
+    private static let _maxSize = CGSize(width: 0.6 * UIScreen.main.bounds.width, height: 0.7 * UIScreen.main.bounds.height)
+    private static let _minSize = CGSize(width: 50, height: 50)
+    
+    private static func _calcSize(_ original: CGSize) -> CGSize {
+        guard original.width != 0, original.height != 0 else { return _minSize }
+        var ret: CGSize = original
+        let ratio = original.height / original.width
+        if ret.width > _maxSize.width {
+            ret.width = _maxSize.width
+            ret.height = ret.width * ratio
+        }
+        if ret.height > _maxSize.height {
+            ret.height = _maxSize.height
+            ret.width = ret.height / ratio
+        }
+        return ret
+    }
+    
+    var isMyOwn: Bool {
+        return _msg.sender?.id == Context.current?.me.id
+    }
+    
+    var insets: UIEdgeInsets {
+        return .init(top: 5, left: 5, bottom: 5, right: 5)
+    }
+    
+    func layout(event: PublishSubject<Chat.Presenter.NodeEvent>) -> Layout {
+        let size = ImageProvider._calcSize(.init(width: CGFloat(_msg.imageWidth), height: CGFloat(_msg.imageHeight)))
+        return SizeLayout<UIImageView>(size: size, viewReuseId: "ImageContentLayout") { [_msg] imageView in
+            guard let url = URL(string: _msg.imageURL) else { return }
+            imageView.kf.setImage(with: url.resize(to: size), placeholder: nil, options: KingfisherOptionsInfo.normalImageOptions(size: size, corner: 20), progressBlock: nil, completionHandler: nil)
+        }
     }
 }

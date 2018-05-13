@@ -50,10 +50,14 @@ extension Robot.CreationView {
         view.addSubview(_maskView)
         add(_contentView)
         _setupViews()
-        _layoutViews()
         _contentView.view.transform = CGAffineTransform(translationX: 0, y: -55)
         _contentView.view.alpha = 0
         _bind()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        _layoutViews()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -62,6 +66,9 @@ extension Robot.CreationView {
     }
 
     private func _setupViews() {
+        _maskView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        _contentView.view.autoresizingMask = [.flexibleWidth, .flexibleTopMargin, .flexibleBottomMargin]
+        
         _contentView.view.setShadow(color: .gray, offSet: CGSize(width: 3.5, height: 3.5), radius: 6, opacity: 0.45)
         _maskView.tap { [weak self] _ in
             self?._dismiss()
@@ -89,20 +96,10 @@ extension Robot.CreationView {
     }
     
     private func _layoutViews() {
-        _maskView.translatesAutoresizingMaskIntoConstraints = false
-        _contentView.view.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            _maskView.leftAnchor.constraint(equalTo: view.leftAnchor),
-            _maskView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            _maskView.topAnchor.constraint(equalTo: view.topAnchor),
-            _maskView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            
-            _contentView.view.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            _contentView.view.leftAnchor.constraint(equalTo: view.leftAnchor, constant: ui.contentViewHorizontalSpacing),
-            _contentView.view.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -ui.contentViewHorizontalSpacing),
-            _contentView.view.heightAnchor.constraint(equalToConstant: ui.contentViewHeight)
-        ])
+        _maskView.frame = view.bounds
+        _contentView.view.height = ui.contentViewHeight
+        _contentView.view.width = view.width - 2 * ui.contentViewHorizontalSpacing
+        _contentView.view.center = CGPoint(x: 0.5 * view.width, y: 0.5 * view.height)
     }
     
     private func _bind() {
@@ -125,6 +122,7 @@ extension Robot.CreationView {
             view.backgroundColor = .clear
             _contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
             view.addSubview(_contentView)
+            view.adaptToKeyboard(minSpacingToKeyboard: 25)
         }
         
         override func viewDidLayoutSubviews() {

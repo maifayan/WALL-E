@@ -92,6 +92,7 @@ extension EVE.Connecter {
     enum MessageType {
         case typing(to: Contact)
         case message(to: Contact, content: String)
+        case image(to: Contact, url: String)
     }
     
     func send(_ type: MessageType) {
@@ -100,9 +101,16 @@ extension EVE.Connecter {
         case .typing(let to):
             event.typingTo = to.id
         case .message(let to, let content):
+            log("Sent message: \(content)")
             let babyMsg = EVEBabyMessage()
             babyMsg.receiver = to.id
             babyMsg.content = content
+            event.message = babyMsg
+        case .image(let to, let url):
+            log("Sent image: \(url)")
+            let babyMsg = EVEBabyMessage()
+            babyMsg.receiver = to.id
+            babyMsg.imageURL = url
             event.message = babyMsg
         }
         _writer?.writeValue(event)

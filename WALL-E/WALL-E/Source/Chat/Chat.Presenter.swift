@@ -97,6 +97,8 @@ private extension Chat.Presenter {
                     return TextLayoutProvider(message: msg)
                 case .typing:
                     return TypingProvider()
+                case .image:
+                    return ImageProvider(msg)
                 }
             }()
             

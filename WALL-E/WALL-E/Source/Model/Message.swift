@@ -16,6 +16,9 @@ final class Message: Object {
     dynamic var sender: Contact?
     dynamic var receiver: Contact?
     dynamic var content = ""
+    dynamic var imageURL = ""
+    dynamic var imageWidth: Float = 0
+    dynamic var imageHeight: Float = 0
     dynamic var createdAt = Date()
     dynamic var updatedAt = Date()
     dynamic var typeValue = "normal"
@@ -29,6 +32,7 @@ extension Message {
     enum MessageType: String {
         case typing
         case normal
+        case image
     }
     
     var type: MessageType {
@@ -42,6 +46,12 @@ extension Message {
         set {
             typeValue = newValue.rawValue
         }
+    }
+    
+    enum CreationType {
+        case typing
+        case normal
+        case image(url: String, width: Float, height: Float)
     }
 }
 
@@ -58,13 +68,19 @@ extension Message {
             
             let conversationId = sender.id == uid ? receiver.id : sender.id
             
+            let type: CreationType = {
+                guard case .image = message.type else { return .normal }
+                return .image(url: message.imageURL, width: message.imageWidth, height: message.imageHeight)
+            }()
+            
             return Message(id: message.id_p,
                            conversationId: conversationId,
                            sender: sender,
                            receiver: receiver,
                            content: message.content,
                            createdAt: message.createdAt.date,
-                           updatedAt: message.updatedAt.date)
+                           updatedAt: message.updatedAt.date,
+                           type: type)
         }
     }
     
@@ -75,7 +91,8 @@ extension Message {
         receiver: Contact,
         content: String,
         createdAt: Date,
-        updatedAt: Date
+        updatedAt: Date,
+        type: CreationType
     ) {
         self.init()
         self.id = id
@@ -85,7 +102,17 @@ extension Message {
         self.content = content
         self.createdAt = createdAt
         self.updatedAt = updatedAt
-        type = .normal
+        switch type {
+        case .normal:
+            self.type = .normal
+        case .typing:
+            self.type = .typing
+        case .image(let url, let width, let height):
+            self.type = .image
+            self.imageURL = url
+            self.imageWidth = width
+            self.imageHeight = height
+        }
     }
 }
 

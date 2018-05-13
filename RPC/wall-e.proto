@@ -34,6 +34,7 @@ message ServiceEvent {
 message BabyMessage {
   string receiver = 1;
   string content = 2;
+  string imageURL = 3;
 }
 
 message Typing {
@@ -47,12 +48,20 @@ message ConnectSuccess {
 
 // Sent by service
 message Message {
+   enum Type {
+     Normal = 0;
+     Image = 1;
+   }
   string id = 1;
   string sender = 2;
   string receiver = 3;
-  string content = 4;
-  google.protobuf.Timestamp createdAt = 5;
-  google.protobuf.Timestamp updatedAt = 6;
+  Type type = 4;
+  string content = 5;
+  string imageURL = 6;
+  float imageWidth = 7;
+  float imageHeight = 8;
+  google.protobuf.Timestamp createdAt = 9;
+  google.protobuf.Timestamp updatedAt = 10;
 }
 
 message ContactUpdate {

@@ -79,7 +79,7 @@ private struct _ViewKeyboardAdapterHelper {
 
 // MARK: - Keyboard adapter
 extension UIView {
-    func adaptToKeyboard(minSpacingToKeyboard: CGFloat = 0, reference: UIView?) {
+    func adaptToKeyboard(minSpacingToKeyboard: CGFloat = 0, reference: UIView? = nil) {
         let observer = _KeyboardObserver { [unowned view = self, weak ref = reference] state in
             let reference = ref ?? view
             guard let superview = reference.superview,

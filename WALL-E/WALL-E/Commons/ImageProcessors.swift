@@ -35,4 +35,13 @@ extension Array where Element == KingfisherOptionsInfoItem {
             .pngCacheSerializer
         ]
     }
+    
+    static func normalImageOptions(size: CGSize, corner: CGFloat) -> [KingfisherOptionsInfoItem] {
+        return [
+            .scaleFactor(UIScreen.main.scale),
+            .transition(.fade(0.25)),
+            .resizeAndCropping(targetSize: size, withCorner: corner),
+            .pngCacheSerializer
+        ]
+    }
 }
