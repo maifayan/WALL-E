@@ -44,6 +44,7 @@ extension Settings.Model {
 
 extension Settings.Model {
     func saveAndUpdate() {
+        // TODO: Validate
         func notEqualOrNil<T: Equatable>(_ value: T?) -> (T) -> T? {
             return { value == $0 ? nil : $0 }
         }
@@ -74,7 +75,7 @@ extension Settings.Model {
         pickImage.map(first).map { $0.path }.map(EVE.Uploader.Resource.file)
             .do(onNext: { _ in HUD.show() })
             .flatMap(EVE.Uploader.shared.uploadMapper)
-            .map { if case .finish(let url) = $0 { return url } else { return nil } }
+            .map { $0.url }
             .ignoreNil()
             .map { IconType.url(string: $0) }
             .do(onNext: { _ in HUD.dismiss() })

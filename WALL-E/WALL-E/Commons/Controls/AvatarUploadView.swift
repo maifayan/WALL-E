@@ -65,6 +65,11 @@ class AvatarUploadView: UIView {
             _progress.guideColor = isOK ? UIColor.white.withAlphaComponent(0.25) : UIColor.red.withAlphaComponent(0.45)
         }
     }
+    
+    func setupFlagColor(_ color: UIColor) {
+        _progress.guideColor = color
+        _progress.colors = [color]
+    }
 
     var image: UIImage? {
         didSet {
@@ -89,6 +94,12 @@ class AvatarUploadView: UIView {
         }
     }
     
+    var progressObserver: AnyObserver<Double> {
+        return Binder(self) { view, progress in
+            view.progress = progress
+        }.asObserver()
+    }
+
     var onTap: Observable<()> {
         return Observable.create { [weak self] subscribe in
             self?.tap { _ in subscribe.onNext(()) }

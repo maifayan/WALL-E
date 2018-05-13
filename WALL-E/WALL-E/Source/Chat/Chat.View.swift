@@ -78,10 +78,14 @@ extension Chat.View {
         super.viewDidLoad()
         view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         view.backgroundColor = .white
-        view.roundCorners(.allCorners, radius: 16)
         statusBarStyle = .lightContent
         _setupViews()
         _layoutViews()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        view.roundCorners(.allCorners, radius: 16)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

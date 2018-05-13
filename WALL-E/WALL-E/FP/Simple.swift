@@ -48,6 +48,16 @@ func triple<T>(_ value: T) -> (T, T, T) { return (value, value, value) }
 func double<T>(_ f: () -> T) -> (T, T) { return (f(), f()) }
 func triple<T>(_ f: () -> T) -> (T, T, T) { return (f(), f(), f()) }
 
+func compact<T>(_ tuple: (T?, T?)) -> (T, T)? {
+    guard let one = tuple.0, let two = tuple.1 else { return nil }
+    return (one, two)
+}
+
+func compact<T>(_ tuple: (T?, T?, T?)) -> (T, T, T)? {
+    guard let one = tuple.0, let two = tuple.1, let three = tuple.2 else { return nil }
+    return (one, two, three)
+}
+
 @discardableResult
 func forEach<T, O>(_ tuple: (T, T), mapper: @escaping (T) -> O) -> (O, O) {
     return (tuple |> first >>> mapper, tuple |> second >>> mapper)

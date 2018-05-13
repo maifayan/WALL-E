@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="Gxq-tQ-7ph" customClass="RobotCreationContentView" customModule="WALL_E" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="306" height="340"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NGc-a3-OKe" customClass="AvatarUploadView" customModule="WALL_E" customModuleProvider="target">
+                    <rect key="frame" x="83" y="30" width="140" height="140"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="140" id="BWB-Kx-Xgo"/>
+                        <constraint firstAttribute="height" constant="140" id="HcU-eD-Rmc"/>
+                    </constraints>
+                </view>
+                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Pje-AR-Kiv">
+                    <rect key="frame" x="16" y="186" width="274" height="30"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
+                    <textInputTraits key="textInputTraits" textContentType="username"/>
+                </textField>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="toV-6C-8Kd" customClass="WavesView" customModule="WALL_E" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="232" width="306" height="40"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="PRh-a0-q8c"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uQR-xB-PsQ">
+                    <rect key="frame" x="0.0" y="272" width="306" height="68"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nzp-gZ-MmG">
+                            <rect key="frame" x="98" y="7" width="110" height="54"/>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="35"/>
+                            <state key="normal" title="Create">
+                                <color key="titleColor" red="0.91764705879999997" green="0.57254901960000004" blue="0.57254901960000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </state>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="nzp-gZ-MmG" firstAttribute="centerY" secondItem="uQR-xB-PsQ" secondAttribute="centerY" id="aoh-Na-8d4"/>
+                        <constraint firstItem="nzp-gZ-MmG" firstAttribute="centerX" secondItem="uQR-xB-PsQ" secondAttribute="centerX" id="lKz-NY-RMs"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="0.91764705879999997" green="0.57254901960000004" blue="0.57254901960000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="toV-6C-8Kd" firstAttribute="leading" secondItem="y9e-mJ-kvV" secondAttribute="leading" id="27c-hK-v0V"/>
+                <constraint firstItem="y9e-mJ-kvV" firstAttribute="trailing" secondItem="Pje-AR-Kiv" secondAttribute="trailing" constant="16" id="CJQ-1r-5AL"/>
+                <constraint firstItem="Pje-AR-Kiv" firstAttribute="top" secondItem="NGc-a3-OKe" secondAttribute="bottom" constant="16" id="JQd-RZ-2X5"/>
+                <constraint firstItem="uQR-xB-PsQ" firstAttribute="leading" secondItem="y9e-mJ-kvV" secondAttribute="leading" id="O4r-yd-2HL"/>
+                <constraint firstItem="uQR-xB-PsQ" firstAttribute="top" secondItem="toV-6C-8Kd" secondAttribute="bottom" id="PzJ-mm-8IU"/>
+                <constraint firstItem="y9e-mJ-kvV" firstAttribute="bottom" secondItem="uQR-xB-PsQ" secondAttribute="bottom" id="Tz2-6P-9Dd"/>
+                <constraint firstItem="NGc-a3-OKe" firstAttribute="top" secondItem="y9e-mJ-kvV" secondAttribute="top" constant="30" id="ft2-qt-1PB"/>
+                <constraint firstItem="Pje-AR-Kiv" firstAttribute="leading" secondItem="y9e-mJ-kvV" secondAttribute="leading" constant="16" id="gZt-8Q-p3J"/>
+                <constraint firstItem="y9e-mJ-kvV" firstAttribute="trailing" secondItem="toV-6C-8Kd" secondAttribute="trailing" id="kqE-Wq-1ZS"/>
+                <constraint firstItem="toV-6C-8Kd" firstAttribute="top" secondItem="Pje-AR-Kiv" secondAttribute="bottom" constant="16" id="oPN-1M-UKb"/>
+                <constraint firstItem="y9e-mJ-kvV" firstAttribute="trailing" secondItem="uQR-xB-PsQ" secondAttribute="trailing" id="r8u-3A-duK"/>
+                <constraint firstItem="NGc-a3-OKe" firstAttribute="centerX" secondItem="Gxq-tQ-7ph" secondAttribute="centerX" id="ubN-Ex-82i"/>
+            </constraints>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="y9e-mJ-kvV"/>
+            <connections>
+                <outlet property="avatarUploadView" destination="NGc-a3-OKe" id="0m0-Qf-Pm5"/>
+                <outlet property="createBtn" destination="nzp-gZ-MmG" id="rjC-CF-Dn0"/>
+                <outlet property="nameTF" destination="Pje-AR-Kiv" id="LyA-oZ-vZj"/>
+            </connections>
+            <point key="canvasLocation" x="355" y="-321"/>
+        </view>
+    </objects>
+</document>

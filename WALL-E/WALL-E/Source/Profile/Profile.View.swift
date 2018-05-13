@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import WXWaveView
 
 extension Profile {
     final class View: UIViewController {
@@ -97,7 +96,7 @@ extension Profile.View {
 }
 
 extension UI where Base: Profile.View {
-    var contentViewHeight: CGFloat { return 380 }
+    var contentViewHeight: CGFloat { return 370 }
     var contentViewHorizontalPadding: CGFloat { return 44 }
 }
 
@@ -196,7 +195,11 @@ private extension Profile.View._ContentView {
             ui.adapt(themeKeyPath: \.mainColor, for: \.backgroundColor)
             addSubview(_avatarView)
             addSubview(_nickLabel)
-            addSubview(_phoneLabel)
+            if contact.type == .member {
+                addSubview(_phoneLabel)
+            } else {
+                addSubview(_copyTokenBtn)
+            }
             addSubview(_wavesView)
             _layoutViews()
             clipsToBounds = true
@@ -232,13 +235,30 @@ private extension Profile.View._ContentView {
             return label
         }()
         
-        private lazy var _wavesView: _WavesView = _WavesView()
+        private lazy var _copyTokenBtn: UIButton = {
+            let button = UIButton(type: .system)
+            button.setTitle("[Copy Token]", for: .normal)
+            button.setTitleColor(.white, for: .normal)
+            button.titleLabel?.font = .boldSystemFont(ofSize: 20)
+            button.on(.touchUpInside) { [token = _contact.token] _ in
+                guard let token = token else { return }
+                UIPasteboard.general.string = token
+                UIViewController.topMost?.showAlert(message: "Now that you've copied the text, start creating your robot.")
+            }
+            button.layout(with: .hImageLabel, space: 6)
+            return button
+        }()
+        
+        private lazy var _wavesView: WavesView = WavesView()
         
         private func _layoutViews() {
             _avatarView.translatesAutoresizingMaskIntoConstraints = false
             _wavesView.translatesAutoresizingMaskIntoConstraints = false
             _nickLabel.translatesAutoresizingMaskIntoConstraints = false
             _phoneLabel.translatesAutoresizingMaskIntoConstraints = false
+            _copyTokenBtn.translatesAutoresizingMaskIntoConstraints = false
+            
+            let centerView = _contact.type == .member ? _phoneLabel : _copyTokenBtn
             
             NSLayoutConstraint.activate([
                 _avatarView.centerXAnchor.constraint(equalTo: centerXAnchor),
@@ -250,53 +270,15 @@ private extension Profile.View._ContentView {
                 _nickLabel.rightAnchor.constraint(equalTo: rightAnchor),
                 _nickLabel.topAnchor.constraint(equalTo: _avatarView.bottomAnchor, constant: 8),
                 
-                _phoneLabel.leftAnchor.constraint(equalTo: leftAnchor),
-                _phoneLabel.rightAnchor.constraint(equalTo: rightAnchor),
-                _phoneLabel.topAnchor.constraint(equalTo: _nickLabel.bottomAnchor, constant: 6),
+                centerView.leftAnchor.constraint(equalTo: leftAnchor),
+                centerView.rightAnchor.constraint(equalTo: rightAnchor),
+                centerView.topAnchor.constraint(equalTo: _nickLabel.bottomAnchor, constant: 6),
                 
                 _wavesView.heightAnchor.constraint(equalToConstant: ui.wavesViewHeight),
                 _wavesView.bottomAnchor.constraint(equalTo: bottomAnchor),
                 _wavesView.leftAnchor.constraint(equalTo: leftAnchor),
                 _wavesView.rightAnchor.constraint(equalTo: rightAnchor)
             ])
-        }
-        
-        private final class _WavesView: UIView {
-            typealias WaveItem = (color: UIColor, speed: CGFloat, height: CGFloat)
-            
-            override init(frame: CGRect) {
-                super.init(frame: frame)
-                let items: [WaveItem] = [
-                    (UIColor.white.withAlphaComponent(0.7), 1, 20),
-                    (UIColor.white.withAlphaComponent(0.55), 0.72, 29),
-                    (UIColor.white.withAlphaComponent(0.45), 1.4, 26),
-                    (UIColor.white.withAlphaComponent(0.6), 2.5, 19),
-                    (UIColor.white.withAlphaComponent(1), 2, 9)
-                ]
-                _ = items.map(_makeWaveView).map(flip(WXWaveView.wave)())
-            }
-            
-            required init?(coder aDecoder: NSCoder) {
-                fatalError("init(coder:) has not been implemented")
-            }
-            
-            @discardableResult
-            private func _makeWaveView(_ item: WaveItem) -> WXWaveView {
-                let view = WXWaveView.add(to: self, withFrame: .zero)!
-                view.translatesAutoresizingMaskIntoConstraints = false
-                view.waveTime = 0
-                view.waveColor = item.color
-                view.waveSpeed = item.speed
-                view.angularSpeed = CGFloat(Float(arc4random()) / Float(UINT32_MAX)) + 1
-                NSLayoutConstraint.activate([
-                    view.leftAnchor.constraint(equalTo: leftAnchor),
-                    view.rightAnchor.constraint(equalTo: rightAnchor),
-                    view.bottomAnchor.constraint(equalTo: bottomAnchor),
-                    view.heightAnchor.constraint(equalToConstant: item.height)
-                ])
-                view.setShadow(color: .gray, offSet: CGSize(width: 2, height: 2), radius: 3, opacity: 0.2)
-                return view
-            }
         }
     }
     

@@ -51,7 +51,7 @@ extension Account.Login.View {
 
 private extension Account.Login.View {
     func _validateAndGetInfo() -> (nameOrPhone: String, password: String)? {
-        let np = _loginView.namePhoneTF.validateAndGetText(minCount: 6, maxCount: 24, callback: ui.textFieldValidate)
+        let np = _loginView.namePhoneTF.validateAndGetText(minCount: 3, maxCount: 24, callback: ui.textFieldValidate)
         let p = _loginView.passwordTF.validateAndGetText(minCount: 6, maxCount: 24, callback: ui.textFieldValidate)
         guard
             let nameAndPhone = np,
@@ -107,5 +107,7 @@ final class LoginView: UIView {
     override func awakeFromNib() {
         super.awakeFromNib()
         ui.adapt(themeKeyPath: \.mainColor, for: \.backgroundColor)
+        namePhoneTF.rightViewMode = .always
+        passwordTF.rightViewMode = .always
     }
 }

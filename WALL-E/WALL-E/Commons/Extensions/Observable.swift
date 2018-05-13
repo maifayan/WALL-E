@@ -13,6 +13,11 @@ extension ObservableType {
         return filter { $0 != nil }.map { $0! }
     }
     
+    func subscribeOnMain<O: ObserverType>(_ observer: O) -> Disposable where O.E == E {
+        return observeOn(MainScheduler.instance)
+            .subscribe(observer)
+    }
+
     func subscribeOnMain(_ on: @escaping (Event<E>) -> ()) -> Disposable {
         return observeOn(MainScheduler.instance)
             .subscribe(on)

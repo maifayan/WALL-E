@@ -249,7 +249,10 @@ private extension Settings.ContentView._FormView {
             }
             <<< LabelRow() { row in
                 row.title = "Sign Out"
-                row.onCellSelection { _, _ in model.signOut() }
+                row.onCellSelection { _, row in
+                    row.deselect()
+                    model.signOut()
+                }
                 row.cellSetup { cell, _ in
                     cell.selectionStyle = .default
                 }

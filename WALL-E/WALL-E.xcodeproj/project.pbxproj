@@ -18,6 +18,7 @@
 		BA1A993F2085DE4700FAE3FA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BA1A993E2085DE4700FAE3FA /* Assets.xcassets */; };
 		BA1A99422085DE4700FAE3FA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BA1A99402085DE4700FAE3FA /* LaunchScreen.storyboard */; };
 		BA1A994D2085DE4700FAE3FA /* WALL_ETests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1A994C2085DE4700FAE3FA /* WALL_ETests.swift */; };
+		BA32D72020A759EC00A19601 /* Robot.CreationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA32D71F20A759EC00A19601 /* Robot.CreationViewModel.swift */; };
 		BA373ABD20A1E59000ACC8E6 /* Auto+Sync.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA373ABC20A1E59000ACC8E6 /* Auto+Sync.swift */; };
 		BA373ABF20A1EC7700ACC8E6 /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA373ABE20A1EC7700ACC8E6 /* Time.swift */; };
 		BA373AC120A2055100ACC8E6 /* Context+Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA373AC020A2055100ACC8E6 /* Context+Event.swift */; };
@@ -47,6 +48,9 @@
 		BA8195E120A5A31D00689B94 /* Context+Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA8195E020A5A31D00689B94 /* Context+Notification.swift */; };
 		BA8195E320A5BD4700689B94 /* Chat.NodeTypingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA8195E220A5BD4600689B94 /* Chat.NodeTypingView.swift */; };
 		BA8195E520A6E4A000689B94 /* Context+Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA8195E420A6E4A000689B94 /* Context+Account.swift */; };
+		BA8195EA20A7243A00689B94 /* Robot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA8195E920A7243A00689B94 /* Robot.swift */; };
+		BA8195EC20A7245500689B94 /* Robot.CreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA8195EB20A7245500689B94 /* Robot.CreationView.swift */; };
+		BA8195EE20A724D700689B94 /* RobotCreationContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA8195ED20A724D600689B94 /* RobotCreationContentView.xib */; };
 		BA88B7872092203A0014C860 /* AccessoryViewRevealer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA88B7862092203A0014C860 /* AccessoryViewRevealer.swift */; };
 		BA88B789209220DB0014C860 /* Chat.Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA88B788209220DB0014C860 /* Chat.Cell.swift */; };
 		BA88B78F2092374B0014C860 /* Settings.Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA88B78E2092374B0014C860 /* Settings.Model.swift */; };
@@ -95,6 +99,7 @@
 		BAE8DF2C20A06D350021246E /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE8DF2B20A06D350021246E /* UITextField.swift */; };
 		BAF8A89C20A335B8004DB8EB /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAF8A89B20A335B8004DB8EB /* Renderer.swift */; };
 		BAF8A89E20A34916004DB8EB /* Renderer.Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAF8A89D20A34916004DB8EB /* Renderer.Section.swift */; };
+		BAFACB7020A74B36008C29A2 /* WavesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFACB6F20A74B36008C29A2 /* WavesView.swift */; };
 		BAFD041A2091C995009D132A /* Chat.NodeLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFD04192091C995009D132A /* Chat.NodeLayout.swift */; };
 		BAFD041C2091D62A009D132A /* Chat.ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFD041B2091D62A009D132A /* Chat.ContentView.swift */; };
 		BAFD041E2091ED5C009D132A /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFD041D2091ED5C009D132A /* UIColor.swift */; };
@@ -128,6 +133,7 @@
 		BA1A99482085DE4700FAE3FA /* WALL-ETests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "WALL-ETests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA1A994C2085DE4700FAE3FA /* WALL_ETests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WALL_ETests.swift; sourceTree = "<group>"; };
 		BA1A994E2085DE4700FAE3FA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BA32D71F20A759EC00A19601 /* Robot.CreationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Robot.CreationViewModel.swift; sourceTree = "<group>"; };
 		BA373ABC20A1E59000ACC8E6 /* Auto+Sync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Auto+Sync.swift"; sourceTree = "<group>"; };
 		BA373ABE20A1EC7700ACC8E6 /* Time.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
 		BA373AC020A2055100ACC8E6 /* Context+Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Context+Event.swift"; sourceTree = "<group>"; };
@@ -157,6 +163,9 @@
 		BA8195E020A5A31D00689B94 /* Context+Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Context+Notification.swift"; sourceTree = "<group>"; };
 		BA8195E220A5BD4600689B94 /* Chat.NodeTypingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.NodeTypingView.swift; sourceTree = "<group>"; };
 		BA8195E420A6E4A000689B94 /* Context+Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Context+Account.swift"; sourceTree = "<group>"; };
+		BA8195E920A7243A00689B94 /* Robot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Robot.swift; sourceTree = "<group>"; };
+		BA8195EB20A7245500689B94 /* Robot.CreationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Robot.CreationView.swift; sourceTree = "<group>"; };
+		BA8195ED20A724D600689B94 /* RobotCreationContentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RobotCreationContentView.xib; sourceTree = "<group>"; };
 		BA88B7862092203A0014C860 /* AccessoryViewRevealer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessoryViewRevealer.swift; sourceTree = "<group>"; };
 		BA88B788209220DB0014C860 /* Chat.Cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.Cell.swift; sourceTree = "<group>"; };
 		BA88B78E2092374B0014C860 /* Settings.Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.Model.swift; sourceTree = "<group>"; };
@@ -205,6 +214,7 @@
 		BAE8DF2B20A06D350021246E /* UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextField.swift; sourceTree = "<group>"; };
 		BAF8A89B20A335B8004DB8EB /* Renderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
 		BAF8A89D20A34916004DB8EB /* Renderer.Section.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderer.Section.swift; sourceTree = "<group>"; };
+		BAFACB6F20A74B36008C29A2 /* WavesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WavesView.swift; sourceTree = "<group>"; };
 		BAFD04192091C995009D132A /* Chat.NodeLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.NodeLayout.swift; sourceTree = "<group>"; };
 		BAFD041B2091D62A009D132A /* Chat.ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.ContentView.swift; sourceTree = "<group>"; };
 		BAFD041D2091ED5C009D132A /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
@@ -402,6 +412,7 @@
 		BA3CCD9C208CD4030000D639 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				BA8195E620A7242300689B94 /* Robot */,
 				BAE8DF0D209F1B5E0021246E /* Account */,
 				BAAFF4D6209D80B90010CB4C /* Model */,
 				BAAFF4D1209C78E10010CB4C /* EVE */,
@@ -414,6 +425,17 @@
 				BA3CCD7A208B99CA0000D639 /* Main */,
 			);
 			path = Source;
+			sourceTree = "<group>";
+		};
+		BA8195E620A7242300689B94 /* Robot */ = {
+			isa = PBXGroup;
+			children = (
+				BA8195E920A7243A00689B94 /* Robot.swift */,
+				BA8195EB20A7245500689B94 /* Robot.CreationView.swift */,
+				BA8195ED20A724D600689B94 /* RobotCreationContentView.xib */,
+				BA32D71F20A759EC00A19601 /* Robot.CreationViewModel.swift */,
+			);
+			path = Robot;
 			sourceTree = "<group>";
 		};
 		BA86BEC720A2A446003B28A4 /* Renderer */ = {
@@ -554,6 +576,7 @@
 			children = (
 				BAE8DF1B209FEEF20021246E /* AvatarUploadView.swift */,
 				BA619ABE20A439BC00559255 /* AvatarView.swift */,
+				BAFACB6F20A74B36008C29A2 /* WavesView.swift */,
 			);
 			path = Controls;
 			sourceTree = "<group>";
@@ -656,6 +679,7 @@
 				BAE8DF15209F2E810021246E /* RegisterView.xib in Resources */,
 				BA783F73208CFAEA00771E86 /* ThemePickerView.xib in Resources */,
 				BAE8DF13209F1E3B0021246E /* LoginView.xib in Resources */,
+				BA8195EE20A724D700689B94 /* RobotCreationContentView.xib in Resources */,
 				BAA2ECB72090AA4700C6F577 /* LaunchViewController.xib in Resources */,
 				BA1A993F2085DE4700FAE3FA /* Assets.xcassets in Resources */,
 				BAA2EC8D208DF07B00C6F577 /* ProfileHeaderView.xib in Resources */,
@@ -782,6 +806,7 @@
 				BA3CCD9B208CD3F10000D639 /* UIButton.swift in Sources */,
 				BA013CA1208DE602004689F0 /* Profile.View.swift in Sources */,
 				BA373ABF20A1EC7700ACC8E6 /* Time.swift in Sources */,
+				BA32D72020A759EC00A19601 /* Robot.CreationViewModel.swift in Sources */,
 				BA88B7872092203A0014C860 /* AccessoryViewRevealer.swift in Sources */,
 				BAE8DF0F209F1B6B0021246E /* Account.Login.swift in Sources */,
 				BA8B312C209D93CD007C34CD /* Threads.swift in Sources */,
@@ -813,6 +838,7 @@
 				BAE8DF19209F328B0021246E /* Account.swift in Sources */,
 				BAF8A89C20A335B8004DB8EB /* Renderer.swift in Sources */,
 				BA8B3130209DFF03007C34CD /* Message.swift in Sources */,
+				BA8195EA20A7243A00689B94 /* Robot.swift in Sources */,
 				BAFD041C2091D62A009D132A /* Chat.ContentView.swift in Sources */,
 				BAE8DF0C209E0F7F0021246E /* EVE.Account.swift in Sources */,
 				BA619AC120A43C0500559255 /* URL+Image.swift in Sources */,
@@ -844,6 +870,7 @@
 				BA3CCD97208CCE7B0000D639 /* Menu.swift in Sources */,
 				BA8195DF20A59E1E00689B94 /* Chat.ViewModel.swift in Sources */,
 				BAA2ECA6208F7A8E00C6F577 /* Chat.InputView.swift in Sources */,
+				BAFACB7020A74B36008C29A2 /* WavesView.swift in Sources */,
 				BA373ABD20A1E59000ACC8E6 /* Auto+Sync.swift in Sources */,
 				BAE8DF2820A017DA0021246E /* EVE.Uploader.swift in Sources */,
 				BA3CCD92208CA4F90000D639 /* Root.swift in Sources */,
@@ -857,6 +884,7 @@
 				BA013C97208DD8EC004689F0 /* Observable.swift in Sources */,
 				BAA2ECAA209058AC00C6F577 /* Chat.ImagesPickerAdapter.swift in Sources */,
 				BAA2ECB02090A0A000C6F577 /* UIView.swift in Sources */,
+				BA8195EC20A7245500689B94 /* Robot.CreationView.swift in Sources */,
 				BA3CCD82208BB0940000D639 /* Simple.swift in Sources */,
 				BA8195E520A6E4A000689B94 /* Context+Account.swift in Sources */,
 				BA3CCD8F208C9E810000D639 /* R.generated.swift in Sources */,
@@ -1017,7 +1045,10 @@
 				DEVELOPMENT_TEAM = 9PA6Z533LV;
 				INFOPLIST_FILE = "WALL-E/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "personal.tangent.WALL-E";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -1034,7 +1065,10 @@
 				DEVELOPMENT_TEAM = 9PA6Z533LV;
 				INFOPLIST_FILE = "WALL-E/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "personal.tangent.WALL-E";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -1050,7 +1084,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9PA6Z533LV;
 				INFOPLIST_FILE = "WALL-ETests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "personal.tangent.WALL-ETests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -1067,7 +1105,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9PA6Z533LV;
 				INFOPLIST_FILE = "WALL-ETests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "personal.tangent.WALL-ETests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;

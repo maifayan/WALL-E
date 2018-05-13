@@ -28,6 +28,16 @@ extension EVE.Uploader {
     enum Progress {
         case uploading(progress: Float)
         case finish(url: String)
+        
+        var progress: Float? {
+            guard case .uploading(let ret) = self else { return nil }
+            return ret
+        }
+        
+        var url: String? {
+            guard case .finish(let ret) = self else { return nil }
+            return ret
+        }
     }
     
     enum Resource {

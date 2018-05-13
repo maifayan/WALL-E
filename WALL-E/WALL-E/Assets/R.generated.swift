@@ -135,7 +135,7 @@ struct R: Rswift.Validatable {
     fileprivate init() {}
   }
   
-  /// This `R.nib` struct is generated, and contains static references to 6 nibs.
+  /// This `R.nib` struct is generated, and contains static references to 7 nibs.
   struct nib {
     /// Nib `LaunchViewController`.
     static let launchViewController = _R.nib._LaunchViewController()
@@ -147,6 +147,8 @@ struct R: Rswift.Validatable {
     static let profileHeaderView = _R.nib._ProfileHeaderView()
     /// Nib `RegisterView`.
     static let registerView = _R.nib._RegisterView()
+    /// Nib `RobotCreationContentView`.
+    static let robotCreationContentView = _R.nib._RobotCreationContentView()
     /// Nib `ThemePickerView`.
     static let themePickerView = _R.nib._ThemePickerView()
     
@@ -173,6 +175,11 @@ struct R: Rswift.Validatable {
     /// `UINib(name: "RegisterView", in: bundle)`
     static func registerView(_: Void = ()) -> UIKit.UINib {
       return UIKit.UINib(resource: R.nib.registerView)
+    }
+    
+    /// `UINib(name: "RobotCreationContentView", in: bundle)`
+    static func robotCreationContentView(_: Void = ()) -> UIKit.UINib {
+      return UIKit.UINib(resource: R.nib.robotCreationContentView)
     }
     
     /// `UINib(name: "ThemePickerView", in: bundle)`
@@ -231,9 +238,9 @@ struct _R: Rswift.Validatable {
   
   struct nib: Rswift.Validatable {
     static func validate() throws {
-      try _MenuContentView.validate()
       try _LaunchViewController.validate()
       try _LoginView.validate()
+      try _MenuContentView.validate()
     }
     
     struct _LaunchViewController: Rswift.NibResourceType, Rswift.Validatable {
@@ -300,6 +307,17 @@ struct _R: Rswift.Validatable {
       
       func firstView(owner ownerOrNil: AnyObject?, options optionsOrNil: [NSObject : AnyObject]? = nil) -> RegisterView? {
         return instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? RegisterView
+      }
+      
+      fileprivate init() {}
+    }
+    
+    struct _RobotCreationContentView: Rswift.NibResourceType {
+      let bundle = R.hostingBundle
+      let name = "RobotCreationContentView"
+      
+      func firstView(owner ownerOrNil: AnyObject?, options optionsOrNil: [NSObject : AnyObject]? = nil) -> RobotCreationContentView? {
+        return instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? RobotCreationContentView
       }
       
       fileprivate init() {}
