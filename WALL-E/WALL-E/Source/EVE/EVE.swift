@@ -14,7 +14,7 @@ enum EVE { }
 
 extension EVE {
     struct Config {
-        static let address = "127.0.0.1:8081"
+        static let address = "150.109.40.31:8081"
         static let timeout: TimeInterval = 15
     }
     

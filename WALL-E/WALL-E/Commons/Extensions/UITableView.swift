@@ -35,9 +35,9 @@ extension UITableView {
 }
 
 fileprivate extension CGFloat {
-    // 四舍五入取两位小数
+    // 四舍五入
     var _standard: CGFloat {
-        return CGFloat(lroundf(Float(self) * 100)) / 100
+        return self |> Float.init >>> roundf >>> CGFloat.init
     }
 }
 

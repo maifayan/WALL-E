@@ -119,6 +119,7 @@ private extension Chat.ContentView {
             case .nodes(let layouts, let batchUpdates):
                 self._reload(layouts: layouts, batchUpdates: batchUpdates)
             case .scrollWithKeyboard(let info):
+                // FIXME
                 guard self.tableView.isAtBottom == true else { return }
                 UIView.animate(withDuration: info.duration, delay: 0, options: info.animationOptions, animations: {
                     self.tableView.contentOffset.y -= info.constant

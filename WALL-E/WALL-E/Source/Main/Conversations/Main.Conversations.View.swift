@@ -30,6 +30,15 @@ extension Main.Conversations {
             log()
         }
         
+        private lazy var _emptyView: UIImageView = {
+            let imageView = UIImageView()
+            imageView.autoresizingMask = [.flexibleLeftMargin, .flexibleTopMargin, .flexibleBottomMargin, .flexibleRightMargin]
+            imageView.contentMode = .scaleAspectFill
+            imageView.ui.adapt(themeKeyPath: \.mainColor, for: \.tintColor, mapper: flip(UIColor.withAlphaComponent)(0.5))
+            imageView.image = R.image.robot()?.withRenderingMode(.alwaysTemplate)
+            return imageView
+        }()
+        
         private lazy var _tableView: UITableView = {
             let tableView = UITableView(frame: .zero, style: .plain)
             tableView.separatorStyle = .none
@@ -58,6 +67,7 @@ extension Main.Conversations.View {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.addSubview(_emptyView)
         view.addSubview(_tableView)
         _adapter.listen(#selector(UITableViewDelegate.tableView(_:didSelectRowAt:)), in: UITableViewDelegate.self) { [weak self] in
             guard $0.count == 2, let indexPath = $0[1] as? IndexPath, let context = self?._context, let contact = self?._messages?[indexPath.row].other else { return }
@@ -66,21 +76,19 @@ extension Main.Conversations.View {
             self?._tableView.deselectRow(at: indexPath, animated: true)
         }
         _tableView.delegate = _adapter
+        _setupRender()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        _emptyView.size = ui.emptyViewSize
+        _emptyView.center = CGPoint(x: 0.5 * view.width, y: 0.5 * view.height - 35)
         _tableView.frame = view.bounds
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         _render(width: size.width)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        _setupRender()
     }
 }
 
@@ -89,10 +97,12 @@ private extension Main.Conversations.View {
         let results = _context.auto.main.objects(Message.self).filter("typeValue != %@", Message.MessageType.typing.rawValue).sorted(byKeyPath: "updatedAt", ascending: false).distinct(by: ["conversationId"])
         _token = results.observe { [weak self] changes in
             switch changes {
-            case .initial:
+            case .initial(let messages):
                 self?._render()
-            case .update(_, let deletions, let insertions, let modifications):
+                self?._emptyView.isHidden = !messages.isEmpty
+            case .update(let messages, let deletions, let insertions, let modifications):
                 self?._render(updates: (insert: insertions, delete: deletions, reload: modifications))
+                self?._emptyView.isHidden = !messages.isEmpty
             default: ()
             }
         }
@@ -131,6 +141,13 @@ private extension Main.Conversations.View {
 extension Main.Conversations.View: MenuButtonDisplayController {
     var showMenuButton: Observable<Bool> {
         return _tableView.verticalScrollDirection.map { $0 == .down }
+    }
+}
+
+extension UI where Base: Main.Conversations.View {
+    var emptyViewSize: CGSize {
+        let value = 0.7 * UIScreen.main.bounds.width
+        return CGSize(width: value, height: value)
     }
 }
 
