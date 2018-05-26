@@ -92,7 +92,7 @@ DEPENDENCIES:
   - YYText
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
+  https://github.com/cocoapods/specs.git:
     - "!ProtoCompiler"
     - "!ProtoCompiler-gRPCPlugin"
     - BoringSSL
@@ -159,4 +159,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 34dfe461c2e18a550af5c36bb71ca88e87900ab2
 
-COCOAPODS: 1.5.0
+COCOAPODS: 1.5.3
